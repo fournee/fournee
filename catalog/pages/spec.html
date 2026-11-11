@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournée Spec</title>
+<link rel="stylesheet" href="assets/frosting.css">
+<link rel="stylesheet" href="assets/fontdant-fonts.css">
+<link rel="stylesheet" href="assets/fontdant.css">
+<link rel="stylesheet" href="mise.css">
+<link rel="stylesheet" href="nav.css">
+<script src="nav.js"></script>
+</head>
+<body>
+<main>
+  <h1>Spec</h1>
+  <p class="lede">The standard a page is held to. Every project starts on the <b>House spec</b>. In the panel's Spec step you can compare any other side by side, fit your look to it, then adopt it or keep yours. A spec only ever tightens the House rules (it never loosens them).</p>
+
+  <h2>House spec</h2>
+  <div class="scroll"><table id="house"></table></div>
+
+  <h2>The 21 standards</h2>
+  <p class="muted">Contrast is a minimum ratio (text / shapes and borders). Sizes are px floors set by design systems; no law sets one. "—" means the standard doesn't set that rule.</p>
+  <div class="scroll"><table id="specs"></table></div>
+</main>
+<script src="assets/tokens.js"></script>
+<script src="assets/readability.js"></script>
+<script src="assets/type-tokens.js"></script>
+<script src="assets/standards.js"></script>
+<script>
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var C = FrostingColor, K = KitchenStandards, floors = FontdantTokens.modes[FontdantTokens.defaultMode].floors;
+  var label = { text: 'Main text', muted: 'Quiet text', 'accent-text': 'Accent text', 'button-text': 'Button text', accent: 'Accent shapes', button: 'Buttons', border: 'Borders' };
+  document.getElementById('house').innerHTML = '<thead><tr><th>Rule</th><th>Minimum</th></tr></thead><tbody>' +
+    C.contracts().filter(function (c) { return label[c.role] && (c.against === 'bg' || c.against === 'button'); }).map(function (c) { return '<tr><td>' + esc(label[c.role]) + ' on ' + esc(c.against) + '</td><td>' + c.min + ':1</td></tr>'; }).join('') +
+    '<tr><td>Body text at least (reading mode)</td><td>' + floors.body + 'px</td></tr><tr><td>Smallest text</td><td>' + floors.any + 'px</td></tr>' +
+    '<tr><td>Small, thin and quiet text</td><td>extra checks (thin type on dark, quiet text under 14px, button text weight)</td></tr></tbody>';
+  var d = function (v, suf) { return v == null ? '—' : esc(v) + (suf || ''); };
+  document.getElementById('specs').innerHTML = '<thead><tr><th>Standard</th><th>Group</th><th>Region</th><th>Based on</th><th>Text</th><th>Shapes</th><th>Body</th><th>Smallest</th><th>Focus ring</th><th>Targets</th><th>Line height</th><th>Note</th></tr></thead><tbody>' +
+    K.list().map(function (p) {
+      return '<tr><td><b>' + esc(p.label) + '</b></td><td>' + esc(p.group) + '</td><td>' + esc(p.region) + '</td><td>WCAG ' + esc(p.wcag) + ' ' + esc(p.level) + '</td>' +
+        '<td>' + d(p.text, ':1') + '</td><td>' + (p.ui == null ? '— <span class="tag">advice</span>' : d(p.ui, ':1')) + '</td><td>' + d(p.bodyMin, 'px') + '</td><td>' + d(p.anyMin, 'px') + '</td>' +
+        '<td>' + (p.focus && p.focus.width ? esc(p.focus.width) + 'px, ' + esc(p.focus.contrast) + ':1' : '—') + '</td><td>' + d(p.targets, 'px') + '</td><td>' + d(p.leading) + '</td>' +
+        '<td class="muted">' + esc(p.note) + (p.apca ? ' <span class="tag">APCA Lc ' + esc(p.apca.body) + '</span>' : '') + '</td></tr>';
+    }).join('') + '</tbody>';
+</script>
+</body>
+</html>

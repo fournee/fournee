@@ -1,0 +1,24 @@
+/* kitchen · the pass in the panel. Frosted: --fr-* roles only, no literal colours. State is never colour
+   alone: every item carries a mark (✕ ! ✓ …) and failures say "failing" / "(warning)" in words. */
+.mise-pass { display: grid; gap: 10px; }
+.mise-pass__head { font-weight: 700; padding: 8px 12px; border-radius: 8px; background: var(--fr-surface); color: var(--fr-text); border-left: 4px solid var(--fr-ok); }
+.mise-pass__head[data-level="warn"] { border-left-color: var(--fr-warn); }
+.mise-pass__head[data-level="bad"] { border-left-color: var(--fr-bad); }
+.mise-pass__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.mise-pass__item { display: grid; grid-template-columns: 1.5em 3.5em 1fr auto; gap: 2px 8px; align-items: baseline; padding: 6px 8px; border-radius: 6px; background: var(--fr-surface); color: var(--fr-text); }
+.mise-pass__mark { font-weight: 700; text-align: center; border-radius: 999px; }
+.mise-pass__item[data-kind="hard"] .mise-pass__mark { color: var(--fr-bg); background: var(--fr-bad); }
+.mise-pass__item[data-kind="warn"] .mise-pass__mark { color: var(--fr-bg); background: var(--fr-warn); }
+.mise-pass__item[data-kind="ok"] .mise-pass__mark { color: var(--fr-bg); background: var(--fr-ok); }
+.mise-pass__item[data-kind="pending"] .mise-pass__mark { color: var(--fr-muted); }
+.mise-pass__id { font-weight: 700; color: var(--fr-text); font-variant-numeric: tabular-nums; }
+.mise-pass__label { font-weight: 600; }
+.mise-pass__label em { font-weight: 400; color: var(--fr-muted); font-style: normal; }
+.mise-pass__detail { grid-column: 3 / -1; color: var(--fr-muted); font-size: .9em; overflow-wrap: anywhere; }
+.mise-pass__passed summary { cursor: pointer; color: var(--fr-muted); padding: 4px 0; }
+.mise-pass__frame { position: absolute; left: -10000px; top: 0; width: 320px; height: 900px; border: 0; visibility: hidden; }
+.mise-pass__item[data-kind="info"] .mise-pass__mark { color: var(--fr-bg); background: var(--fr-accent); font-style: italic; }
+/* Fix / Look buttons and samples (the Fournée steps' Expo) */
+.mise-pass__fix { font: inherit; font-size: .9em; background: transparent; border: 0; padding: 0 2px; color: var(--fr-accent-text); text-decoration: underline; cursor: pointer; justify-self: end; white-space: nowrap; }
+.mise-pass__fix:focus-visible { outline: 2px solid var(--fr-focus-ring); outline-offset: 2px; }
+.mise-pass__sample { display: inline-block; grid-column: 3 / -1; justify-self: start; margin-top: 4px; padding: 3px 8px; border: 1px solid var(--fr-border); border-radius: 4px; line-height: 1.3; }

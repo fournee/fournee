@@ -1,0 +1,48 @@
+{
+  "name": "@fournee/delivery",
+  "version": "0.1.0",
+  "description": "Fournée delivery: one recipe applied the same way in plain HTML, React, Svelte, Electron, pywebview, Qt and tkinter, and exported as DTCG 2025.10 tokens.",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/mise.js",
+  "module": "dist/mise.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/mise.mjs",
+      "require": "./dist/mise.js"
+    },
+    "./react": "./react/index.mjs",
+    "./svelte": "./svelte/index.mjs",
+    "./svelte/Mise.svelte": "./svelte/Mise.svelte",
+    "./electron": "./electron/index.cjs",
+    "./mise.css": "./dist/mise.css"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/build.mjs && node test/run.mjs"
+  },
+  "files": [
+    "dist",
+    "src",
+    "react",
+    "svelte",
+    "electron",
+    "python",
+    "scripts"
+  ],
+  "devDependencies": {
+    "esbuild": "0.24.2",
+    "esbuild-svelte": "0.9.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "style-dictionary": "5.7.1",
+    "svelte": "5.33.0",
+    "wawoff2": "2.0.1"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fournee/fournee.git",
+    "directory": "delivery"
+  }
+}

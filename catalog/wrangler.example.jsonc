@@ -1,0 +1,10 @@
+{
+  // Template for hosting the Fournée catalog on Cloudflare Workers (static assets only).
+  // Copy to catalog/wrangler.jsonc (git-ignored), set your own name and domain, then run `npm run deploy`.
+  // Without a custom domain, delete "routes" and Cloudflare serves it at <name>.<your-subdomain>.workers.dev.
+  "$schema": "../frosting/node_modules/wrangler/config-schema.json",
+  "name": "fournee-catalog",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./site", "not_found_handling": "404-page" },
+  "routes": [{ "pattern": "catalog.example.com", "custom_domain": true }]
+}

@@ -1,0 +1,85 @@
+/* frosting · the panel's own styles. It is frosted with the same variables it edits. */
+.fr-pal { color: var(--fr-text); font: 14px/1.4 system-ui, sans-serif; outline: none; }
+.fr-pal h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--fr-muted); margin: 18px 0 8px; }
+.fr-muted { color: var(--fr-muted); font-size: 13px; }
+.fr-btn { font: inherit; padding: 7px 12px; border-radius: 8px; border: 1px solid transparent; background: var(--fr-button); color: var(--fr-button-text); cursor: pointer; }
+.fr-btn--ghost { background: transparent; color: var(--fr-text); border-color: var(--fr-border); }
+.fr-btn:hover { filter: brightness(1.08); }
+.fr-link { font: inherit; background: none; border: 0; color: var(--fr-accent-text); text-decoration: underline; cursor: pointer; padding: 0; }
+.fr-tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--fr-border); }
+.fr-tag--ok { background: var(--fr-ok); color: #fff; border-color: transparent; }
+.fr-tag--warn { background: var(--fr-warn); color: #000; border-color: transparent; }
+.fr-pal__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.fr-pal__nav { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 240px; }
+.fr-pal__now { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.fr-pal__now strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fr-pal__lock { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+.fr-pal__bg, .fr-pal__check { display: flex; align-items: center; gap: 6px; }
+.fr-pal__bg input[type=text], .fr-sw input[type=text] { font: 12px/1 ui-monospace, Consolas, monospace; width: 84px; padding: 5px 6px; border: 1px solid var(--fr-control-border); border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); }
+.fr-pal__badge { margin: 12px 0 0; font-size: 13px; }
+.fr-pal__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.fr-pal__card { text-align: left; padding: 10px; border-radius: 10px; border: 1px solid; cursor: pointer; font: inherit; display: flex; flex-direction: column; gap: 2px; }
+.fr-pal__card[aria-pressed="true"] { outline: 2px solid var(--fr-accent); outline-offset: 2px; }
+.fr-pal__card b { font-size: 13px; } .fr-pal__card small { font-size: 11px; opacity: .75; }
+.fr-pal__chips { display: flex; align-items: center; gap: 5px; margin-top: 6px; }
+.fr-pal__pill { font-size: 11px; padding: 2px 8px; border-radius: 999px; }
+.fr-pal__dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.fr-pal__favwrap { position: relative; }
+.fr-pal__del { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; border: 0; background: var(--fr-bad); color: #fff; cursor: pointer; font-size: 13px; line-height: 1; }
+.fr-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
+.fr-sw { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 8px; padding: 6px 8px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); font-size: 12px; }
+.fr-sw input[type=color] { width: 34px; height: 28px; border: 0; padding: 0; background: none; cursor: pointer; }
+.fr-sw code { font-size: 11px; color: var(--fr-muted); }
+.fr-pal__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
+.fr-pal__actions [data-flash].is-error { color: var(--fr-bad); }
+.fr-pal__keys { margin-top: 8px; }
+/* scope, the standards dial, and gradients (Nov 2026) */
+.fr-pal__scope { margin: 0 0 10px; font-size: 13px; color: var(--fr-muted); }
+.fr-pal__dial { display: flex; align-items: center; gap: 6px; margin-left: auto; min-width: 0; max-width: 100%; }
+/* a select is as wide as its longest option: let it shrink on narrow screens and wide system fonts */
+.fr-pal__dial select { flex: 0 1 auto; min-width: 0; max-width: 100%; text-overflow: ellipsis; }
+.fr-pal__dial select, .fr-grad select, .fr-grad input[type=number] { font: inherit; font-size: 12px; padding: 4px 6px; border: 1px solid var(--fr-control-border); border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); }
+.fr-grad input[type=number] { width: 64px; }
+.fr-sw__tools { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.fr-chip { font: inherit; font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--fr-control-border); background: var(--fr-bg); color: var(--fr-text); cursor: pointer; }
+.fr-chip[aria-pressed="true"] { border-color: var(--fr-accent); color: var(--fr-accent-text); }
+.fr-grad { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+.fr-grad__preview { height: 34px; border-radius: 6px; border: 1px solid var(--fr-border); }
+.fr-grad__row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fr-grad__stop input[type=color] { width: 34px; height: 28px; border: 0; padding: 0; background: none; cursor: pointer; }
+.fr-grad__angles { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+.fr-grad__angle { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--fr-control-border); background: var(--fr-bg); color: var(--fr-text); cursor: pointer; font: inherit; font-size: 13px; line-height: 1; padding: 0; }
+.fr-grad__angle span { display: inline-block; }
+.fr-grad__angle[aria-pressed="true"] { border-color: var(--fr-accent); color: var(--fr-accent-text); }
+.fr-btn--sm { padding: 3px 9px; font-size: 12px; }
+.fr-grad__ratio { font-size: 12px; color: var(--fr-muted); }
+.fr-grad__ratio.is-bad { color: var(--fr-bad); }
+.fr-grad__more label { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; }
+/* Fit to a standard */
+.fr-fit { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); font-size: 13px; }
+.fr-fit p { margin: 0 0 6px; }
+.fr-fit__list { margin: 0 0 8px; padding-left: 18px; }
+.fr-fit__list li { margin: 2px 0; }
+.fr-fit__sw { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--fr-border); border-radius: 2px; vertical-align: -1px; margin-right: 3px; }
+.fr-fit__left { color: var(--fr-bad); }
+.fr-fit__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fr-seg { display: inline-flex; gap: 4px; }
+/* the Fournée steps: step 1 (Build around a colour, the lucky card, extras, Fix highlights) */
+.fr-pal--steps h3 { display: flex; align-items: center; gap: 6px; }
+.fr-build { display: grid; gap: 8px; padding: 10px 12px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); }
+.fr-build__pins { display: grid; gap: 6px; }
+.fr-build__pin { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fr-build__pin input[type=color] { width: 34px; height: 28px; border: 0; padding: 0; background: none; cursor: pointer; }
+.fr-build__pin input[type=text] { font: 12px/1 ui-monospace, Consolas, monospace; width: 84px; padding: 5px 6px; border: 1px solid var(--fr-control-border); border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); }
+.fr-build__pin select { font: inherit; font-size: 13px; padding: 4px 6px; border: 1px solid var(--fr-control-border); border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); }
+.fr-build__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fr-build__acts [hidden] { display: none; }
+.fr-build__note:empty, .fr-build [data-bgnote]:empty, .fr-pal__flash:empty { display: none; }
+.fr-build__note, .fr-build [data-bgnote] { margin: 0; }
+.fr-pal__flash { margin: 8px 0 0; font-size: 13px; color: var(--fr-text); }
+.fr-pal__flash.is-error { color: var(--fr-bad); }
+.fr-pal__lucky { background: var(--fr-surface); color: var(--fr-text); border-color: var(--fr-border); border-style: dashed; justify-content: center; }
+.fr-pal__lucky b { font-size: 14px; }
+.fr-pal__save { font-size: 12px; text-transform: none; letter-spacing: 0; margin-left: auto; }
+.fr-sw.is-flash { outline: 3px solid var(--fr-warn); outline-offset: 1px; }
+.fr-pal__extras > div { display: grid; gap: 8px; }

@@ -1,0 +1,51 @@
+{
+  "name": "Delivery check",
+  "client": "Corner Bakery",
+  "scheme": "Dark",
+  "frosting": {
+    "colors": {
+      "bg": "#14161A",
+      "surface": "#1D2026",
+      "border": "#323741",
+      "text": "#ECEDEF",
+      "muted": "#9AA0AA",
+      "accent": "#7CC4A0",
+      "accent-text": "#9AD7B8",
+      "button": "#7CC4A0",
+      "button-text": "#0E1512"
+    }
+  },
+  "fontdant": {
+    "faces": {
+      "display": "fraunces",
+      "text": "source-sans-3",
+      "mono": "ibm-plex-mono"
+    },
+    "mode": "dense",
+    "dials": {
+      "weights": {
+        "title": 650
+      }
+    },
+    "roles": {
+      "eyebrow-lower": {
+        "weight": 600
+      }
+    },
+    "extensions": {
+      "roles": [
+        {
+          "name": "deck-time",
+          "base": "metric",
+          "face": "display",
+          "size": "clamp(1.5rem, min(2.6vw, 4.2vh), 2.375rem)",
+          "weight": 600,
+          "leading": 1,
+          "tracking": "0",
+          "tnum": true
+        }
+      ]
+    }
+  },
+  "sprinkles": false
+}

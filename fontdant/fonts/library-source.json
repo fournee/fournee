@@ -1,0 +1,63 @@
+{
+  "about": "What the font library is built from: the curated picks (8 Nov 2026). scripts/fetch-library.mjs downloads each family's latin woff2 from Google Fonts (variable where the family has a wght axis, static weights otherwise) plus its licence text from github.com/google/fonts; scripts/build-library.mjs measures the files and writes library.json. Edit this file to add or drop a family; never edit library.json by hand.",
+  "defaultLook": { "display": "inter", "text": "inter", "mono": "jetbrains-mono" },
+  "shelves": {
+    "compact-sans": { "label": "Compact modern sans", "slots": ["text", "display"] },
+    "text": { "label": "Text faces", "slots": ["text", "display"] },
+    "display-classic": { "label": "Display · classic", "slots": ["display"] },
+    "display-trendy": { "label": "Display · trendy", "slots": ["display"] },
+    "mono": { "label": "Mono", "slots": ["mono"] }
+  },
+  "families": [
+    { "id": "inter", "family": "Inter", "shelf": "compact-sans", "lucky": true },
+    { "id": "inter-tight", "family": "Inter Tight", "shelf": "compact-sans", "lucky": true },
+    { "id": "arimo", "family": "Arimo", "shelf": "compact-sans", "lucky": true },
+    { "id": "archivo", "family": "Archivo", "shelf": "compact-sans", "lucky": true },
+    { "id": "schibsted-grotesk", "family": "Schibsted Grotesk", "shelf": "compact-sans", "lucky": true },
+    { "id": "instrument-sans", "family": "Instrument Sans", "shelf": "compact-sans", "lucky": true },
+    { "id": "geist", "family": "Geist", "shelf": "compact-sans", "lucky": true },
+    { "id": "mona-sans", "family": "Mona Sans", "shelf": "compact-sans", "lucky": true },
+
+    { "id": "public-sans", "family": "Public Sans", "shelf": "text", "lucky": true },
+    { "id": "roboto", "family": "Roboto", "shelf": "text", "lucky": false, "note": "CERN web face (home.cern)" },
+    { "id": "source-sans-3", "family": "Source Sans 3", "shelf": "text", "lucky": true },
+    { "id": "libre-franklin", "family": "Libre Franklin", "shelf": "text", "lucky": true },
+    { "id": "manrope", "family": "Manrope", "shelf": "text", "lucky": true },
+    { "id": "atkinson-hyperlegible-next", "family": "Atkinson Hyperlegible Next", "shelf": "text", "lucky": true },
+    { "id": "source-serif-4", "family": "Source Serif 4", "shelf": "text", "lucky": true },
+
+    { "id": "eb-garamond", "family": "EB Garamond", "shelf": "display-classic", "lucky": true },
+    { "id": "cormorant-garamond", "family": "Cormorant Garamond", "shelf": "display-classic", "lucky": true },
+    { "id": "libre-baskerville", "family": "Libre Baskerville", "shelf": "display-classic", "lucky": true },
+    { "id": "jost", "family": "Jost", "shelf": "display-classic", "lucky": true },
+    { "id": "newsreader", "family": "Newsreader", "shelf": "display-classic", "lucky": true },
+
+    { "id": "fraunces", "family": "Fraunces", "shelf": "display-trendy", "lucky": true },
+    { "id": "bricolage-grotesque", "family": "Bricolage Grotesque", "shelf": "display-trendy", "lucky": true },
+    { "id": "syne", "family": "Syne", "shelf": "display-trendy", "lucky": true },
+    { "id": "unbounded", "family": "Unbounded", "shelf": "display-trendy", "lucky": true },
+    { "id": "space-grotesk", "family": "Space Grotesk", "shelf": "display-trendy", "lucky": true },
+    { "id": "big-shoulders", "family": "Big Shoulders", "shelf": "display-trendy", "lucky": true, "note": "Picked as 'Big Shoulders Display'; Google Fonts merged the Display and Text cuts into one 'Big Shoulders' family with an opsz axis." },
+    { "id": "young-serif", "family": "Young Serif", "shelf": "display-trendy", "lucky": true },
+    { "id": "anton", "family": "Anton", "shelf": "display-trendy", "lucky": true },
+    { "id": "bebas-neue", "family": "Bebas Neue", "shelf": "display-trendy", "lucky": true },
+
+    { "id": "jetbrains-mono", "family": "JetBrains Mono", "shelf": "mono", "lucky": true },
+    { "id": "ibm-plex-mono", "family": "IBM Plex Mono", "shelf": "mono", "lucky": true },
+    { "id": "dm-mono", "family": "DM Mono", "shelf": "mono", "lucky": false, "note": "NASA brand: numbers and labels (Nov 2026)" },
+    { "id": "geist-mono", "family": "Geist Mono", "shelf": "mono", "lucky": true },
+    { "id": "space-mono", "family": "Space Mono", "shelf": "mono", "lucky": true },
+
+    { "id": "hanken-grotesk", "family": "Hanken Grotesk", "shelf": "compact-sans", "lucky": false },
+    { "id": "plus-jakarta-sans", "family": "Plus Jakarta Sans", "shelf": "compact-sans", "lucky": false },
+    { "id": "playfair-display", "family": "Playfair Display", "shelf": "display-classic", "lucky": false },
+    { "id": "cinzel", "family": "Cinzel", "shelf": "display-classic", "lucky": false },
+    { "id": "instrument-serif", "family": "Instrument Serif", "shelf": "display-classic", "lucky": false }
+  ],
+  "systemFallbacks": {
+    "about": "Local fonts the metric-matched fallback aliases stand on while a web font loads (the capsize / next/font method). Measured from this machine's C:/Windows/Fonts by build-library.mjs; metrics only, no files.",
+    "sans": { "family": "Arial", "local": ["Arial", "ArialMT"], "localItalic": ["Arial Italic", "Arial-ItalicMT"], "file": "C:/Windows/Fonts/arial.ttf" },
+    "serif": { "family": "Times New Roman", "local": ["Times New Roman", "TimesNewRomanPSMT"], "localItalic": ["Times New Roman Italic", "TimesNewRomanPS-ItalicMT"], "file": "C:/Windows/Fonts/times.ttf" },
+    "mono": { "family": "Courier New", "local": ["Courier New", "CourierNewPSMT"], "localItalic": ["Courier New Italic", "CourierNewPS-ItalicMT"], "file": "C:/Windows/Fonts/cour.ttf" }
+  }
+}

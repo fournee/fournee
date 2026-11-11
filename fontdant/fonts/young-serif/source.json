@@ -1,0 +1,30 @@
+{
+  "id": "young-serif",
+  "family": "Young Serif",
+  "category": "Serif",
+  "designers": [
+    "Bastien Sozeau"
+  ],
+  "variable": false,
+  "axes": [],
+  "staticStyles": [
+    "400"
+  ],
+  "files": [
+    {
+      "file": "young-serif-latin-400.woff2",
+      "weight": "400",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/youngserif/v2/3qTpojO2nS2VtkB3KtkQZ1t93kY.woff2",
+      "bytes": 26992
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Bastien Sozeau",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/youngserif/"
+  },
+  "fetched": "2026-11-08T19:36:09.377Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Young+Serif:wght@400&display=swap"
+}

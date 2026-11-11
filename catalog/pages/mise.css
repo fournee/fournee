@@ -1,0 +1,22 @@
+/* The Fournée catalog pages. Frosted and Fontdant-typed: --fr-* and --fd-* only, no literal colours or sizes. */
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fr-bg); color: var(--fr-text); font-family: var(--fd-face-text); font-size: var(--fd-step-md); line-height: 1.55; }
+a { color: var(--fr-accent-text); }
+main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-family: var(--fd-face-display); font-size: var(--fd-step-h-xl); line-height: 1.1; margin: 8px 0 8px; }
+h2 { font-family: var(--fd-face-display); font-size: var(--fd-step-h-md); margin: 32px 0 10px; }
+h3 { font-family: var(--fd-face-display); font-size: var(--fd-step-h-sm); margin: 0 0 4px; }
+.lede { color: var(--fr-muted); max-width: 70ch; }
+.muted { color: var(--fr-muted); }
+.small { font-size: var(--fd-step-sm); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.card { display: block; padding: 14px; border: 1px solid var(--fr-border); border-radius: 10px; background: var(--fr-surface); color: var(--fr-text); text-decoration: none; }
+a.card:hover { border-color: var(--fr-accent); }
+.card p { margin: 4px 0 0; }
+.num { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--fr-accent); color: var(--fr-button-text); font-size: var(--fd-step-sm); margin-right: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: var(--fd-step-sm); }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--fr-border); vertical-align: top; }
+th { color: var(--fr-muted); font-weight: var(--fd-weight-emph); position: sticky; top: var(--mise-nav-h, 0); background: var(--fr-bg); }
+.scroll { overflow-x: auto; }
+code { font-family: var(--fd-face-mono); font-size: var(--fd-step-sm); }
+.tag { display: inline-block; padding: 0 6px; border: 1px solid var(--fr-border); border-radius: 999px; font-size: var(--fd-step-xs); color: var(--fr-muted); }

@@ -1,0 +1,116 @@
+{
+  "version": "0.1.0",
+  "prefix": "fd",
+  "about": "The fontdant role list. Single source of truth: the CSS (dist/fontdant.css), the JS token object (dist/type-tokens.js), the checks and the panel all read from this file. Add a role, step, variant, mode or contract here and nowhere else.",
+  "groups": {
+    "core": "Always present. Every fontdant page uses these.",
+    "data": "Optional. Big tabular numerals on dashboards, gauges and KPI tiles."
+  },
+
+  "faces": {
+    "about": "The three standard face slots. Each carries the fit target its aliases are normalised to (proposal §5, regime B): the build emits one @font-face alias per font × slot with size-adjust = target ÷ (font metric ÷ UPM). Targets are Inter's own ratios (measured), so the default look renders at 100%. The default look itself lives in fonts/library-source.json.",
+    "display": { "label": "Display face", "use": "Hero lines, wordmarks, the two large heading steps.", "generic": "system-ui, sans-serif", "fit": { "metric": "cap-height", "target": 0.7275 }, "loading": "swap" },
+    "text":    { "label": "Text face",    "use": "Reading text, UI, captions, eyebrows, small headings.", "generic": "system-ui, -apple-system, 'Segoe UI', sans-serif", "fit": { "metric": "ex-height", "target": 0.5459 }, "loading": "swap" },
+    "mono":    { "label": "Mono face",    "use": "Code, terminal output, identifiers, lowercase eyebrows.", "generic": "ui-monospace, 'Cascadia Code', Consolas, monospace", "fit": { "metric": "ex-height", "matchFace": "text" }, "loading": "optional" }
+  },
+
+  "weights": {
+    "about": "Five weight dials. 600 is the house bold, 800 the display weight (repo audit §6).",
+    "regular": 400, "emph": 500, "title": 600, "bold": 700, "display": 800
+  },
+
+  "stepOrder": ["xs", "sm", "md", "lg", "h-sm", "h-md", "h-lg", "h-xl", "display"],
+  "defaultMode": "reading",
+  "scalingRange": [1, 1.25],
+  "modes": {
+    "dense": {
+      "label": "Dense",
+      "use": "Tools, consoles, admin. a dense console's ladder 12/13/14/15/16; body holds at 14px (F1).",
+      "steps": { "xs": "0.75rem", "sm": "0.8125rem", "md": "0.875rem", "lg": "0.9375rem", "h-sm": "1rem", "h-md": "1.125rem", "h-lg": "1.375rem", "h-xl": "1.75rem", "display": "2.25rem" },
+      "floors": { "any": 12, "body": 14, "body-sm": 14, "ui": 12, "ui-sm": 12 }
+    },
+    "reading": {
+      "label": "Reading",
+      "use": "Sites, docs, long form. Typical site ladders; fluid only for h-xl and display.",
+      "steps": { "xs": "0.75rem", "sm": "0.8125rem", "md": "0.9375rem", "lg": "1.0625rem", "h-sm": "1.1875rem", "h-md": "1.375rem", "h-lg": "1.75rem", "h-xl": "clamp(2rem, 1.5rem + 1.5vw, 2.5rem)", "display": "clamp(2.5rem, 1.5rem + 4vw, 4.75rem)" },
+      "floors": { "any": 12, "body": 16, "body-sm": 14, "ui": 14, "ui-sm": 13 }
+    }
+  },
+
+  "features": {
+    "about": "Boolean flags any role, step or variant may set.",
+    "tnum":   "font-variant-numeric: tabular-nums",
+    "case":   "text-transform: upper | lower | none",
+    "italic": "font-style: italic",
+    "strong": "one weight dial up"
+  },
+
+  "roles": [
+    { "name": "display", "group": "core", "label": "Display", "use": "Hero lines, wordmarks, empty-state titles.",
+      "face": "display", "size": "display", "weight": "display", "leading": 1.05, "tracking": "-0.02em", "loading": "swap" },
+
+    { "name": "heading", "group": "core", "label": "Heading", "use": "Section, card and dialog headings. Steps xl lg md sm; the embedded scope compresses them inside messages and cards.",
+      "face": "text", "weight": "title", "leading": 1.2, "tracking": "0", "defaultStep": "md", "loading": "swap",
+      "steps": {
+        "xl": { "size": "h-xl", "face": "display", "tracking": "-0.01em" },
+        "lg": { "size": "h-lg", "face": "display", "tracking": "-0.01em" },
+        "md": { "size": "h-md", "tracking": { "dense": "0", "reading": "-0.01em" } },
+        "sm": { "size": "h-sm" }
+      },
+      "scopes": { "embedded": { "xl": { "size": "h-md" }, "lg": { "size": "h-sm" }, "md": { "size": "lg" }, "sm": { "size": "lg" } } } },
+
+    { "name": "body", "group": "core", "label": "Body", "use": "Reading text, chat messages, lists; table cells use body-sm with tnum. Never below 14px, even in dense (F1).",
+      "face": "text", "size": { "dense": "md", "reading": "lg" }, "weight": "regular", "leading": 1.5, "tracking": "0",
+      "measure": "65ch", "align": "start", "loading": "optional",
+      "steps": { "sm": { "size": { "dense": "md", "reading": "md" } } } },
+
+    { "name": "ui", "group": "core", "label": "UI", "use": "Buttons, labels, inputs, nav, tabs, badges, the composer. One role; variants button, nav, input (F2).",
+      "face": "text", "size": { "dense": "sm", "reading": "md" }, "weight": "title", "leading": 1.3, "tracking": "0", "tnum": true, "loading": "optional",
+      "steps": { "sm": { "size": { "dense": "xs", "reading": "sm" } } },
+      "variants": {
+        "button": { "weight": "title" },
+        "nav":    { "weight": "emph" },
+        "input":  { "weight": "regular", "coarseFloor": "1rem" }
+      } },
+
+    { "name": "caption", "group": "core", "label": "Caption", "use": "Meta, hints, timestamps, status lines, source chips, fine print. Usually in frosting's muted colour.",
+      "face": "text", "size": { "dense": "xs", "reading": "sm" }, "weight": "regular", "leading": 1.4, "tracking": "0", "tnum": true, "loading": "optional" },
+
+    { "name": "eyebrow", "group": "core", "label": "Eyebrow", "use": "Kicker above a heading, table header, section label, chip text. Variants upper (default) and lower (mono, lowercase).",
+      "face": "text", "size": "xs", "weight": "title", "leading": 1.2, "tracking": "0.08em", "case": "upper", "loading": "optional",
+      "variants": {
+        "upper": { },
+        "lower": { "face": "mono", "case": "lower", "tracking": "0.02em" }
+      } },
+
+    { "name": "mono", "group": "core", "label": "Mono", "use": "Code inline and block, terminal output, diffs, identifiers. Steps block (default) and inline (em, relative to the surrounding text).",
+      "face": "mono", "size": { "dense": "sm", "reading": "md" }, "weight": "regular", "leading": 1.5, "tracking": "0", "defaultStep": "block", "loading": "optional",
+      "steps": {
+        "block":  { },
+        "inline": { "size": "0.9em" }
+      } },
+
+    { "name": "metric", "group": "data", "label": "Metric", "use": "Big tabular numerals: gauges, KPI tiles, progress amounts, deck numerals. Any step from lg to display.",
+      "face": "text", "size": "h-lg", "weight": "title", "leading": 1, "tracking": "0", "tnum": true, "loading": "swap" }
+  ],
+
+  "contracts": [
+    { "id": "T1",  "label": "Relative units",            "level": "hard", "source": "WCAG 1.4.4",            "rule": "every size is rem or em, or clamp() containing a rem term" },
+    { "id": "T2",  "label": "Unitless leading, em spacing", "level": "hard", "source": "WCAG 1.4.12",       "rule": "leading is a unitless number; tracking is in em" },
+    { "id": "T3",  "label": "Body leading",              "level": "hard", "source": "WCAG 1.4.8 / 1.4.12",  "role": "body", "property": "leading", "min": 1.5 },
+    { "id": "T4",  "label": "Measure",                   "level": "hard", "source": "WCAG 1.4.8",           "role": "body", "property": "measure", "max": 80, "warnBand": [45, 75] },
+    { "id": "T5",  "label": "Floors",                    "level": "hard", "source": "Q4, F1; Apple HIG 11pt; console floor (12)", "rule": "per-mode floors in modes.*.floors, checked at the minimum scaling" },
+    { "id": "T6",  "label": "Order",                     "level": "hard", "source": "console fit",          "rule": "steps strictly increasing within a mode" },
+    { "id": "T7",  "label": "Weight floor",              "level": "warn", "source": "Apple HIG; WCAG 1.4.3 note", "rule": "weight < 400 below 24px warns; weight < 300 below 24px is hard" },
+    { "id": "T8",  "label": "Uppercase tracking",        "level": "warn", "source": "Butterick",            "rule": "case upper implies tracking >= 0.05em" },
+    { "id": "T9",  "label": "Tracking sign",             "level": "hard", "source": "Apple SF tracking table", "rule": "negative tracking only when size >= 20px" },
+    { "id": "T10", "label": "Leading bands",             "level": "warn", "source": "convention",           "bands": { "heading": [1.15, 1.35], "display": [1.0, 1.25], "ui": [1.3, null], "mono": [1.4, null] } },
+    { "id": "T11", "label": "Swap normalisation",        "level": "warn", "source": "Beier 2012",           "needs": "font-metrics", "rule": "face change with x-height ratio delta > 10% requires a fit target" },
+    { "id": "T12", "label": "Mono matches body",         "level": "warn", "source": "VS Code, chat kits",   "needs": "font-metrics", "rule": "adjusted x-heights of mono and body within 5%" },
+    { "id": "T13", "label": "Rendered survival",         "level": "hard", "source": "WCAG 1.4.12, 1.4.10, 1.4.4", "needs": "render", "rule": "survives the 1.4.12 overrides and reflows at 320px; zoom never blocked" },
+    { "id": "T14", "label": "Weight availability",       "level": "hard", "source": "font mechanics",       "needs": "font-metrics", "rule": "the role's weight exists in the face; never synthesised" },
+    { "id": "T15", "label": "Composer floor",            "level": "hard", "source": "iOS zoom; LibreChat",  "role": "ui", "variant": "input", "property": "coarseFloor", "minPx": 16 },
+    { "id": "T16", "label": "Paragraph spacing",         "level": "warn", "source": "WCAG 1.4.8",           "rule": "body paragraph space >= 1.5 x leading (derived, always holds)" },
+    { "id": "T17", "label": "Body styling",              "level": "warn", "source": "WCAG 1.4.8; dyslexia guidance", "rule": "body is not justified, not italic, not uppercase by default" }
+  ]
+}

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Frosting catalog</title>
+<link rel="stylesheet" href="frosting.css">
+<link rel="stylesheet" href="panel.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fr-bg); color: var(--fr-text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header:not(.mise-nav) { position: sticky; top: var(--mise-nav-h, 0); z-index: 2; background: var(--fr-surface); border-bottom: 1px solid var(--fr-border); padding: 10px 16px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  header:not(.mise-nav) h1 { font-size: 16px; margin: 0; } header:not(.mise-nav) .v { color: var(--fr-muted); font-size: 12px; }
+  header:not(.mise-nav) nav { display: flex; gap: 12px; flex-wrap: wrap; margin-left: auto; font-size: 13px; }
+  header:not(.mise-nav) nav a { color: var(--fr-accent-text); text-decoration: none; }
+  main { max-width: 1080px; margin: 0 auto; padding: 16px; }
+  section { margin: 28px 0; padding: 18px; background: var(--fr-surface); border: 1px solid var(--fr-border); border-radius: 12px; }
+  h2 { margin: 0 0 6px; font-size: 20px; } h2 small { font-weight: 400; color: var(--fr-muted); font-size: 13px; margin-left: 8px; }
+  .lead { color: var(--fr-muted); margin: 0 0 14px; }
+  code, pre { font: 12.5px/1.45 ui-monospace, Consolas, monospace; }
+  pre { background: var(--fr-bg); border: 1px solid var(--fr-border); border-radius: 8px; padding: 10px 12px; overflow: auto; margin: 10px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; } th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--fr-border); vertical-align: top; }
+  th { color: var(--fr-muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .sw { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; border: 1px solid var(--fr-border); margin-right: 6px; }
+  .pill { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 999px; background: var(--fr-accent-soft); color: var(--fr-accent-text); }
+  /* the sample: what a look does to real components */
+  .sample { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+  .card { background: var(--fr-bg); border: 1px solid var(--fr-border); border-radius: 10px; padding: 12px; }
+  .card h4 { margin: 0 0 6px; font-size: 13px; } .card p { margin: 0 0 8px; color: var(--fr-muted); font-size: 13px; }
+  .btn { font: inherit; padding: 7px 12px; border-radius: 8px; border: 0; background: var(--fr-button); color: var(--fr-button-text); cursor: pointer; }
+  .meter { height: 8px; border-radius: 4px; background: var(--fr-progress-track); overflow: hidden; margin: 8px 0; } .meter > i { display: block; height: 100%; width: 62%; background: var(--fr-progress-fill); }
+  .dots { display: flex; gap: 12px; font-size: 13px; } .dots span::before { content: "●"; margin-right: 5px; }
+  .dots .ok::before { color: var(--fr-ok); } .dots .warn::before { color: var(--fr-warn); } .dots .bad::before { color: var(--fr-bad); }
+  .big { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--fr-series-1); } .big + .big { color: var(--fr-series-2); }
+  canvas { width: 100%; height: 56px; display: block; }
+  a { color: var(--fr-accent-text); }
+  .parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+  .part { background: var(--fr-bg); border: 1px solid var(--fr-border); border-radius: 10px; padding: 12px; }
+  .part h4 { margin: 0 0 4px; font-size: 14px; } .part p { margin: 0; color: var(--fr-muted); font-size: 13px; }
+  .part label { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: 13px; }
+  .part.std { border-color: var(--fr-accent); }
+  .recipe { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  .recipe pre { flex: 1; margin: 0; min-width: 260px; }
+  .toggle { font: inherit; background: transparent; color: var(--fr-text); border: 1px solid var(--fr-border); border-radius: 8px; padding: 5px 10px; cursor: pointer; }
+</style>
+<link rel="stylesheet" href="../assets/fontdant-fonts.css">
+<link rel="stylesheet" href="../assets/fontdant.css">
+<link rel="stylesheet" href="../nav.css">
+<script src="../nav.js"></script>
+</head>
+<body>
+<header>
+  <h1>🧁 Frosting</h1><span class="v" id="ver"></span>
+  <nav><a href="#rule">Rule</a><a href="#roles">Roles</a><a href="#sample">Sample</a><a href="#panel">Panel</a><a href="#parts">Parts</a><a href="#recipe">Recipe</a></nav>
+</header>
+<main>
+  <section id="rule">
+    <h2>The rule <small>Part A</small></h2>
+    <p class="lead">Never hard-code a colour. Name its role. A look is just a set of values for the roles, so swapping it is one <code>setProperty</code> per role.</p>
+    <pre>.card    { background: var(--fr-surface); color: var(--fr-text); }
+.dot.up  { color: var(--fr-ok); }
+.chart   { stroke: var(--fr-series-1); }</pre>
+    <p class="lead">This page is frosted with the same variables. Everything you see below, including the panel, follows whatever look you pick.</p>
+  </section>
+
+  <section id="roles">
+    <h2>The roles <small>from tokens.json · live values</small></h2>
+    <p class="lead">The role list is data; the CSS, the gallery and the readability checks all read it. Swatches show the look currently applied to this page.</p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Role</th><th>Group</th><th>Used for</th><th>Now</th><th>Light</th><th>Dark</th></tr></thead><tbody id="roleRows"></tbody></table></div>
+  </section>
+
+  <section id="sample">
+    <h2>What a look does <small>sample components</small></h2>
+    <div class="sample">
+      <div class="card"><h4>A card on the background</h4><p>Quiet text in <code>muted</code>. A <a href="#">link in accent-text</a>.</p><button class="btn">Primary button</button></div>
+      <div class="card"><h4>Progress</h4><div class="meter"><i></i></div><div class="dots"><span class="ok">up</span><span class="warn">soon</span><span class="bad">down</span></div></div>
+      <div class="card"><h4>Numbers &amp; series</h4><div class="big">1.2 KB/s</div><div class="big">2.5 KB/s</div><canvas id="chart"></canvas></div>
+    </div>
+    <p class="lead" style="margin-top:12px">Readability now: <span id="badge"></span></p>
+  </section>
+
+  <section id="panel">
+    <h2>The panel <small>Parts B · C · D, live</small></h2>
+    <p class="lead">Pick a ready-made look, roll a lucky one, lock a background and rebuild around it, tune any role by hand. Favorites and the published look persist in this browser (Part D, localStorage adapter).</p>
+    <div id="mount"></div>
+  </section>
+
+  <section id="parts">
+    <h2>The parts</h2>
+    <p class="lead">Standard frosting is A + B + C + D. Tick what a project needs; the recipe updates below.</p>
+    <div class="parts" id="partList"></div>
+  </section>
+
+  <section id="recipe">
+    <h2>Recipe</h2>
+    <p class="lead">Say this to Claude at the start of a project, or paste it into its brief.</p>
+    <div class="recipe"><pre id="recipeOut"></pre><button class="btn" id="copy">Copy</button></div>
+  </section>
+</main>
+
+<script src="tokens.js"></script>
+<script src="readability.js"></script>
+<script src="fills.js"></script>
+<script src="gallery.js"></script>
+<script src="standards.js"></script>
+<script src="store.js"></script>
+<script src="panel.js"></script>
+<script>
+(function () {
+  var T = window.FrostingTokens, C = window.FrostingColor, S = window.FrostingStore, P = window.FrostingPanel;
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  document.getElementById('ver').textContent = 'v' + T.version + ' · ' + T.roles.length + ' roles · ' + T.contracts.length + ' contracts';
+
+  /* roles table + badge, refreshed whenever the look changes */
+  var cs = getComputedStyle(document.documentElement);
+  function now(role) { return cs.getPropertyValue('--' + T.prefix + '-' + role).trim(); }
+  function refresh(draft) {
+    document.getElementById('roleRows').innerHTML = T.roles.map(function (r) {
+      var v = draft ? draft[r.name] : now(r.name);
+      return '<tr><td><code>--' + T.prefix + '-' + r.name + '</code></td><td><span class="pill">' + r.group + '</span></td><td>' + esc(r.use) + '</td>' +
+        '<td><span class="sw" style="background:' + v + '"></span><code>' + v + '</code></td><td><span class="sw" style="background:' + r.light + '"></span></td><td><span class="sw" style="background:' + r.dark + '"></span></td></tr>';
+    }).join('');
+    var theme = draft || {}; if (!draft) T.roles.forEach(function (r) { theme[r.name] = now(r.name); });
+    var res = C.check(theme), bad = res.filter(function (x) { return !x.ok; });
+    document.getElementById('badge').innerHTML = bad.length ? '<span class="fr-tag fr-tag--warn">Hard to read</span> ' + bad.map(function (x) { return esc(x.label) + ' ' + x.ratio + ':1'; }).join(' · ')
+      : '<span class="fr-tag fr-tag--ok">Readable ✓</span> all ' + res.length + ' checks pass';
+    drawChart(theme);
+  }
+  function drawChart(theme) {
+    var c = document.getElementById('chart'), d = devicePixelRatio || 1, w = c.clientWidth, h = 56; c.width = w * d; c.height = h * d;
+    var g = c.getContext('2d'); g.scale(d, d);
+    [['series-1', 0.55, 0.9], ['series-2', 0.35, 1.7]].forEach(function (s) {
+      g.beginPath(); for (var x = 0; x <= w; x += 4) { var y = h - 6 - (Math.sin(x / 28 * s[2]) * 0.5 + 0.5) * h * s[1]; x ? g.lineTo(x, y) : g.moveTo(x, y); }
+      g.strokeStyle = theme[s[0]]; g.lineWidth = 2; g.stroke();
+    });
+  }
+
+  /* the panel, backed by localStorage so favorites + the published look persist in this browser */
+  var mode = document.documentElement.getAttribute('data-theme');
+  var store = S.createStore(S.localStorageAdapter(mode === 'dark' ? 'frosting-catalog' : 'frosting-catalog-light'), mode === 'dark' ? T.dark : T.light);
+  P.mount(document.getElementById('mount'), { store: store, onChange: refresh }).ready.then(function () { refresh(); });
+  // light / dark comes from the Fournée bar (catalog nav.js); each mode keeps its own saved look
+  window.addEventListener('mise-theme', function (e) {
+    mode = e.detail;
+    T.roles.forEach(function (r) { document.documentElement.style.removeProperty('--' + T.prefix + '-' + r.name); });
+    store = S.createStore(S.localStorageAdapter(mode === 'dark' ? 'frosting-catalog' : 'frosting-catalog-light'), mode === 'dark' ? T.dark : T.light);
+    P.mount(document.getElementById('mount'), { store: store, onChange: refresh }).ready.then(function () { refresh(); });
+  });
+
+  /* parts + recipe */
+  var PARTS = [
+    ['A', 'Tokens', 'The roles as CSS variables, light and dark defaults, the build.', true],
+    ['B', 'Readability', 'Contrast contracts, fit(), check(), the badge.', true],
+    ['C', 'Gallery', 'Ready-made looks, 🎲 lucky, build-around-this-background.', true],
+    ['D', 'Store', 'Draft, published look, favorites, with a storage adapter: JSON file, localStorage, HTTP, pywebview.', true],
+    ['E', 'Generators', 'Image → palette, remix chips, describe-a-mood (LLM). Not ported yet.', false],
+    ['F', 'Type dials', 'Sizes and weights as part of a look. Not ported yet.', false],
+    ['G', 'Reserved roles', 'Roles a look may never reuse (a console app\'s rule that some colours mean one thing only). Not ported yet.', false],
+    ['H', 'Motion', 'Effect presets with a schema-driven editor (an effects editor). Separate from paint. Not ported yet.', false],
+  ];
+  var ADAPTERS = ['localStorage', 'json-file (pywebview)', 'http (Worker/D1)', 'memory'];
+  var list = document.getElementById('partList');
+  list.innerHTML = PARTS.map(function (p) {
+    return '<div class="part' + (p[3] ? ' std' : '') + '"><h4>' + p[0] + ' · ' + p[1] + (p[3] ? ' <span class="pill">standard</span>' : '') + '</h4><p>' + p[2] + '</p>' +
+      '<label><input type="checkbox" data-part="' + p[0] + '"' + (p[3] ? ' checked' : '') + '> include</label></div>';
+  }).join('') + '<div class="part"><h4>Storage adapter</h4><p>Where the look and favorites live.</p><label><select id="adapter">' + ADAPTERS.map(function (a) { return '<option>' + a + '</option>'; }).join('') + '</select></label></div>';
+  function recipe() {
+    var parts = Array.prototype.map.call(list.querySelectorAll('[data-part]:checked'), function (i) { return i.getAttribute('data-part'); });
+    var std = ['A', 'B', 'C', 'D'].every(function (x) { return parts.indexOf(x) >= 0; }), extra = parts.filter(function (x) { return 'ABCD'.indexOf(x) < 0; });
+    var line = (std ? 'standard frosting' : 'frosting parts ' + parts.join(' ')) + (std && extra.length ? ' + ' + extra.join(' ') : '') + ', storage=' + document.getElementById('adapter').value + ', prefix=' + T.prefix;
+    document.getElementById('recipeOut').textContent = line + '\n\nfrom github.com/fournee/fournee (frosting/) v' + T.version + ' — include dist/frosting.css, dist/tokens.js' +
+      (parts.indexOf('B') >= 0 ? ', src/readability.js' : '') + (parts.indexOf('C') >= 0 ? ', src/gallery.js' : '') + (parts.indexOf('D') >= 0 ? ', src/store.js' : '') + (parts.indexOf('C') >= 0 ? ', src/panel.js + panel.css' : '');
+  }
+  list.addEventListener('change', recipe); recipe();
+  document.getElementById('copy').addEventListener('click', function () { navigator.clipboard.writeText(document.getElementById('recipeOut').textContent); this.textContent = 'Copied'; var b = this; setTimeout(function () { b.textContent = 'Copy'; }, 1500); });
+})();
+</script>
+</body>
+</html>

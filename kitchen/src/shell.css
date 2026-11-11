@@ -1,0 +1,125 @@
+/* kitchen · panel shell styles. Frosted: --fr-* roles and derived colours only, no literal colours. */
+.mise-shell { display: grid; gap: 12px; }
+.mise-shell__bar { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: end; border-bottom: 1px solid var(--fr-border); }
+.mise-shell__tabs { display: flex; gap: 4px; }
+.mise-shell__tab {
+  font: inherit; font-weight: 600; padding: 8px 14px; margin-bottom: -1px; cursor: pointer;
+  background: transparent; color: var(--fr-muted); border: 1px solid transparent; border-bottom: 2px solid transparent; border-radius: 6px 6px 0 0;
+}
+.mise-shell__tab:hover { color: var(--fr-text); }
+.mise-shell__tab[aria-selected="true"] { color: var(--fr-text); border-bottom-color: var(--fr-accent); }
+.mise-shell__tab[aria-disabled="true"] { opacity: .7; }
+.mise-shell__tab:focus-visible { outline: 2px solid var(--fr-accent); outline-offset: 2px; }
+.mise-shell__note { color: var(--fr-muted); margin: 0; }
+.mise-shell__badge { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 999px; font-size: .8em; font-weight: 700; line-height: 1.5; background: var(--fr-surface); color: var(--fr-muted); border: 1px solid var(--fr-border); }
+.mise-shell__badge[data-level="bad"] { color: var(--fr-text); border-color: var(--fr-bad); }
+.mise-shell__badge[data-level="warn"] { color: var(--fr-text); border-color: var(--fr-warn); }
+.mise-shell__badge[data-level="ok"] { color: var(--fr-text); border-color: var(--fr-ok); }
+.mise-shell__tools { margin-left: auto; align-self: center; padding-bottom: 4px; position: relative; }
+/* Sprinkles (kitchen/src/sprinkles.js) */
+.mise-spr { display: flex; align-items: center; gap: 8px; font-size: .9em; }
+.mise-spr__switch { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--fr-text); font-weight: 600; }
+.mise-spr__switch input { accent-color: var(--fr-accent); width: 1.1em; height: 1.1em; }
+.mise-spr__pending { font-size: .85em; color: var(--fr-muted); font-style: italic; }
+.mise-spr__pending[hidden] { display: none; }
+.mise-spr__cmp { font: inherit; background: transparent; border: 1px solid var(--fr-border); border-radius: 6px; padding: 2px 8px; color: var(--fr-text); cursor: pointer; }
+.mise-spr__cmp:focus-visible, .mise-spr__switch input:focus-visible { outline: 2px solid var(--fr-accent); outline-offset: 2px; }
+.mise-spr__pop { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; width: min(560px, 92vw); padding: 12px; border-radius: 10px; background: var(--fr-bg); color: var(--fr-text); border: 1px solid var(--fr-border); box-shadow: 0 8px 24px rgb(0 0 0 / .18); }
+.mise-spr__lede { margin: 0 0 10px; color: var(--fr-muted); }
+.mise-spr__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 480px) { .mise-spr__pair { grid-template-columns: 1fr; } }
+.mise-spr__mini { border: 1px solid; border-radius: 8px; padding: 10px; display: grid; gap: 4px; }
+.mise-spr__mini p { margin: 0; padding: 2px 4px; border-radius: 4px; }
+.mise-spr__ratio { font-size: .85em; font-variant-numeric: tabular-nums; }
+.mise-contrast[aria-pressed="true"] { outline: 2px solid var(--fr-accent); }
+.mise-shell__badge[hidden] { display: none; }
+/* steps (numbered tabs) and tab tips */
+.mise-shell__tab { position: relative; }
+.mise-shell__tip { display: none; position: absolute; z-index: 30; left: 0; top: calc(100% + 6px); width: max-content; max-width: 220px; padding: 6px 10px; border-radius: 6px;
+  background: var(--fr-tip-bg); color: var(--fr-tip-text); font-weight: 400; font-size: .85em; line-height: 1.35; text-align: left; white-space: normal; pointer-events: none; }
+.mise-shell__tab:hover .mise-shell__tip, .mise-shell__tab:focus-visible .mise-shell__tip { display: block; }
+.mise-shell__tab:last-child .mise-shell__tip { left: auto; right: 0; }
+.mise-shell--steps .mise-shell__tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); flex: 1 1 100%; gap: 0; }
+.mise-shell--steps .mise-shell__tab { padding: 8px 4px 6px; display: grid; grid-template-columns: auto auto; justify-content: center; align-items: center; gap: 0 6px; }
+.mise-shell--steps .mise-shell__badge { grid-column: 1 / -1; justify-self: center; margin: 2px 0 0; }
+.mise-shell__num { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; border-radius: 50%; border: 1px solid var(--fr-border); font-size: .8em; }
+.mise-shell__tab[aria-selected="true"] .mise-shell__num { background: var(--fr-accent); border-color: var(--fr-accent); color: var(--fr-button-text); }
+.mise-shell__label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* a section's own explanation: an (i) that shows its tip on hover, focus or tap */
+.mise-tipi { position: relative; display: inline-grid; place-items: center; width: 1.25em; height: 1.25em; border-radius: 50%; border: 1px solid var(--fr-muted); color: var(--fr-muted);
+  background: transparent; font: inherit; font-size: .75em; font-weight: 700; line-height: 1; cursor: help; padding: 0; vertical-align: middle; text-transform: none; letter-spacing: 0; }
+.mise-tipi > span { display: none; position: absolute; z-index: 30; left: 50%; transform: translateX(-50%); top: calc(100% + 6px); width: max-content; max-width: 220px; padding: 6px 10px; border-radius: 6px;
+  background: var(--fr-tip-bg); color: var(--fr-tip-text); font-weight: 400; font-size: 1.1em; line-height: 1.35; text-align: left; white-space: normal; pointer-events: none; }
+.mise-tipi:hover > span, .mise-tipi:focus-visible > span, .mise-tipi:focus > span { display: block; }
+/* the Fournée steps (kitchen/src/steps.js): Next / back, Spec and Expo */
+.mise-steps__nav { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--fr-border); }
+.mise-shell__badge { max-width: 9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+.mise-spec, .mise-expo { display: grid; gap: 10px; color: var(--fr-text); font-size: 14px; line-height: 1.45; }
+.mise-spec h3, .mise-expo h3 { display: flex; align-items: center; gap: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--fr-muted); margin: 10px 0 0; }
+.mise-spec [hidden], .mise-expo [hidden] { display: none; }
+.mise-spec__now { display: grid; gap: 2px; padding: 10px 12px; border-radius: 8px; background: var(--fr-accent-faint); border: 1px solid var(--fr-accent); }
+.mise-spec__now[data-level="warn"] { border-color: var(--fr-warn); }
+.mise-spec__eyebrow, .mise-spec__note, .mise-spec__hint, .mise-spec__detail, .mise-spec__why, .mise-spec__more, .mise-expo__against, .mise-expo__hint { color: var(--fr-muted); font-size: 13px; }
+.mise-spec__now b { font-size: 16px; }
+.mise-spec__status { font-weight: 600; }
+.mise-spec__probs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.mise-spec__probs > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 6px; background: var(--fr-surface); border-left: 4px solid var(--fr-bad); }
+.mise-spec__probs > li.mise-spec__more { border-left-color: var(--fr-border); display: block; }
+.mise-spec__probs b { display: block; }
+.mise-spec__detail { display: block; overflow-wrap: anywhere; }
+.mise-spec__sample { display: inline-block; margin-top: 4px; padding: 3px 8px; border: 1px solid var(--fr-border); border-radius: 4px; line-height: 1.3; }
+.mise-spec__ok { margin: 0; color: var(--fr-text); }
+.mise-spec__acts, .mise-spec__try, .mise-expo__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mise-spec__try select { font: inherit; font-size: 13px; padding: 5px 8px; border: 1px solid var(--fr-control-border); border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); max-width: 100%; }
+.mise-spec__seg { display: inline-flex; gap: 4px; }
+.mise-spec__fit { padding: 10px 12px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); display: grid; gap: 6px; }
+.mise-spec__fit p { margin: 0; }
+.mise-spec__changes { margin: 0; padding-left: 18px; }
+.mise-spec__sw { display: inline-block; width: 11px; height: 11px; border: 1px solid var(--fr-border); border-radius: 2px; vertical-align: -1px; margin-right: 3px; }
+.mise-spec__left { color: var(--fr-bad); }
+.mise-spec__cmp { display: grid; gap: 10px; padding: 12px; border: 2px solid var(--fr-accent); border-radius: 10px; background: var(--fr-bg); animation: mise-slide .18s ease-out; }
+@keyframes mise-slide { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .mise-spec__cmp { animation: none; } }
+.mise-spec__cmphead { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.mise-spec__cmphead b { font-size: 16px; }
+.mise-spec__table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.mise-spec__table th, .mise-spec__table td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--fr-border); vertical-align: top; }
+.mise-spec__table th { color: var(--fr-muted); font-weight: 600; }
+.mise-spec__table tr.is-diff td:last-child { font-weight: 700; color: var(--fr-text); }
+.mise-spec__dot { color: var(--fr-warn); }
+.mise-spec__vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.mise-spec__spr { display: grid; gap: 6px; }
+.mise-spec__sprbox { position: relative; }
+.mise-spec__sprbox .mise-spr__pop { position: static; width: auto; margin-top: 8px; box-shadow: none; }
+.mise-spec__spr.is-flash { outline: 3px solid var(--fr-warn); outline-offset: 4px; border-radius: 6px; }
+.mise-spec__flash, .mise-expo__flash { margin: 0; font-size: 13px; }
+.mise-spec__flash:empty, .mise-expo__flash:empty { display: none; }
+.mise-expo__flash.is-error { color: var(--fr-bad); }
+.mise-expo__against { margin: 0; }
+.mise-expo__send { display: grid; gap: 8px; padding: 12px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); }
+.mise-expo__send p { margin: 0; }
+.mise-expo__pending { font-weight: 600; }
+/* steps: a tip spans the whole tab bar, so it never runs off a phone screen */
+.mise-shell--steps .mise-shell__bar { position: relative; }
+.mise-shell--steps .mise-shell__tab { position: static; }
+.mise-shell--steps .mise-shell__tip, .mise-shell--steps .mise-shell__tab:last-child .mise-shell__tip { left: 0; right: 0; width: auto; max-width: none; }
+/* narrow panels: stack the number over the name so names never truncate */
+@media (max-width: 560px) {
+  .mise-shell--steps .mise-shell__tab { grid-template-columns: 1fr; justify-items: center; gap: 2px; padding: 6px 2px; }
+  .mise-shell--steps .mise-shell__label { overflow: visible; }
+}
+/* touch screens: a tap would leave the tip stuck over the step, so there it shows while the tab is held */
+@media (hover: none) {
+  .mise-shell__tab:hover .mise-shell__tip { display: none; }
+  .mise-shell__tab:active .mise-shell__tip { display: block; }
+}
+/* Expo: Take it with you (handoff: true) */
+.mise-expo__handoff { padding: 10px 12px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); }
+.mise-expo__handoff > summary { cursor: pointer; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.mise-expo__handoff[open] > summary { margin-bottom: 8px; }
+.mise-expo__handoff h4 { margin: 12px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--fr-muted); }
+.mise-expo__name { display: flex; align-items: center; gap: 8px; }
+.mise-expo__name input { font: inherit; padding: 4px 8px; border: 1px solid var(--fr-control-border); border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); min-width: 0; flex: 1 1 12em; }
+.mise-expo__summary { margin: 0; padding: 8px 10px; border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); border: 1px solid var(--fr-border); white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--fd-face-mono, ui-monospace, Consolas, monospace); font-size: var(--fd-step-xs, 12px); line-height: 1.5; }
+.mise-expo__prompt { width: 100%; margin-top: 8px; padding: 8px; border-radius: 6px; border: 1px solid var(--fr-control-border); background: var(--fr-bg); color: var(--fr-text); font-family: var(--fd-face-mono, ui-monospace, Consolas, monospace); font-size: var(--fd-step-xs, 12px); line-height: 1.45; resize: vertical; box-sizing: border-box; }
+.mise-expo__handoff input[type=file] { max-width: 100%; color: var(--fr-text); }

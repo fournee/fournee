@@ -1,0 +1,37 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: the_problem
+    attributes:
+      label: The problem
+      description: What problem are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed solution
+      description: How do you suggest we solve this?
+    validations:
+      required: true
+  - type: dropdown
+    id: which_part
+    attributes:
+      label: Which part?
+      description: Which component or system is this for?
+      options:
+        - Frosting (colour)
+        - Fontdant (type)
+        - Kitchen (panel, store, the pass)
+        - Delivery (exports)
+        - Catalog
+        - Not sure
+  - type: checkboxes
+    id: role_reminder
+    attributes:
+      label: Role Description Reminder
+      description: If this adds a new role, I've described what the role is for, not what colour or font it should be.
+      options:
+        - I have described the role's purpose (not styling).

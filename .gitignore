@@ -1,0 +1,32 @@
+node_modules/
+.wrangler/
+frosting/site/
+kitchen/test/out/
+delivery/test/out/
+__pycache__/
+*.pyc
+catalog/site/
+
+# secrets / local config (machine-specific settings go in .env; see .env.example)
+# your own hosting config (template: catalog/wrangler.example.jsonc)
+catalog/wrangler.jsonc
+.env
+.env.*
+!.env.example
+.dev.vars
+.claude/settings.local.json
+
+*.decisions.json
+
+# test + tool output
+playwright-report/
+test-results/
+coverage/
+*.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

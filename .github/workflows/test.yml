@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            frosting/package-lock.json
+            fontdant/package-lock.json
+            delivery/package-lock.json
+      - name: Install
+        run: |
+          npm --prefix frosting ci
+          npm --prefix fontdant ci
+          npm --prefix delivery ci
+          npx --prefix fontdant playwright install --with-deps chromium firefox
+      - name: Test every part
+        run: npm test
+      - name: Test the catalog
+        run: npm run test:catalog
+      - name: Built files are up to date
+        run: git diff --exit-code -- '*/dist/*' || (echo "::error::dist/ differs from a fresh build. Run npm run build and commit the result." && exit 1)

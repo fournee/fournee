@@ -1,0 +1,46 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: Describe the bug in detail.
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Provide a step-by-step guide to trigger the bug.
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behaviour
+    attributes:
+      label: Expected behaviour
+      description: What did you expect to happen?
+  - type: dropdown
+    id: which_part
+    attributes:
+      label: Which part?
+      description: Which component or system is affected?
+      options:
+        - Frosting (colour)
+        - Fontdant (type)
+        - Kitchen (panel, store, the pass)
+        - Delivery (exports)
+        - Catalog
+        - Not sure
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, and Node version.
+  - type: textarea
+    id: recipe_json
+    attributes:
+      label: recipe.json (if relevant)
+      description: Paste the relevant JSON snippet here.
+      render: json

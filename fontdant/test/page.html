@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>fontdant fit measurement</title>
+<script>
+  // Cumulative layout shift, recorded from the very first frame.
+  window.__cls = 0;
+  try { new PerformanceObserver(function (l) { l.getEntries().forEach(function (e) { if (!e.hadRecentInput) window.__cls += e.value; }); }).observe({ type: 'layout-shift', buffered: true }); } catch (e) {}
+</script>
+<link rel="stylesheet" href="/dist/fontdant.css">
+<script src="/dist/type-tokens.js"></script>
+<script src="/dist/library.js"></script>
+<script src="/src/fontface.js"></script>
+<script>
+  // ?slot=display&faces=inter,fraunces,anton  → per face: the fitted alias and a raw (size-adjust 100%) control alias,
+  //                                             measured as cap (display) or x (text, mono) height, line boxes, advance
+  // ?cls=1                                    → the default look rendered as a page; reports layout shift
+  var P = new URLSearchParams(location.search);
+  var slot = P.get('slot') || 'display', faces = (P.get('faces') || '').split(',').filter(Boolean), cls = P.get('cls') === '1';
+  var F = window.FontdantFonts, L = window.FontdantLibrary;
+  var css = '', stacks = {}, rawStacks = {};
+  if (cls) {
+    var out = F.faceCss({ faces: L.defaultLook }, { baseUrl: '/fonts' }); css = out.css;
+    css += '\n:root{--fd-face-display:' + out.vars.display + ';--fd-face-text:' + out.vars.text + ';--fd-face-mono:' + out.vars.mono + '}';
+  } else {
+    faces.forEach(function (id) {
+      var b = F.faceBlocks(id, slot, { baseUrl: '/fonts', display: 'block' });
+      css += b.css + '\n';
+      // control: the same files with no size-adjust
+      css += b.css.split('\n\n')[0].replace(/@font-face \{[\s\S]*?\}/g, function (block) { return block.indexOf('local(') >= 0 ? '' : block.replace(b.alias, b.alias + ' raw').replace(/size-adjust: [^;]+;/, 'size-adjust: 100%;'); }) + '\n';
+      stacks[id] = '"' + b.alias + '"'; rawStacks[id] = '"' + b.alias + ' raw"';
+    });
+  }
+  var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+</script>
+<style>
+  body { margin: 24px; }
+  .row { margin: 8px 0; }
+  .bar { display: inline-block; height: 8px; background: #09f; }
+  .lines { white-space: nowrap; width: max-content; line-height: 1.2; font-size: 32px; }
+</style>
+</head>
+<body>
+<div id="out"></div>
+<script>
+  (async function () {
+    var out = document.getElementById('out'), results = { slot: slot, faces: {}, cls: null };
+    function el(tag, cls, styles, text) { var e = document.createElement(tag); if (cls) e.className = cls; Object.assign(e.style, styles); if (text != null) e.innerHTML = text; return e; }
+    if (cls) {
+      out.innerHTML = '<h1 class="fd-heading-xl">Fresh batches</h1><p class="fd-body">' + 'Everything prepped and in its place. '.repeat(40) + '</p><h2 class="fd-heading-lg">The pass</h2><p class="fd-body">' + 'A page never names a font, it names the role. '.repeat(40) + '</p><pre class="fd-mono">const look = { faces: { display: "inter" } };</pre><p class="fd-caption">timestamps 12:34:56 · 00:00:01</p>';
+      await document.fonts.ready;
+      await new Promise(function (r) { setTimeout(r, 1500); });
+      results.cls = window.__cls;
+      results.loaded = Array.from(document.fonts).filter(function (f) { return f.status === 'loaded'; }).map(function (f) { return f.family; });
+    } else {
+      // display faces are measured at a display size (64px); text and mono faces at body size (17px), because
+      // variable fonts with an opsz axis (Inter, Source Serif 4, Newsreader…) change x-height per optical instance
+      // and the text slot's target governs reading sizes
+      var unit = slot === 'display' ? 'cap' : 'ex', px = slot === 'display' ? '64px' : '17px', rows = {};
+      faces.forEach(function (id) {
+        var row = el('div', 'row');
+        row.appendChild(el('span', 'bar', { fontFamily: stacks[id], fontSize: px, width: '100' + unit }));
+        row.appendChild(el('span', 'bar', { fontFamily: rawStacks[id], fontSize: px, width: '100' + unit, background: '#f90' }));
+        row.appendChild(el('div', 'lines', { fontFamily: stacks[id] }, 'Line one of three<br>Line two of three<br>Line three of three'));
+        row.appendChild(el('div', 'adv', { fontFamily: stacks[id], fontSize: px, display: 'inline-block', whiteSpace: 'nowrap' }, 'Hamburgefonstiv 0123'));
+        out.appendChild(row); rows[id] = row;
+      });
+      results.px = px;
+      await Promise.all(faces.flatMap(function (id) { return [document.fonts.load(px + ' ' + stacks[id]), document.fonts.load(px + ' ' + rawStacks[id])]; }));
+      await document.fonts.ready;
+      faces.forEach(function (id) {
+        var row = rows[id], bars = row.querySelectorAll('.bar');
+        results.faces[id] = {
+          metricPx: bars[0].getBoundingClientRect().width / 100,      // fitted: cap or x height at 64px
+          rawMetricPx: bars[1].getBoundingClientRect().width / 100,   // control: the same font with no size-adjust
+          linesPx: row.querySelector('.lines').getBoundingClientRect().height,
+          advancePx: row.querySelector('.adv').getBoundingClientRect().width,
+          status: Array.from(document.fonts).filter(function (f) { return f.family.replace(/"/g, '') === stacks[id].replace(/"/g, ''); }).map(function (f) { return f.status; }),
+        };
+      });
+    }
+    window.__results = results; window.__done = true;
+  })();
+</script>
+</body>
+</html>

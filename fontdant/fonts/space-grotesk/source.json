@@ -1,0 +1,40 @@
+{
+  "id": "space-grotesk",
+  "family": "Space Grotesk",
+  "category": "Sans Serif",
+  "designers": [
+    "Florian Karsten"
+  ],
+  "variable": true,
+  "axes": [
+    {
+      "tag": "wght",
+      "min": 300,
+      "max": 700
+    }
+  ],
+  "staticStyles": [
+    "300",
+    "400",
+    "500",
+    "600",
+    "700"
+  ],
+  "files": [
+    {
+      "file": "space-grotesk-latin-wght.woff2",
+      "weight": "300 700",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/spacegrotesk/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4Cw.woff2",
+      "bytes": 22288
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Florian Karsten",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/"
+  },
+  "fetched": "2026-11-08T19:36:08.951Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"
+}

@@ -1,0 +1,63 @@
+/* fontdant · the Fontdant tab. Frosted: --fr-* roles only, no literal colours. Leans on frosting's panel.css
+   for .fr-btn, .fr-link and .fr-pal__card when it is on the page (the Fournée panel always loads it). */
+.fd-pal { display: grid; gap: 14px; color: var(--fr-text); }
+.fd-muted { color: var(--fr-muted); }
+.fd-pal__top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.fd-pal__nav { display: flex; align-items: center; gap: 8px; }
+.fd-pal__now { display: grid; min-width: 12em; }
+.fd-pal__now .fd-muted { font-size: .9em; }
+.fd-pal__cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 8px; }
+.fd-card { display: grid; gap: 2px; text-align: left; padding: 8px 10px; background: var(--fr-bg); color: var(--fr-text); border: 1px solid var(--fr-border); border-radius: 10px; cursor: pointer; font: inherit; }
+.fd-card[aria-pressed="true"] { outline: 2px solid var(--fr-accent); outline-offset: 1px; }
+.fd-card:focus-visible { outline: 2px solid var(--fr-accent); outline-offset: 2px; }
+.fd-card__aa { font-size: 28px; line-height: 1.1; font-weight: 700; }
+.fd-card__name { font-weight: 600; font-size: .9em; }
+.fd-card__faces { color: var(--fr-muted); font-size: .8em; }
+.fd-pal__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .fd-pal__grid { grid-template-columns: 1fr; } }
+.fd-pal__controls { display: grid; gap: 8px; }
+.fd-pal__row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.fd-pal__label { color: var(--fr-muted); font-size: .9em; }
+.fd-pal select, .fd-pal input[type="number"], .fd-pal input[type="text"], .fd-pal input[type="date"] { font: inherit; color: var(--fr-text); background: var(--fr-bg); border: 1px solid var(--fr-border); border-radius: 6px; padding: 4px 6px; min-width: 0; }
+.fd-pal input[type="range"] { accent-color: var(--fr-accent); }
+/* Firefox draws its range thumb and track in its own grey unless they are styled directly */
+.fd-pal input[type="range"]::-moz-range-thumb { background: var(--fr-accent); border: 2px solid var(--fr-bg); }
+.fd-pal input[type="range"]::-moz-range-track { background: var(--fr-border); height: 4px; border-radius: 2px; }
+.fd-pal input[type="range"]::-moz-range-progress { background: var(--fr-accent); height: 4px; border-radius: 2px; }
+.fd-seg { display: inline-flex; border: 1px solid var(--fr-border); border-radius: 8px; overflow: hidden; justify-self: start; }
+.fd-seg button { font: inherit; padding: 4px 12px; border: 0; background: var(--fr-bg); color: var(--fr-text); cursor: pointer; }
+.fd-seg button[aria-checked="true"] { background: var(--fr-accent-soft); font-weight: 700; }
+.fd-seg button:focus-visible { outline: 2px solid var(--fr-accent); outline-offset: -2px; }
+.fd-pal__fine summary { cursor: pointer; color: var(--fr-muted); }
+.fd-pal__dialgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; margin-top: 8px; }
+.fd-pal__dialgrid label { display: grid; grid-template-columns: 3.5em 1fr auto; gap: 4px; align-items: center; font-size: .85em; }
+.fd-pal__dialgrid input { width: 4.2em; }
+.fd-pal__notes { display: flex; flex-wrap: wrap; gap: 6px; }
+.fd-tag { font-size: .8em; padding: 1px 8px; border-radius: 999px; background: var(--fr-surface); border: 1px solid var(--fr-warn); color: var(--fr-text); }
+.fd-pal__actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fd-pal__flash { min-height: 1.4em; margin: 0; color: var(--fr-text); }
+.fd-pal__flash.is-error { color: var(--fr-text); border-left: 3px solid var(--fr-bad); padding-left: 8px; }
+.fd-pal__preview { border: 1px solid var(--fr-border); border-radius: 10px; padding: 16px; background: var(--fr-bg); display: grid; gap: 8px; overflow-wrap: anywhere; }
+.fd-pal__preview > * { margin: 0; }
+.fd-pal__preview .fd-eyebrow, .fd-pal__preview .fd-caption { color: var(--fr-muted); }
+.fd-pal__btnsample { justify-self: start; padding: 6px 14px; border-radius: 8px; background: var(--fr-button); color: var(--fr-button-text); }
+.fd-add { border: 1px solid var(--fr-border); border-radius: 10px; padding: 14px; background: var(--fr-surface); }
+.fd-add__head { display: flex; justify-content: space-between; align-items: center; }
+.fd-add__head h3 { margin: 0; font-size: 1.1em; }
+.fd-add__steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; padding-left: 1.2em; margin: 10px 0 0; }
+.fd-add__steps li { display: grid; gap: 6px; align-content: start; }
+.fd-add__steps p { margin: 0; font-size: .9em; }
+.fd-add__drop { display: grid; place-items: center; text-align: center; padding: 16px; border: 2px dashed var(--fr-border); border-radius: 10px; color: var(--fr-muted); cursor: pointer; position: relative; }
+.fd-add__drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.fd-add__drop:focus-within { outline: 2px solid var(--fr-accent); }
+.fd-add__kv { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; margin: 0; font-size: .9em; }
+.fd-add__kv dt { color: var(--fr-muted); }
+.fd-add__kv dd { margin: 0; }
+.fd-add__lic { display: grid; gap: 6px; }
+.fd-add__lic label { display: grid; grid-template-columns: 7em 1fr; gap: 6px; align-items: center; font-size: .9em; }
+/* the Fournée steps: step 2 */
+.fd-pal--steps h3 { display: flex; align-items: center; gap: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--fr-muted); margin: 18px 0 8px; }
+.fd-pal--steps .fd-pal__controls h3:first-child { margin-top: 0; }
+.fd-card--lucky { border-style: dashed; }
+.fd-pal__controls.is-flash { outline: 3px solid var(--fr-warn); outline-offset: 4px; border-radius: 6px; }
+.fd-pal__flash:empty { display: none; }

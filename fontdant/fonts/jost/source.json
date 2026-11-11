@@ -1,0 +1,64 @@
+{
+  "id": "jost",
+  "family": "Jost",
+  "category": "Sans Serif",
+  "designers": [
+    "Owen Earl"
+  ],
+  "variable": true,
+  "axes": [
+    {
+      "tag": "wght",
+      "min": 100,
+      "max": 900
+    }
+  ],
+  "staticStyles": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "100i",
+    "200i",
+    "300i",
+    "400i",
+    "500i",
+    "600i",
+    "700i",
+    "800i",
+    "900i"
+  ],
+  "files": [
+    {
+      "style": "normal",
+      "file": "jost-latin-wght.woff2",
+      "weight": "100 900",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/jost/v20/92zatBhPNqw73oTd4g.woff2",
+      "bytes": 26576
+    },
+    {
+      "file": "jost-latin-wght-italic.woff2",
+      "weight": "100 900",
+      "style": "italic",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/jost/v20/92zUtBhPNqw73oHt4D4h.woff2",
+      "bytes": 30700
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Owen Earl",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/"
+  },
+  "fetched": "2026-11-08T19:36:07.627Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Jost:wght@100..900&display=swap",
+  "css2Italic": "https://fonts.googleapis.com/css2?family=Jost:ital,wght@1,100..900&display=swap",
+  "italicsFetched": "2026-11-08T20:32:34.698Z"
+}

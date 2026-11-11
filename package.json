@@ -1,0 +1,29 @@
+{
+  "name": "fournee",
+  "version": "1.2.0",
+  "description": "Fournée: a theming toolkit. Colour and type by role, one recipe, many batches. Frosting (colour), Fontdant (type), kitchen (shared store, panel, recipe format, the pass), delivery (wrappers and exports).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install:frosting": "npm --prefix frosting ci",
+    "install:fontdant": "npm --prefix fontdant ci && npx --prefix fontdant playwright install chromium firefox",
+    "build": "npm --prefix frosting run build && npm --prefix fontdant run build && npm --prefix delivery run build",
+    "test": "npm --prefix frosting test && npm --prefix fontdant test && npm --prefix kitchen test && npm --prefix delivery test",
+    "test:frosting": "npm --prefix frosting test",
+    "test:fontdant": "npm --prefix fontdant test",
+    "test:kitchen": "npm --prefix kitchen test",
+    "catalog": "npm --prefix frosting run catalog",
+    "deploy": "node catalog/build.mjs && npx --prefix frosting wrangler deploy --config catalog/wrangler.jsonc",
+    "test:catalog": "node catalog/build.mjs && node catalog/test.mjs",
+    "test:delivery": "npm --prefix delivery test",
+    "install:delivery": "npm --prefix delivery ci",
+    "playground": "node scripts/playground.mjs",
+    "export:desktop": "node delivery/scripts/desktop.mjs",
+    "export:dtcg": "node delivery/scripts/dtcg.mjs"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fournee/fournee.git"
+  }
+}

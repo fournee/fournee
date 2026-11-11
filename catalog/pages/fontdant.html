@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournée Fontdant</title>
+<link rel="stylesheet" href="assets/frosting.css">
+<link rel="stylesheet" href="assets/fontdant-fonts.css">
+<link rel="stylesheet" href="assets/fontdant.css">
+<link rel="stylesheet" href="mise.css">
+<link rel="stylesheet" href="nav.css">
+<script src="nav.js"></script>
+<style>
+  .presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .preset { padding: 14px; border: 1px solid var(--fr-border); border-radius: 10px; background: var(--fr-surface); }
+  .preset .aa { font-size: var(--fd-step-h-xl); line-height: 1; }
+  .preset .sample-h { font-size: var(--fd-step-h-sm); margin: 8px 0 2px; }
+  .preset .sample-b { margin: 0; }
+  .preset .faces { color: var(--fr-muted); font-size: var(--fd-step-sm); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Fontdant</h1>
+  <p class="lede">Type for every project: three face slots (display, text, mono), a size ladder per mode, weights, and a self-hosted font library. Pages use the <code>--fd-*</code> steps and faces and the <code>.fd-*</code> roles, never literal sizes or font stacks. Nothing goes under 12px.</p>
+
+  <h2>Type presets</h2>
+  <div class="presets" id="presets"></div>
+
+  <h2>The size ladder</h2>
+  <p class="muted">Each mode's steps, and the floors the checks hold them to.</p>
+  <div class="scroll"><table id="ladder"></table></div>
+
+  <h2>The font library</h2>
+  <p class="muted">Served from this site's <code>fonts/</code>, never from Google. "Lucky" fonts can be picked by 🎲.</p>
+  <div class="scroll"><table id="library"></table></div>
+</main>
+<script src="assets/type-tokens.js"></script>
+<script src="assets/library.js"></script>
+<script src="assets/fontface.js"></script>
+<script src="assets/typecheck.js"></script>
+<script src="assets/licence.js"></script>
+<script src="assets/fd-gallery.js"></script>
+<script>
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var F = FontdantFonts, L = FontdantLibrary, T = FontdantTokens, css = [], seen = {};
+  function face(id, slot) { var k = id + '/' + slot; if (!seen[k] && F.entryOf(id)) { seen[k] = 1; css.push(F.faceBlocks(id, slot, { baseUrl: 'fonts', display: 'swap' }).css); } return F.faceStack(id, slot); }
+  function fam(id) { var e = F.entryOf(id); return e ? e.family : id; }
+  document.getElementById('presets').innerHTML = FontdantGallery.presets().map(function (p) {
+    var f = F.facesOf(p.look);
+    return '<div class="preset"><div class="aa" style="font-family:' + esc(face(f.display, 'display')) + '">Aa</div><h3>' + esc(p.name) + '</h3>' +
+      '<div class="faces">' + esc(fam(f.display) + ' / ' + fam(f.text) + ' / ' + fam(f.mono)) + (p.look.mode === 'dense' ? ' · dense' : '') + '</div>' +
+      '<div class="sample-h" style="font-family:' + esc(face(f.display, 'display')) + '">Corner Bakery opens at seven</div>' +
+      '<p class="sample-b" style="font-family:' + esc(face(f.text, 'text')) + '">Our sourdough rests for two days before it is baked.</p></div>';
+  }).join('');
+  var st = document.createElement('style'); st.textContent = css.join('\n'); document.head.appendChild(st);
+  var modes = Object.keys(T.modes);
+  document.getElementById('ladder').innerHTML = '<thead><tr><th>Step</th>' + modes.map(function (m) { return '<th>' + esc(T.modes[m].label || m) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+    T.stepOrder.map(function (s) { return '<tr><td><code>--fd-step-' + esc(s) + '</code></td>' + modes.map(function (m) { return '<td><code>' + esc(T.modes[m].steps[s]) + '</code></td>'; }).join('') + '</tr>'; }).join('') +
+    '<tr><td>Floors (px)</td>' + modes.map(function (m) { var f = T.modes[m].floors || {}; return '<td>' + Object.keys(f).map(function (k) { return esc(k) + ' ' + f[k]; }).join(', ') + '</td>'; }).join('') + '</tr></tbody>';
+  var fonts = Object.keys(L.fonts).map(function (id) { return L.fonts[id]; }).sort(function (a, b) { return a.family.localeCompare(b.family); });
+  document.getElementById('library').innerHTML = '<thead><tr><th>Family</th><th>Shelf</th><th>Slots</th><th>Weights</th><th>Licence</th><th>Lucky</th></tr></thead><tbody>' +
+    fonts.map(function (e) {
+      var w = e.weights || {}; var ws = w.kind === 'variable' ? w.min + '–' + w.max : (w.available || []).join(', ');
+      return '<tr><td>' + esc(e.family) + '</td><td>' + esc((L.shelves[e.shelf] || {}).label || e.shelf) + '</td><td>' + esc((e.slots || []).join(', ')) + '</td><td>' + esc(ws) + '</td><td>' + esc((e.licence || {}).id || '') + '</td><td>' + (e.lucky ? 'yes' : '') + '</td></tr>';
+    }).join('') + '</tbody>';
+</script>
+</body>
+</html>

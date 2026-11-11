@@ -1,0 +1,10 @@
+/* The Fournée catalog's navigation bar (nav.js). Frosted and Fontdant-typed, with fallbacks for pages that don't load Fontdant. */
+.mise-nav { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 8px 18px; padding: 10px 16px; background: var(--fr-surface); color: var(--fr-text); border-bottom: 1px solid var(--fr-border); font-family: var(--fd-face-text, system-ui, sans-serif); font-size: var(--fd-step-md, 15px); line-height: 1.3; }
+.mise-nav__brand { font-family: var(--fd-face-display, inherit); font-size: var(--fd-step-h-sm, 18px); font-weight: var(--fd-weight-title, 700); color: var(--fr-text); text-decoration: none; flex: none; }
+.mise-nav__links { display: flex; gap: 4px 16px; flex: 1 1 auto; min-width: 0; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; }
+.mise-nav__links a { color: var(--fr-muted); text-decoration: none; font-weight: var(--fd-weight-emph, 600); padding: 4px 0; border-bottom: 2px solid transparent; }
+.mise-nav__links a:hover { color: var(--fr-text); }
+.mise-nav__links a[aria-current="page"] { color: var(--fr-text); border-bottom-color: var(--fr-accent); }
+.mise-nav__theme { flex: none; font: inherit; font-size: var(--fd-step-sm, 13px); padding: 4px 10px; border-radius: 8px; border: 1px solid var(--fr-control-border); background: var(--fr-bg); color: var(--fr-text); cursor: pointer; }
+.mise-nav a:focus-visible, .mise-nav__theme:focus-visible { outline: 2px solid var(--fr-focus-ring); outline-offset: 2px; }
+@media (max-width: 520px) { .mise-nav { gap: 6px 12px; padding: 8px 12px; } }

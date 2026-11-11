@@ -1,0 +1,30 @@
+{
+  "id": "anton",
+  "family": "Anton",
+  "category": "Sans Serif",
+  "designers": [
+    "Vernon Adams"
+  ],
+  "variable": false,
+  "axes": [],
+  "staticStyles": [
+    "400"
+  ],
+  "files": [
+    {
+      "file": "anton-latin-400.woff2",
+      "weight": "400",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8.woff2",
+      "bytes": 18612
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Vernon Adams",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/anton/"
+  },
+  "fetched": "2026-11-08T19:36:09.663Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Anton:wght@400&display=swap"
+}

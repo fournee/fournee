@@ -1,0 +1,27 @@
+{
+  "name": "@fournee/frosting",
+  "version": "1.0.0",
+  "description": "Frosting: the standard re-theming toolkit. Roles as CSS variables, readability contracts, a palette gallery, pluggable storage.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/build.mjs && node test/run.mjs",
+    "catalog": "node scripts/build.mjs && node scripts/catalog.mjs"
+  },
+  "files": [
+    "dist",
+    "src",
+    "tokens.json",
+    "SPEC.md"
+  ],
+  "devDependencies": {
+    "wrangler": "^4.151.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fournee/fournee.git",
+    "directory": "frosting"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "playfair-display",
+  "family": "Playfair Display",
+  "category": "Serif",
+  "designers": [
+    "Claus Eggers Sørensen"
+  ],
+  "variable": true,
+  "axes": [
+    {
+      "tag": "wght",
+      "min": 400,
+      "max": 900
+    }
+  ],
+  "staticStyles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "400i",
+    "500i",
+    "600i",
+    "700i",
+    "800i",
+    "900i"
+  ],
+  "files": [
+    {
+      "style": "normal",
+      "file": "playfair-display-latin-wght.woff2",
+      "weight": "400 900",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2",
+      "bytes": 38404
+    },
+    {
+      "file": "playfair-display-latin-wght-italic.woff2",
+      "weight": "400 900",
+      "style": "italic",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/playfairdisplay/v40/nuFkD-vYSZviVYUb_rj3ij__anPXDTnogkk7.woff2",
+      "bytes": 38804
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Claus Eggers Sørensen",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/"
+  },
+  "fetched": "2026-11-08T19:36:11.555Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&display=swap",
+  "css2Italic": "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..900&display=swap",
+  "italicsFetched": "2026-11-08T20:32:35.105Z"
+}

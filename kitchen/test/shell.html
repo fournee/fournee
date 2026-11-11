@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournée panel test</title>
+<link rel="stylesheet" href="/frosting/dist/frosting.css">
+<link rel="stylesheet" href="/fontdant/dist/fontdant.css">
+<link rel="stylesheet" href="/frosting/src/panel.css">
+<link rel="stylesheet" href="/fontdant/src/panel.css">
+<link rel="stylesheet" href="/kitchen/src/shell.css">
+<link rel="stylesheet" href="/kitchen/src/passview.css">
+<style>body { margin: 24px; background: var(--fr-bg); color: var(--fr-text); font: 15px/1.5 system-ui, sans-serif; }</style>
+</head>
+<body>
+<div id="hc"></div>
+<div id="mise"></div>
+<script src="/frosting/dist/tokens.js"></script>
+<script src="/frosting/src/readability.js"></script>
+<script src="/frosting/src/gallery.js"></script>
+<script src="/frosting/dist/store.js"></script>
+<script src="/frosting/src/panel.js"></script>
+<script src="/fontdant/dist/type-tokens.js"></script>
+<script src="/fontdant/dist/library.js"></script>
+<script src="/fontdant/src/fontface.js"></script>
+<script src="/fontdant/src/typecheck.js"></script>
+<script src="/fontdant/src/licence.js"></script>
+<script src="/fontdant/src/gallery.js"></script>
+<script src="/fontdant/src/emit.js"></script>
+<script src="/fontdant/src/panel.js"></script>
+<script src="/kitchen/src/recipe.js"></script>
+<script src="/kitchen/src/sprinkles.js"></script>
+<script src="/kitchen/src/standards.js"></script>
+<script src="/kitchen/src/pass.js"></script>
+<script src="/kitchen/src/passview.js"></script>
+<script src="/kitchen/src/shell.js"></script>
+<script>
+  window.__errors = [];
+  window.addEventListener('error', function (e) { window.__errors.push(String(e.message)); });
+  var Q = new URLSearchParams(location.search);
+  var client = Q.get('client') || 'Corner Bakery';
+  // the recipe the pass checks: frosting's draft colours + the Fontdant tab's draft (or ?fontdant=<json>) + Sprinkles
+  var fdParam = Q.get('fontdant');
+  window.fontdantHalf = fdParam ? JSON.parse(fdParam) : null;
+  var adapter = KitchenStore.localStorageAdapter('kitchen-test');
+  // Sprinkles waits for Publish (J5): the switch sets the draft, which this page shows; the Fontdant tab's Publish publishes it
+  var sprStore = KitchenSprinkles.store(adapter);
+  function sprinklesOn() { return sprStore.draft(); }
+  function currentRecipe() {
+    var colors = window.draft || FrostingTokens.light;   // the frosting panel's draft is a colour map
+    var fd = window.shell && shell.tab('fontdant') ? shell.tab('fontdant').draft() : (window.fontdantHalf || {});
+    return KitchenRecipe.clean({ name: 'test', client: client, scheme: FrostingColor.isDark(colors.bg) ? 'Dark' : 'Light', frosting: { colors: colors }, fontdant: fd, sprinkles: sprinklesOn() }, { colors: FrostingTokens.light });
+  }
+  /* Sprinkles off: the page wears the Plain greys; either way prefers-contrast: more gets them (J3) */
+  var plainCss = document.head.appendChild(Object.assign(document.createElement('style'), { id: 'mise-sprinkles' }));
+  function applySprinkles() {
+    var colors = window.draft || FrostingTokens.light, P = KitchenSprinkles.plain(colors);
+    Object.keys(P.changes).forEach(function (k) { document.documentElement.style.setProperty('--fr-' + k, sprinklesOn() ? colors[k] : P.colors[k]); });
+    plainCss.textContent = KitchenSprinkles.css(colors, { prefix: 'fr' });
+  }
+  function badge(r) { if (window.shell) shell.badge('pass', r.summary.hard ? r.summary.hard + ' failing' : r.summary.warn ? r.summary.warn + ' warn' : 'ok', r.summary.hard ? 'bad' : r.summary.warn ? 'warn' : 'ok'); }
+  function changed() { applySprinkles(); if (!window.shell) return; if (shell.tab('pass')) shell.tab('pass').refresh(); else badge(KitchenPass.run(currentRecipe())); if (window.spr) spr.refresh(); }
+  window.shell = null;
+  var store = FrostingStore.createStore(FrostingStore.localStorageAdapter('kitchen-test'), FrostingTokens.light);
+  window.shell = KitchenShell.mount(document.getElementById('mise'), {
+    tools: function (el) {
+      window.spr = KitchenSprinkles.toggle(el, {
+        get: sprinklesOn,
+        set: function (on) { var p = sprStore.set(on); changed(); return p; },
+        pending: sprStore.pending,
+        colors: function () { return window.draft || FrostingTokens.light; },
+      });
+    },
+    tabs: [
+      { id: 'frosting', label: 'Frosting', mount: function (el) { return FrostingPanel.mount(el, { store: store, onChange: function (d) { window.draft = d; changed(); } }); } },
+      { id: 'fontdant', label: 'Fontdant', mount: function (el) {
+          return FontdantPanel.mount(el, { store: FontdantPanel.createStore(adapter), fontShelf: FontdantPanel.createShelf(adapter), client: client,
+            baseUrl: '/fontdant/fonts', metricsUrl: '/fontdant/dist/metrics.js', onChange: function () { changed(); },
+            onPublish: function () { return sprStore.publish().then(changed); }, onReset: function () { return sprStore.reset().then(changed); } });
+        } },
+      { id: 'pass', label: 'The pass', mount: function (el) { return KitchenPassView.mount(el, { recipe: currentRecipe, specimenUrl: '/kitchen/src/specimen.html', onResult: badge }); } },
+    ],
+  });
+  if (Q.get('hc')) KitchenSprinkles.contrastSwitch(document.getElementById('hc'), { key: 'kitchen-test.contrast' });   // layer 3, opt-in per project
+  applySprinkles();
+  sprStore.load().then(changed);
+  badge(KitchenPass.run(currentRecipe()));   // the tab shows the pass's verdict before it is opened
+</script>
+</body>
+</html>

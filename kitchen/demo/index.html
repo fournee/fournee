@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournée playground</title>
+<link rel="stylesheet" href="/frosting/dist/frosting.css">
+<link rel="stylesheet" href="/fontdant/dist/fontdant.css">
+<link rel="stylesheet" href="/frosting/src/panel.css">
+<link rel="stylesheet" href="/fontdant/src/panel.css">
+<link rel="stylesheet" href="/kitchen/src/shell.css">
+<link rel="stylesheet" href="/kitchen/src/passview.css">
+<style>
+  /* The playground: a sample site on the left, the whole Fournée panel on the right. Frosted: --fr-* roles only. */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--fr-bg); color: var(--fr-text); font-family: var(--fd-face-text, system-ui, sans-serif); }
+  .pg-bar, .pg-panel { font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }   /* the tools stay in the system face; the bakery follows the look */
+  .pg-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 8px 16px; background: var(--fr-surface); border-bottom: 1px solid var(--fr-border); }
+  .pg-bar p { margin: 0; color: var(--fr-muted); }
+  .pg-bar button { font: inherit; background: transparent; color: var(--fr-text); border: 1px solid var(--fr-control-border); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .pg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 620px); min-height: calc(100vh - 44px); }
+  .pg-site { min-width: 0; border-right: 1px solid var(--fr-border); }
+  .pg-panel { min-width: 0; padding: 16px; position: sticky; top: 0; align-self: start; max-height: 100vh; overflow: auto; }
+  @media (max-width: 1100px) { .pg { grid-template-columns: 1fr; } .pg-site { border-right: 0; border-bottom: 1px solid var(--fr-border); } .pg-panel { position: static; max-height: none; } }
+
+  /* the sample site: Corner Bakery */
+  .cb { max-width: 880px; margin: 0 auto; padding: 0 16px 48px; }
+  .cb-nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--fr-border); }
+  .cb-nav nav { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .cb-nav a { color: var(--fr-text); text-decoration: none; }
+  .cb-nav a:hover { text-decoration: underline; }
+  .cb-brand { color: var(--fr-text); margin: 0; }
+  .cb-hero { padding: 40px 0 24px; }
+  .cb-hero .fd-eyebrow { color: var(--fr-accent-text); margin: 0 0 8px; }
+  .cb-hero h1 { margin: 0 0 12px; }
+  .cb-hero p { margin: 0 0 20px; max-width: 60ch; }
+  .cb-btn { display: inline-block; background: var(--fr-button); color: var(--fr-button-text); border: 0; border-radius: 8px; padding: 10px 18px; cursor: pointer; text-decoration: none; }
+  .cb-btn--ghost { background: transparent; color: var(--fr-accent-text); border: 1px solid var(--fr-control-border); }
+  .cb-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .cb-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin: 16px 0 32px; }
+  .cb-card { background: var(--fr-surface); border: 1px solid var(--fr-border); border-radius: 12px; padding: 16px; display: grid; gap: 6px; }
+  .cb-card h3 { margin: 0; }
+  .cb-card p { margin: 0; }
+  .cb-muted { color: var(--fr-muted); }
+  .cb-status { display: inline-flex; align-items: center; gap: 6px; }
+  .cb-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .cb-goal { background: var(--fr-surface); border: 1px solid var(--fr-border); border-radius: 12px; padding: 20px; margin-bottom: 32px; }
+  .cb-goal h2 { margin: 0 0 4px; }
+  .cb-track { height: 10px; border-radius: 5px; background: var(--fr-progress-track); overflow: hidden; margin: 12px 0 8px; }
+  .cb-fill { height: 100%; width: 68%; background: var(--fr-progress-fill); }
+  .cb-form { display: grid; gap: 8px; max-width: 420px; margin-bottom: 32px; }
+  .cb-form input { font: inherit; padding: 10px 12px; border: 1px solid var(--fr-control-border); border-radius: 8px; background: var(--fr-bg); color: var(--fr-text); }
+  .cb-form label { color: var(--fr-text); }
+  .cb-note { background: var(--fr-accent-soft); color: var(--fr-text); border-radius: 8px; padding: 12px 14px; margin-bottom: 32px; }
+  .cb-foot { border-top: 1px solid var(--fr-border); padding-top: 16px; color: var(--fr-muted); }
+  .cb-foot p { margin: 0 0 6px; }
+  .mise-contrast { font: inherit; background: transparent; color: var(--fr-text); border: 1px solid var(--fr-control-border); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  .mise-contrast[aria-pressed="true"] { background: var(--fr-accent-soft); }
+</style>
+</head>
+<body>
+<div class="pg-bar fd-ui-sm">
+  <strong>Fournée playground</strong>
+  <p>Change colours, type and Sprinkles on the right; the bakery page on the left follows. Everything is saved in this browser only.</p>
+  <button type="button" data-pg-reset>Start over</button>
+</div>
+<div class="pg">
+  <div class="pg-site">
+    <div class="cb">
+      <header class="cb-nav">
+        <p class="cb-brand fd-heading-sm">Corner Bakery</p>
+        <nav class="fd-ui--nav"><a href="#menu">Menu</a><a href="#order">Pre-order</a><a href="#visit">Visit</a><span data-pg-hc></span></nav>
+      </header>
+      <section class="cb-hero">
+        <p class="fd-eyebrow">Today's specials</p>
+        <h1 class="fd-heading-xl">Corner Bakery opens at seven</h1>
+        <p class="fd-body">Our sourdough rests for two days before it is baked. Ask at the counter which loaves are still warm, and which are for tomorrow.</p>
+        <div class="cb-row"><a class="cb-btn fd-ui--button" href="#order">Pre-order a loaf</a><a class="cb-btn cb-btn--ghost fd-ui--button" href="#menu">See the menu</a></div>
+      </section>
+
+      <h2 class="fd-heading-lg" id="menu">On the shelf</h2>
+      <div class="cb-cards">
+        <div class="cb-card"><h3 class="fd-heading-sm">Country sourdough</h3><p class="fd-body-sm cb-muted">Two-day ferment, dark crust</p><p class="fd-metric">$9.50</p><p class="fd-caption cb-status"><span class="cb-dot" style="background: var(--fr-ok)"></span>12 left</p></div>
+        <div class="cb-card"><h3 class="fd-heading-sm">Cardamom buns</h3><p class="fd-body-sm cb-muted">Weekends only</p><p class="fd-metric">$4.25</p><p class="fd-caption cb-status"><span class="cb-dot" style="background: var(--fr-warn)"></span>Almost gone</p></div>
+        <div class="cb-card"><h3 class="fd-heading-sm">Rye with seeds</h3><p class="fd-body-sm cb-muted">Sunflower, flax, pumpkin</p><p class="fd-metric">$8.75</p><p class="fd-caption cb-status"><span class="cb-dot" style="background: var(--fr-bad)"></span>Sold out</p></div>
+      </div>
+
+      <div class="cb-goal">
+        <h2 class="fd-heading-md">A second oven</h2>
+        <p class="fd-body-sm cb-muted">Pre-orders help us buy it before winter.</p>
+        <div class="cb-track" role="img" aria-label="68% of the goal"><div class="cb-fill"></div></div>
+        <p class="fd-body-sm"><span class="fd-metric">$1,284.50</span> <span class="cb-muted">of $1,900 · 41 neighbours</span></p>
+      </div>
+
+      <h2 class="fd-heading-lg" id="order">Pre-order</h2>
+      <form class="cb-form" onsubmit="event.preventDefault()">
+        <label class="fd-ui--input" for="cb-name">Your name</label>
+        <input class="fd-ui--input" id="cb-name" placeholder="Sam Rivera">
+        <label class="fd-ui--input" for="cb-when">Pick-up day</label>
+        <input class="fd-ui--input" id="cb-when" placeholder="Saturday">
+        <button class="cb-btn fd-ui--button" type="submit">Reserve</button>
+        <p class="fd-caption cb-muted">Order number <span class="fd-mono-inline">#9F2C4B</span> · prices include tax</p>
+      </form>
+
+      <div class="cb-note fd-body-sm"><strong>Allergy note:</strong> everything here shares one kitchen with nuts and sesame.</div>
+
+      <footer class="cb-foot fd-caption" id="visit">
+        <p>14 Mill Street · open 7am to 2pm, Wednesday to Sunday</p>
+        <p>Updated 9 Nov 2026</p>
+      </footer>
+    </div>
+  </div>
+  <aside class="pg-panel" aria-label="Fournée panel"><div id="mise"></div></aside>
+</div>
+
+<script src="/frosting/dist/tokens.js"></script>
+<script src="/frosting/src/readability.js"></script>
+<script src="/frosting/src/gallery.js"></script>
+<script src="/frosting/dist/store.js"></script>
+<script src="/frosting/src/panel.js"></script>
+<script src="/fontdant/dist/type-tokens.js"></script>
+<script src="/fontdant/dist/library.js"></script>
+<script src="/fontdant/src/fontface.js"></script>
+<script src="/fontdant/src/typecheck.js"></script>
+<script src="/fontdant/src/licence.js"></script>
+<script src="/fontdant/src/gallery.js"></script>
+<script src="/fontdant/src/emit.js"></script>
+<script src="/fontdant/src/panel.js"></script>
+<script src="/kitchen/src/recipe.js"></script>
+<script src="/kitchen/src/sprinkles.js"></script>
+<script src="/kitchen/src/standards.js"></script>
+<script src="/kitchen/src/pass.js"></script>
+<script src="/kitchen/src/passview.js"></script>
+<script src="/kitchen/src/shell.js"></script>
+<script>
+  /* The playground wiring, the same as a project would do it: one kitchen store (localStorage here), the three
+     tabs, Sprinkles with a draft that the Publish buttons publish, and the on-page High contrast switch. */
+  var NS = 'mise-playground', CLIENT = 'Corner Bakery';
+  var adapter = KitchenStore.localStorageAdapter(NS);
+  var colorStore = FrostingStore.createStore(FrostingStore.localStorageAdapter(NS), FrostingTokens.light);
+  var sprStore = KitchenSprinkles.store(adapter);
+  window.draft = null;
+
+  function colors() { return window.draft || FrostingTokens.light; }
+  function recipe() {
+    var c = colors(), fd = window.shell && shell.tab('fontdant') ? shell.tab('fontdant').draft() : {};
+    return KitchenRecipe.clean({ name: CLIENT, client: CLIENT, scheme: FrostingColor.isDark(c.bg) ? 'Dark' : 'Light', frosting: { colors: c }, fontdant: fd, sprinkles: sprStore.draft() }, { colors: FrostingTokens.light });
+  }
+  /* Sprinkles off: the page wears the Plain greys; prefers-contrast: more and the High contrast switch always get them */
+  var plainCss = document.head.appendChild(Object.assign(document.createElement('style'), { id: 'mise-sprinkles' }));
+  function applySprinkles() {
+    var c = colors(), P = KitchenSprinkles.plain(c);
+    Object.keys(P.changes).forEach(function (k) { document.documentElement.style.setProperty('--fr-' + k, sprStore.draft() ? c[k] : P.colors[k]); });
+    plainCss.textContent = KitchenSprinkles.css(c, { prefix: 'fr' });
+  }
+  function badge(r) { if (window.shell) shell.badge('pass', r.summary.hard ? r.summary.hard + ' failing' : r.summary.warn ? r.summary.warn + ' warn' : 'ok', r.summary.hard ? 'bad' : r.summary.warn ? 'warn' : 'ok'); }
+  function changed() {
+    applySprinkles(); if (!window.shell) return;
+    if (shell.tab('pass')) shell.tab('pass').refresh(); else badge(KitchenPass.run(recipe()));
+    if (window.spr) spr.refresh();
+  }
+  function publishSprinkles() { return sprStore.publish().then(changed); }
+
+  window.shell = KitchenShell.mount(document.getElementById('mise'), {
+    tools: function (el) {
+      window.spr = KitchenSprinkles.toggle(el, { get: sprStore.draft, set: function (on) { var p = sprStore.set(on); changed(); return p; }, pending: sprStore.pending, colors: colors });
+    },
+    tabs: [
+      { id: 'frosting', label: 'Frosting', mount: function (el) { return FrostingPanel.mount(el, { store: colorStore, onChange: function (d) { window.draft = d; changed(); } }); } },
+      { id: 'fontdant', label: 'Fontdant', mount: function (el) {
+          return FontdantPanel.mount(el, { store: FontdantPanel.createStore(adapter), fontShelf: FontdantPanel.createShelf(adapter), client: CLIENT, domain: 'cornerbakery.example',
+            baseUrl: '/fontdant/fonts', metricsUrl: '/fontdant/dist/metrics.js', onChange: changed, onPublish: publishSprinkles, onReset: function () { return sprStore.reset().then(changed); } });
+        } },
+      { id: 'pass', label: 'The pass', mount: function (el) { return KitchenPassView.mount(el, { recipe: recipe, specimenUrl: '/kitchen/src/specimen.html', onResult: badge }); } },
+    ],
+  });
+  /* the colours' Publish button publishes Sprinkles too (it is part of how the colours look) */
+  document.getElementById('mise').addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-publish]');
+    if (b && !b.closest('.fd-pal')) setTimeout(publishSprinkles, 0);
+  });
+  KitchenSprinkles.contrastSwitch(document.querySelector('[data-pg-hc]'), { key: NS + '.contrast' });
+  document.querySelector('[data-pg-reset]').addEventListener('click', function () {
+    try { Object.keys(localStorage).filter(function (k) { return k.indexOf(NS) === 0; }).forEach(function (k) { localStorage.removeItem(k); }); } catch (e) { /* nothing stored */ }
+    location.reload();
+  });
+  applySprinkles();
+  sprStore.load().then(changed);
+  badge(KitchenPass.run(recipe()));
+</script>
+</body>
+</html>

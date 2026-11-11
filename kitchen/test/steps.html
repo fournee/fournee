@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournée steps test</title>
+<link rel="stylesheet" href="/frosting/dist/frosting.css">
+<link rel="stylesheet" href="/fontdant/dist/fontdant.css">
+<link rel="stylesheet" href="/frosting/src/panel.css">
+<link rel="stylesheet" href="/fontdant/src/panel.css">
+<link rel="stylesheet" href="/kitchen/src/shell.css">
+<link rel="stylesheet" href="/kitchen/src/passview.css">
+<style>
+  body { margin: 0; background: var(--fr-bg); color: var(--fr-text); font: 15px/1.5 system-ui, sans-serif; }
+  .pull { max-width: 520px; margin-left: auto; min-height: 100vh; padding: 12px 16px; background: var(--fr-surface); border-left: 1px solid var(--fr-border); box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div class="pull"><div id="mise"></div></div>
+<script src="/frosting/dist/tokens.js"></script>
+<script src="/frosting/src/readability.js"></script>
+<script src="/frosting/src/gallery.js"></script>
+<script src="/frosting/src/fills.js"></script>
+<script src="/frosting/dist/store.js"></script>
+<script src="/frosting/src/panel.js"></script>
+<script src="/fontdant/dist/type-tokens.js"></script>
+<script src="/fontdant/dist/library.js"></script>
+<script src="/fontdant/src/fontface.js"></script>
+<script src="/fontdant/src/typecheck.js"></script>
+<script src="/fontdant/src/licence.js"></script>
+<script src="/fontdant/src/gallery.js"></script>
+<script src="/fontdant/src/emit.js"></script>
+<script src="/fontdant/src/panel.js"></script>
+<script src="/kitchen/src/recipe.js"></script>
+<script src="/kitchen/src/sprinkles.js"></script>
+<script src="/kitchen/src/standards.js"></script>
+<script src="/kitchen/src/pass.js"></script>
+<script src="/kitchen/src/passview.js"></script>
+<script src="/kitchen/src/shell.js"></script>
+<script src="/kitchen/src/steps.js"></script>
+<script>
+  window.__errors = [];
+  window.addEventListener('error', function (e) { window.__errors.push(String(e.message)); });
+  var client = 'Corner Bakery';
+  var adapter = KitchenStore.localStorageAdapter('steps-test');
+  var spr = KitchenSprinkles.store(adapter);
+  window.__changes = 0; window.__published = 0;
+  window.steps = KitchenSteps.mount(document.getElementById('mise'), {
+    colours: { store: FrostingStore.createStore(FrostingStore.localStorageAdapter('steps-test'), FrostingTokens.light), target: document.documentElement,
+      extras: { title: 'Tiles', mount: function (el) { el.innerHTML = '<button type="button" class="fr-btn fr-btn--ghost" id="spread">Spread colours across 11 tiles</button>'; } } },
+    type: { store: FontdantPanel.createStore(adapter), fontShelf: FontdantPanel.createShelf(adapter), client: client, baseUrl: '/fontdant/fonts', metricsUrl: '/fontdant/dist/metrics.js' },
+    sprinkles: spr, name: 'test', client: client, designColors: function () { return FrostingTokens.light; },
+    handoff: true, handoffName: 'Corner Bakery',
+    onChange: function () { window.__changes++; },
+    onPublished: function () { window.__published++; },
+  });
+</script>
+</body>
+</html>

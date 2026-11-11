@@ -1,0 +1,21 @@
+#!/bin/sh
+# Blocks a commit whose added lines contain any word from a private list, so names that must stay out of this
+# public repo can't slip back in. The list lives in your local .env (never committed), for example:
+#   FOURNEE_PRIVATE_WORDS=acme|projectx|jane doe
+# Matching is case-insensitive, on whole words. No list = nothing to check. Enable once per clone:
+#   git config core.hooksPath .githooks
+root=$(git rev-parse --show-toplevel)
+[ -f "$root/.env" ] || exit 0
+words=$(sed -n 's/^FOURNEE_PRIVATE_WORDS=//p' "$root/.env" | tail -n 1 | tr -d '\r"'"'")
+[ -n "$words" ] || exit 0
+hits=$(git diff --cached -U0 --no-color --diff-filter=ACMR -- . ':(exclude)*/dist/*' ':(exclude)*package-lock.json' ':(exclude)fontdant/fonts/*' \
+  | grep -E '^(\+\+\+ |\+)' | grep -v '^+++ /dev/null' \
+  | awk '/^\+\+\+ /{f=substr($0,7); next} {print f": "substr($0,2)}' \
+  | grep -iwE "$words")
+if [ -n "$hits" ]; then
+  echo "pre-commit: these added lines contain a private word (FOURNEE_PRIVATE_WORDS in .env):" >&2
+  echo "$hits" | cut -c1-200 >&2
+  echo "Reword them, or commit with --no-verify if you're sure." >&2
+  exit 1
+fi
+exit 0

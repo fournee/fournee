@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fournée Four Steps</title>
+<link rel="stylesheet" href="assets/frosting.css">
+<link rel="stylesheet" href="assets/fontdant-fonts.css">
+<link rel="stylesheet" href="assets/fontdant.css">
+<link rel="stylesheet" href="assets/panel.css">
+<link rel="stylesheet" href="assets/fd-panel.css">
+<link rel="stylesheet" href="assets/shell.css">
+<link rel="stylesheet" href="assets/passview.css">
+<link rel="stylesheet" href="mise.css">
+<link rel="stylesheet" href="nav.css">
+<script src="nav.js"></script>
+<style>
+  .demo { background: var(--fr-bg); color: var(--fr-text); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 0; min-height: calc(100vh - var(--mise-nav-h, 56px)); }
+  @media (max-width: 900px) { .demo { grid-template-columns: 1fr; } }
+  .page { padding: 24px 16px; }
+  .page .cards { margin-top: 16px; }
+  .pull { padding: 12px 16px 32px; background: var(--fr-surface); border-left: 1px solid var(--fr-border); }
+  .sample-btn { display: inline-block; margin-top: 10px; padding: 6px 14px; border-radius: 8px; background: var(--fr-button); color: var(--fr-button-text); }
+</style>
+</head>
+<body>
+<div class="demo">
+  <section class="page" aria-label="Sample page">
+    <div class="fd-eyebrow">Live sample</div>
+    <h1 class="fd-heading-xl">Corner Bakery opens at seven</h1>
+    <p class="fd-body muted">Change anything in the panel and this page follows. Everything here is saved only in this browser; Publish keeps it for your next visit. When you like it, Expo → Take it with you gives you a summary, the recipe file and instructions for Claude.</p>
+    <div class="cards">
+      <div class="card"><h3 class="fd-heading-sm">Sourdough</h3><p class="fd-body">Rests for two days before it is baked.</p><p class="fd-caption muted">Updated 8 Nov · prices include tax</p><span class="sample-btn fd-ui--button">Add to order</span></div>
+      <div class="card"><h3 class="fd-heading-sm">Rye</h3><p class="fd-body">Dark, dense and sliced thin.</p><p class="fd-caption muted">Fridays only</p><span class="sample-btn fd-ui--button">Add to order</span></div>
+      <div class="card"><h3 class="fd-heading-sm">Total today</h3><div class="fd-metric">$1,284.50</div><code class="fd-mono-inline">order #9f2c4b</code></div>
+    </div>
+  </section>
+  <aside class="pull" aria-label="Fournée panel"><div id="mise"></div></aside>
+</div>
+<script src="assets/tokens.js"></script>
+<script src="assets/readability.js"></script>
+<script src="assets/gallery.js"></script>
+<script src="assets/fills.js"></script>
+<script src="assets/store.js"></script>
+<script src="assets/panel.js"></script>
+<script src="assets/type-tokens.js"></script>
+<script src="assets/library.js"></script>
+<script src="assets/fontface.js"></script>
+<script src="assets/typecheck.js"></script>
+<script src="assets/licence.js"></script>
+<script src="assets/fd-gallery.js"></script>
+<script src="assets/emit.js"></script>
+<script src="assets/recipe.js"></script>
+<script src="assets/fd-panel.js"></script>
+<script src="assets/sprinkles.js"></script>
+<script src="assets/standards.js"></script>
+<script src="assets/pass.js"></script>
+<script src="assets/passview.js"></script>
+<script src="assets/shell.js"></script>
+<script src="assets/steps.js"></script>
+<script>
+  var adapter = KitchenStore.localStorageAdapter('mise-catalog');
+  var spr = KitchenSprinkles.store(adapter);
+  var light = FrostingTokens.light, demo = document.querySelector('.demo');
+  function plain(colours, on) {
+    var P = KitchenSprinkles.plain(colours);
+    Object.keys(P.changes).forEach(function (k) { demo.style.setProperty('--fr-' + k, on ? colours[k] : P.colors[k]); });
+  }
+  window.steps = KitchenSteps.mount(document.getElementById('mise'), {
+    colours: { store: FrostingStore.createStore(FrostingStore.localStorageAdapter('mise-catalog'), light), target: demo },
+    type: { store: FontdantPanel.createStore(adapter), fontShelf: FontdantPanel.createShelf(adapter), client: 'Fournée catalog', baseUrl: 'fonts', metricsUrl: 'assets/metrics.js' },
+    sprinkles: spr, name: 'Fournée catalog', client: 'Fournée catalog', designColors: function () { return light; },
+    handoff: true, handoffName: 'My look',
+    onChange: function (s) { if (s.colours) plain(s.colours, s.sprinkles); },
+  });
+</script>
+</body>
+</html>

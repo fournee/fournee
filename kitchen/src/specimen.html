@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the pass · type specimen</title>
+<!-- Every type style of a look, for the pass's rendered checks (T13). Served from the mise root.
+     The look comes in the hash as JSON (#{"mode":"dense",...}) or by postMessage({ look }).
+     Rendered at the look's maximum scaling; core styles use fontdant's real classes, extension
+     roles are styled inline from the resolved values. Posts { pass: 'rendered', result } to its parent. -->
+<link rel="stylesheet" href="/frosting/dist/frosting.css">
+<link rel="stylesheet" href="/fontdant/dist/fontdant.css">
+<style>
+  html, body { margin: 0; background: var(--fr-bg); color: var(--fr-text); }
+  body { padding: 8px; }
+  [data-style] { margin: 0 0 6px; }
+</style>
+</head>
+<body>
+<main id="specimen"></main>
+<script src="/fontdant/dist/type-tokens.js"></script>
+<script src="/fontdant/dist/library.js"></script>
+<script src="/fontdant/src/fontface.js"></script>
+<script src="/fontdant/src/typecheck.js"></script>
+<script src="/kitchen/src/render.js"></script>
+<script>
+(function () {
+  var SAMPLE = {
+    display: 'Corner Bakery opens at seven',
+    heading: 'Fresh bread, every morning',
+    body: 'Our sourdough rests for two days before it is baked. Ask at the counter which loaves are still warm.',
+    ui: 'Add to order',
+    caption: 'Updated 8 Nov 2026 · prices include tax',
+    eyebrow: 'Today’s specials',
+    mono: 'curl https://example.com/api/v1/orders?id=9f2c4b7e1a6d43c8b0e5f7a9d2c1b3e4f5a6b7c8d9e0',
+    metric: '1,284.50',
+  };
+  function apply(look) {
+    look = look || {};
+    var T = window.FontdantTokens, F = window.FontdantFonts, C = window.FontdantCheck, p = T.prefix;
+    var max = (T.scalingRange && T.scalingRange[1]) || 1;
+    var at = JSON.parse(JSON.stringify(look)); at.scaling = Math.max(look.scaling || 1, max);   // reflow is checked at the largest text
+    var html = document.documentElement;
+    if (at.mode && at.mode !== T.defaultMode) html.setAttribute('data-' + p + '-mode', at.mode); else html.removeAttribute('data-' + p + '-mode');
+    var fc = F.faceCss({ faces: at.faces || {}, fonts: at.fonts }, { baseUrl: '/fontdant/fonts' });
+    var css = fc.css + '\n:root{' + Object.keys(fc.vars).map(function (s) { return '--' + p + '-face-' + s + ':' + fc.vars[s] + ';'; }).join('') + C.cssVars(at).replace(/\/\*[^*]*\*\//g, '') + '}';
+    var tag = document.getElementById('look-css') || document.head.appendChild(Object.assign(document.createElement('style'), { id: 'look-css' }));
+    tag.textContent = css;
+    var R = C.resolve(at), main = document.getElementById('specimen');
+    main.innerHTML = '';
+    R.styles.forEach(function (s) {
+      var el = document.createElement(s.role === 'body' ? 'p' : 'div');
+      el.setAttribute('data-style', s.name);
+      if (s.face === 'mono') el.setAttribute('data-mono', '1');
+      if (s.extension) {
+        el.style.fontFamily = 'var(--' + p + '-face-' + s.face + ')';
+        el.style.fontSize = s.sizePx + 'px'; el.style.fontWeight = s.weight; el.style.lineHeight = s.leading;
+        el.style.letterSpacing = s.tracking; el.style.textTransform = s.case === 'upper' ? 'uppercase' : 'none';
+        if (s.face === 'mono') el.style.overflowWrap = 'anywhere';   // as fontdant's generator does for mono styles
+      } else {
+        el.className = s.kind === 'variant' ? p + '-' + s.role + '--' + s.name.slice(s.role.length + 1) : p + '-' + s.name;
+      }
+      el.textContent = SAMPLE[s.role] || SAMPLE[s.face] || SAMPLE.caption;
+      main.appendChild(el);
+    });
+    return (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () {
+      var result = window.KitchenRender.measure(document);
+      window.__rendered = result;
+      if (window.parent !== window) window.parent.postMessage({ pass: 'rendered', result: result }, '*');
+      return result;
+    });
+  }
+  window.renderLook = apply;
+  window.addEventListener('message', function (e) { if (e.data && e.data.look !== undefined) apply(e.data.look); });
+  var h = decodeURIComponent(location.hash.slice(1));
+  window.__ready = apply(h ? JSON.parse(h) : {});
+})();
+</script>
+</body>
+</html>

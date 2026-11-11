@@ -1,0 +1,226 @@
+{
+  "about": "A desktop HUD gauge's computed type, read into a recipe. bg = HUD panel over a black desktop, surface = over a white window.",
+  "recipe": {
+    "name": "HUD gauge (as built)",
+    "scheme": "Dark",
+    "client": null,
+    "frosting": {
+      "colors": {
+        "bg": "#060A0F",
+        "surface": "#202329",
+        "text": "#E0F2FE",
+        "muted": "#64748B",
+        "accent": "#22D3EE",
+        "accent-text": "#22D3EE",
+        "ok": "#4ADE80",
+        "warn": "#FBBF24",
+        "bad": "#F87171"
+      }
+    },
+    "fontdant": {
+      "mode": "dense",
+      "extensions": {
+        "roles": [
+          {
+            "name": "hud-usd",
+            "base": "metric",
+            "face": "mono",
+            "size": "1.9375rem",
+            "weight": 300,
+            "leading": 1,
+            "tracking": "0",
+            "case": "none",
+            "color": "#F0F9FF"
+          },
+          {
+            "name": "hud-usd-fitted",
+            "base": "metric",
+            "face": "mono",
+            "size": "0.875rem",
+            "weight": 300,
+            "leading": 1,
+            "tracking": "0",
+            "case": "none",
+            "color": "#F0F9FF"
+          },
+          {
+            "name": "hud-mini-usd",
+            "base": "metric",
+            "face": "mono",
+            "size": "1.125rem",
+            "weight": 300,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "#F0F9FF"
+          },
+          {
+            "name": "hud-model",
+            "base": "eyebrow",
+            "face": "mono",
+            "size": "0.6563rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.13em",
+            "case": "upper",
+            "color": "accent-text"
+          },
+          {
+            "name": "hud-status",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.5938rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.08em",
+            "case": "none",
+            "color": "muted"
+          },
+          {
+            "name": "hud-usd-label",
+            "base": "eyebrow",
+            "face": "mono",
+            "size": "0.5rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.2em",
+            "case": "upper",
+            "color": "muted"
+          },
+          {
+            "name": "hud-tokens",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.625rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "#94A3B8"
+          },
+          {
+            "name": "hud-record",
+            "base": "eyebrow",
+            "face": "mono",
+            "size": "0.4688rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.2em",
+            "case": "upper",
+            "color": "#FBBF24"
+          },
+          {
+            "name": "hud-tps",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.625rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "accent-text"
+          },
+          {
+            "name": "hud-vram-legend",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.5313rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.04em",
+            "case": "none",
+            "color": "muted"
+          },
+          {
+            "name": "hud-footer",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.5938rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "muted"
+          },
+          {
+            "name": "hud-panel-row",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.5938rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "muted"
+          },
+          {
+            "name": "hud-panel-sub",
+            "base": "eyebrow",
+            "face": "mono",
+            "size": "0.5rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.2em",
+            "case": "upper",
+            "color": "#475569"
+          },
+          {
+            "name": "hud-panel-badge",
+            "base": "eyebrow",
+            "face": "mono",
+            "size": "0.5rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.08em",
+            "case": "upper",
+            "color": "#34D399"
+          },
+          {
+            "name": "hud-hist-label",
+            "base": "eyebrow",
+            "face": "mono",
+            "size": "0.5rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0.16em",
+            "case": "upper",
+            "color": "muted"
+          },
+          {
+            "name": "hud-hist-value",
+            "base": "metric",
+            "face": "mono",
+            "size": "1rem",
+            "weight": 300,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "#F0F9FF"
+          },
+          {
+            "name": "hud-hist-note",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.5625rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "muted"
+          },
+          {
+            "name": "hud-hist-axis",
+            "base": "caption",
+            "face": "mono",
+            "size": "0.5rem",
+            "weight": 400,
+            "leading": 1.2,
+            "tracking": "0",
+            "case": "none",
+            "color": "muted"
+          }
+        ]
+      }
+    }
+  }
+}

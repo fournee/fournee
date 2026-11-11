@@ -1,0 +1,60 @@
+{
+  "id": "instrument-sans",
+  "family": "Instrument Sans",
+  "category": "Sans Serif",
+  "designers": [
+    "Rodrigo Fuenzalida",
+    "Jordan Egstad"
+  ],
+  "variable": true,
+  "axes": [
+    {
+      "tag": "wdth",
+      "min": 75,
+      "max": 100
+    },
+    {
+      "tag": "wght",
+      "min": 400,
+      "max": 700
+    }
+  ],
+  "staticStyles": [
+    "400",
+    "500",
+    "600",
+    "700",
+    "400i",
+    "500i",
+    "600i",
+    "700i"
+  ],
+  "files": [
+    {
+      "style": "normal",
+      "file": "instrument-sans-latin-wght.woff2",
+      "weight": "400 700",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/instrumentsans/v4/pxicypc9vsFDm051Uf6KVwgkfoSbT2lB.woff2",
+      "bytes": 57332
+    },
+    {
+      "file": "instrument-sans-latin-wght-italic.woff2",
+      "weight": "400 700",
+      "style": "italic",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/instrumentsans/v4/pxieypc9vsFDm051Uf6KVwgkfoSbSllDims.woff2",
+      "bytes": 61636
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Rodrigo Fuenzalida, Jordan Egstad",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentsans/"
+  },
+  "fetched": "2026-11-08T19:36:04.973Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap",
+  "css2Italic": "https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@1,75..100,400..700&display=swap",
+  "italicsFetched": "2026-11-08T20:32:34.305Z"
+}

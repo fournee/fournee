@@ -1,0 +1,103 @@
+/* frosting tokens v1.0.0 — generated from tokens.json by scripts/build.mjs; do not edit.
+   Light defaults on :root; dark defaults under prefers-color-scheme: dark (unless data-theme="light")
+   and under an explicit data-theme="dark". A look overrides any of these with setProperty. */
+:root {
+  /* ── core ── Always present. Every frosted page uses these. */
+  --fr-bg: #FFFFFF;
+  --fr-surface: #F5F3EF;
+  --fr-border: #E3DED6;
+  --fr-text: #1C1B19;
+  --fr-muted: #5E5A53;
+  --fr-accent: #2E7D4F;
+  --fr-accent-text: #22603C;
+  --fr-button: #2E7D4F;
+  --fr-button-text: #FFFFFF;
+  --fr-progress-fill: #2E7D4F;
+  --fr-progress-track: #E7E3DC;
+  /* ── status ── Optional. Dashboards and monitors: dots, meters, badges. */
+  --fr-ok: #2E7D4F;
+  --fr-warn: #B45309;
+  --fr-bad: #C8402F;
+  /* ── series ── Optional. Chart lines and bars, in order of use. */
+  --fr-series-1: #1F5F8B;
+  --fr-series-2: #D9622B;
+  --fr-series-3: #6B2D5C;
+  --fr-series-4: #5C6B3A;
+
+  /* ── derived ── Follow the roles automatically through color-mix(); never edited directly. {p} is the prefix. */
+  --fr-accent-soft: color-mix(in srgb, var(--fr-accent) 12%, var(--fr-bg));
+  --fr-accent-faint: color-mix(in srgb, var(--fr-accent) 8%, var(--fr-bg));
+  --fr-control-border: color-mix(in srgb, var(--fr-muted) 80%, var(--fr-bg));
+  --fr-scrim: rgb(14 13 12 / .5);
+  --fr-tip-bg: var(--fr-text);
+  --fr-tip-text: var(--fr-bg);
+  --fr-focus-ring: var(--fr-accent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --fr-bg: #0F1115;
+  --fr-surface: #171A21;
+  --fr-border: #262B36;
+  --fr-text: #E6E8EE;
+  --fr-muted: #8A92A6;
+  --fr-accent: #9D7BFF;
+  --fr-accent-text: #B9A3FF;
+  --fr-button: #9D7BFF;
+  --fr-button-text: #0F1115;
+  --fr-progress-fill: #9D7BFF;
+  --fr-progress-track: #262B36;
+  --fr-ok: #3DDC84;
+  --fr-warn: #FFCC4D;
+  --fr-bad: #FF5C6C;
+  --fr-series-1: #4FB3FF;
+  --fr-series-2: #FFB454;
+  --fr-series-3: #C084FC;
+  --fr-series-4: #5FE0A8;
+  }
+}
+:root[data-theme="dark"] {
+  --fr-bg: #0F1115;
+  --fr-surface: #171A21;
+  --fr-border: #262B36;
+  --fr-text: #E6E8EE;
+  --fr-muted: #8A92A6;
+  --fr-accent: #9D7BFF;
+  --fr-accent-text: #B9A3FF;
+  --fr-button: #9D7BFF;
+  --fr-button-text: #0F1115;
+  --fr-progress-fill: #9D7BFF;
+  --fr-progress-track: #262B36;
+  --fr-ok: #3DDC84;
+  --fr-warn: #FFCC4D;
+  --fr-bad: #FF5C6C;
+  --fr-series-1: #4FB3FF;
+  --fr-series-2: #FFB454;
+  --fr-series-3: #C084FC;
+  --fr-series-4: #5FE0A8;
+}
+/* Gradient fills (src/fills.js): a look may set --fr-<role>-fill on top of a role's solid colour. Paint
+   background-color: var(--fr-<role>); background-image: var(--fr-<role>-fill, none).
+   Forced colours, more contrast and print get the solid roles: every fill is switched off here, beating a
+   look's inline values (!important). */
+@media (forced-colors: active), (prefers-contrast: more), print {
+  :root, :root * {
+    --fr-bg-fill: none !important;
+    --fr-surface-fill: none !important;
+    --fr-border-fill: none !important;
+    --fr-text-fill: none !important;
+    --fr-muted-fill: none !important;
+    --fr-accent-fill: none !important;
+    --fr-accent-text-fill: none !important;
+    --fr-button-fill: none !important;
+    --fr-button-text-fill: none !important;
+    --fr-progress-fill-fill: none !important;
+    --fr-progress-track-fill: none !important;
+    --fr-ok-fill: none !important;
+    --fr-warn-fill: none !important;
+    --fr-bad-fill: none !important;
+    --fr-series-1-fill: none !important;
+    --fr-series-2-fill: none !important;
+    --fr-series-3-fill: none !important;
+    --fr-series-4-fill: none !important;
+  }
+}

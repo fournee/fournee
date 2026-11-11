@@ -1,0 +1,65 @@
+{
+  "id": "newsreader",
+  "family": "Newsreader",
+  "category": "Serif",
+  "designers": [
+    "Production Type"
+  ],
+  "variable": true,
+  "axes": [
+    {
+      "tag": "opsz",
+      "min": 6,
+      "max": 72
+    },
+    {
+      "tag": "wght",
+      "min": 200,
+      "max": 800
+    }
+  ],
+  "staticStyles": [
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "200i",
+    "300i",
+    "400i",
+    "500i",
+    "600i",
+    "700i",
+    "800i"
+  ],
+  "files": [
+    {
+      "style": "normal",
+      "file": "newsreader-latin-wght.woff2",
+      "weight": "200 800",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjA.woff2",
+      "bytes": 132000
+    },
+    {
+      "file": "newsreader-latin-wght-italic.woff2",
+      "weight": "200 800",
+      "style": "italic",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/newsreader/v26/cY9CfjOCX1hbuyalUrK439vCjohC.woff2",
+      "bytes": 146872
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Production Type",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/newsreader/"
+  },
+  "fetched": "2026-11-08T19:36:07.843Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200..800&display=swap",
+  "css2Italic": "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,200..800&display=swap",
+  "italicsFetched": "2026-11-08T20:32:34.738Z"
+}

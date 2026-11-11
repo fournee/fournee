@@ -1,0 +1,21 @@
+{
+  "name": "@fournee/kitchen",
+  "version": "0.1.0",
+  "description": "Kitchen: the shared parts of Fournée. The store engine, the recipe format, the panel shell, the pass.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:unit": "node test/run.mjs && node test/pass.mjs && node test/phase5.mjs && node test/standards.mjs",
+    "test:browser": "node test/browser.mjs && node test/pass-browser.mjs && node test/panel-browser.mjs && node test/playground-browser.mjs && node test/gradients-browser.mjs && node test/steps-browser.mjs",
+    "test": "npm run test:unit && npm run test:browser"
+  },
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fournee/fournee.git",
+    "directory": "kitchen"
+  }
+}

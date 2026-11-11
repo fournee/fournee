@@ -1,0 +1,43 @@
+{
+  "id": "instrument-serif",
+  "family": "Instrument Serif",
+  "category": "Serif",
+  "designers": [
+    "Rodrigo Fuenzalida",
+    "Jordan Egstad"
+  ],
+  "variable": false,
+  "axes": [],
+  "staticStyles": [
+    "400",
+    "400i"
+  ],
+  "files": [
+    {
+      "style": "normal",
+      "file": "instrument-serif-latin-400.woff2",
+      "weight": "400",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zUTjg.woff2",
+      "bytes": 21032
+    },
+    {
+      "file": "instrument-serif-latin-400-italic.woff2",
+      "weight": "400",
+      "style": "italic",
+      "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+      "from": "https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjjH7M.woff2",
+      "bytes": 22128
+    }
+  ],
+  "licence": {
+    "id": "OFL-1.1",
+    "designer": "Rodrigo Fuenzalida, Jordan Egstad",
+    "reservedFontName": true,
+    "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/"
+  },
+  "fetched": "2026-11-08T19:36:12.063Z",
+  "css2": "https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400&display=swap",
+  "css2Italic": "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@1,400&display=swap",
+  "italicsFetched": "2026-11-08T20:32:35.141Z"
+}

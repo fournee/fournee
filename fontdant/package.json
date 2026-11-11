@@ -1,0 +1,30 @@
+{
+  "name": "@fournee/fontdant",
+  "version": "0.1.0",
+  "description": "Fontdant: the type half of Fournée. Roles as CSS variables that point at face slots and dials, type contracts, the dial fit.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node scripts/fetch-library.mjs",
+    "build": "node scripts/build-library.mjs && node scripts/build.mjs",
+    "test:unit": "npm run build && node test/run.mjs",
+    "test:browser": "node test/browser.mjs",
+    "test": "npm run build && node test/run.mjs && node test/browser.mjs"
+  },
+  "files": [
+    "dist",
+    "src",
+    "type-tokens.json"
+  ],
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "fontkit": "^2.0.4",
+    "playwright": "^1.65.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fournee/fournee.git",
+    "directory": "fontdant"
+  }
+}
