@@ -19,7 +19,7 @@ accessibility rules before it ships.
 | [**Kitchen**](kitchen/) | The shared parts: the recipe format, the store, **the pass** (checks a look against WCAG 2.2 and 20 other standards), Sprinkles, and the four-step panel |
 | [**Delivery**](delivery/) | The same recipe in plain HTML, React, Svelte, Electron, pywebview, Qt and tkinter, plus a [DTCG](https://www.designtokens.org/) 2025.10 export |
 
-The **catalog** shows all of it live, including a playground where you build a look in four steps (Frosting →
+The **[catalog](https://fournee.github.io/fournee/)** shows all of it live, including a playground where you build a look in four steps (Frosting →
 Fontdant → Spec → Expo) and take the recipe with you.
 
 ## Try it
