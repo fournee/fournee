@@ -30,3 +30,6 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# local Claude session outputs (never publish)
+Claude outputs/
