@@ -33,3 +33,6 @@ desktop.ini
 
 # local Claude session outputs (never publish)
 Claude outputs/
+
+# private proposal drafts (never publish)
+docs/proposals/
