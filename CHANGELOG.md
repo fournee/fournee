@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- **Frosting: eight tag roles**, `--fr-tag-1` … `--fr-tag-8`, an optional group for telling projects or categories
+  apart (a strip, an underline, a dot). Fixed, evenly spread hues in the same order in every look (blue, orange,
+  violet, green, magenta, cyan, amber, lime), fitted as shapes to 3:1 on `bg` and `surface`. Every ready-made,
+  brand and lucky look derives them. First user: Front Desk's per-project colours.
+
 ## v1.2.0 — 11 Nov 2026 · first public release
 
 Fournée goes public under the MIT licence.

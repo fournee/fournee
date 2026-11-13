@@ -24,6 +24,15 @@
   --fr-series-2: #D9622B;
   --fr-series-3: #6B2D5C;
   --fr-series-4: #5C6B3A;
+  /* ── tag ── Optional. Telling projects or categories apart: a strip, an underline, a dot. Shapes, not text. */
+  --fr-tag-1: #1D4ED8;
+  --fr-tag-2: #C2410C;
+  --fr-tag-3: #7C3AED;
+  --fr-tag-4: #047857;
+  --fr-tag-5: #A21CAF;
+  --fr-tag-6: #0E7490;
+  --fr-tag-7: #A16207;
+  --fr-tag-8: #4D7C0F;
 
   /* ── derived ── Follow the roles automatically through color-mix(); never edited directly. {p} is the prefix. */
   --fr-accent-soft: color-mix(in srgb, var(--fr-accent) 12%, var(--fr-bg));
@@ -54,6 +63,14 @@
   --fr-series-2: #FFB454;
   --fr-series-3: #C084FC;
   --fr-series-4: #5FE0A8;
+  --fr-tag-1: #60A5FA;
+  --fr-tag-2: #FB923C;
+  --fr-tag-3: #A78BFA;
+  --fr-tag-4: #34D399;
+  --fr-tag-5: #E879F9;
+  --fr-tag-6: #22D3EE;
+  --fr-tag-7: #FACC15;
+  --fr-tag-8: #A3E635;
   }
 }
 :root[data-theme="dark"] {
@@ -75,6 +92,14 @@
   --fr-series-2: #FFB454;
   --fr-series-3: #C084FC;
   --fr-series-4: #5FE0A8;
+  --fr-tag-1: #60A5FA;
+  --fr-tag-2: #FB923C;
+  --fr-tag-3: #A78BFA;
+  --fr-tag-4: #34D399;
+  --fr-tag-5: #E879F9;
+  --fr-tag-6: #22D3EE;
+  --fr-tag-7: #FACC15;
+  --fr-tag-8: #A3E635;
 }
 /* Gradient fills (src/fills.js): a look may set --fr-<role>-fill on top of a role's solid colour. Paint
    background-color: var(--fr-<role>); background-image: var(--fr-<role>-fill, none).
@@ -100,6 +125,14 @@
     --fr-series-2-fill: none !important;
     --fr-series-3-fill: none !important;
     --fr-series-4-fill: none !important;
+    --fr-tag-1-fill: none !important;
+    --fr-tag-2-fill: none !important;
+    --fr-tag-3-fill: none !important;
+    --fr-tag-4-fill: none !important;
+    --fr-tag-5-fill: none !important;
+    --fr-tag-6-fill: none !important;
+    --fr-tag-7-fill: none !important;
+    --fr-tag-8-fill: none !important;
   }
 }
 

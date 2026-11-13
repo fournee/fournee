@@ -15,6 +15,17 @@
   function roles() { return T.roles.concat.apply(T.roles, exts.map(function (e) { return e.roles || []; })); }
   function defaults(mode) { var d = {}; roles().forEach(function (r) { d[r.name] = r[mode || 'light']; }); return d; }
 
+  /* ── tags: eight fixed, evenly spread hues for telling projects or categories apart ──
+     The same hue order in every look (tag-1 is always the blue one), fitted as shapes on bg and surface. */
+  var TAG_HUES = [224, 17, 262, 163, 295, 193, 35, 86];
+  function tags(bg, surface) {
+    var dark = isDark(bg), out = {};
+    TAG_HUES.forEach(function (h, n) {
+      out['tag-' + (n + 1)] = fit(hex({ h: h, s: dark ? 80 : 75, l: dark ? 66 : 38 }), [[bg, 3], [surface, 3]]);
+    });
+    return out;
+  }
+
   /* ── build a full look from a few chosen colours ──
      spec: { bg, a (accent), b (button), p (progress, optional), status (hue overrides, optional) }
      lockBg: when set, replaces spec.bg and everything is rebuilt around it. */
@@ -58,7 +69,7 @@
       'accent': accent, 'accent-text': accentText, 'button': button, 'button-text': buttonText,
       'progress-fill': fill, 'progress-track': track,
       'ok': status(sh.ok), 'warn': status(sh.warn), 'bad': status(sh.bad),
-    }, series);
+    }, series, tags(bg, surface));
     exts.forEach(function (e) { if (e.derive) Object.assign(theme, e.derive(theme, spec, C)); });
     return theme;
   }
@@ -110,7 +121,7 @@
   /* presets(lockBg): the derived looks, then the brand looks (left out when a background is locked: they're exact) */
   function presets(lockBg) {
     var out = PRESETS.map(function (p) { return { name: p.name, scheme: SCHEMES[p.scheme], colors: derive(p, lockBg) }; });
-    if (!lockBg) BRANDS.forEach(function (b) { out.push({ name: b.name, scheme: 'Brand', standard: b.standard, note: b.note, colors: Object.assign({}, b.colors) }); });
+    if (!lockBg) BRANDS.forEach(function (b) { out.push({ name: b.name, scheme: 'Brand', standard: b.standard, note: b.note, colors: Object.assign(tags(b.colors.bg, b.colors.surface), b.colors) }); });
     return out;
   }
 
