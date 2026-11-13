@@ -11,7 +11,8 @@ const module = undefined;
   "groups": {
     "core": "Always present. Every frosted page uses these.",
     "status": "Optional. Dashboards and monitors: dots, meters, badges.",
-    "series": "Optional. Chart lines and bars, in order of use."
+    "series": "Optional. Chart lines and bars, in order of use.",
+    "tag": "Optional. Telling projects or categories apart: a strip, an underline, a dot. Shapes, not text."
   },
   "roles": [
     {
@@ -157,6 +158,70 @@ const module = undefined;
       "use": "Fourth chart line or bar.",
       "light": "#5C6B3A",
       "dark": "#5FE0A8"
+    },
+    {
+      "name": "tag-1",
+      "group": "tag",
+      "label": "Tag 1",
+      "use": "Project or category tag 1 (blue). Strips, underlines, dots.",
+      "light": "#1D4ED8",
+      "dark": "#60A5FA"
+    },
+    {
+      "name": "tag-2",
+      "group": "tag",
+      "label": "Tag 2",
+      "use": "Project or category tag 2 (orange). Strips, underlines, dots.",
+      "light": "#C2410C",
+      "dark": "#FB923C"
+    },
+    {
+      "name": "tag-3",
+      "group": "tag",
+      "label": "Tag 3",
+      "use": "Project or category tag 3 (violet). Strips, underlines, dots.",
+      "light": "#7C3AED",
+      "dark": "#A78BFA"
+    },
+    {
+      "name": "tag-4",
+      "group": "tag",
+      "label": "Tag 4",
+      "use": "Project or category tag 4 (green). Strips, underlines, dots.",
+      "light": "#047857",
+      "dark": "#34D399"
+    },
+    {
+      "name": "tag-5",
+      "group": "tag",
+      "label": "Tag 5",
+      "use": "Project or category tag 5 (magenta). Strips, underlines, dots.",
+      "light": "#A21CAF",
+      "dark": "#E879F9"
+    },
+    {
+      "name": "tag-6",
+      "group": "tag",
+      "label": "Tag 6",
+      "use": "Project or category tag 6 (cyan). Strips, underlines, dots.",
+      "light": "#0E7490",
+      "dark": "#22D3EE"
+    },
+    {
+      "name": "tag-7",
+      "group": "tag",
+      "label": "Tag 7",
+      "use": "Project or category tag 7 (amber). Strips, underlines, dots.",
+      "light": "#A16207",
+      "dark": "#FACC15"
+    },
+    {
+      "name": "tag-8",
+      "group": "tag",
+      "label": "Tag 8",
+      "use": "Project or category tag 8 (lime). Strips, underlines, dots.",
+      "light": "#4D7C0F",
+      "dark": "#A3E635"
     }
   ],
   "contracts": [
@@ -285,6 +350,102 @@ const module = undefined;
       "role": "series-4",
       "against": "bg",
       "min": 3
+    },
+    {
+      "label": "Tag 1",
+      "role": "tag-1",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 1 on surfaces",
+      "role": "tag-1",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 2",
+      "role": "tag-2",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 2 on surfaces",
+      "role": "tag-2",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 3",
+      "role": "tag-3",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 3 on surfaces",
+      "role": "tag-3",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 4",
+      "role": "tag-4",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 4 on surfaces",
+      "role": "tag-4",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 5",
+      "role": "tag-5",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 5 on surfaces",
+      "role": "tag-5",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 6",
+      "role": "tag-6",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 6 on surfaces",
+      "role": "tag-6",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 7",
+      "role": "tag-7",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 7 on surfaces",
+      "role": "tag-7",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "Tag 8",
+      "role": "tag-8",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Tag 8 on surfaces",
+      "role": "tag-8",
+      "against": "surface",
+      "min": 3
     }
   ],
   "light": {
@@ -305,7 +466,15 @@ const module = undefined;
     "series-1": "#1F5F8B",
     "series-2": "#D9622B",
     "series-3": "#6B2D5C",
-    "series-4": "#5C6B3A"
+    "series-4": "#5C6B3A",
+    "tag-1": "#1D4ED8",
+    "tag-2": "#C2410C",
+    "tag-3": "#7C3AED",
+    "tag-4": "#047857",
+    "tag-5": "#A21CAF",
+    "tag-6": "#0E7490",
+    "tag-7": "#A16207",
+    "tag-8": "#4D7C0F"
   },
   "dark": {
     "bg": "#0F1115",
@@ -325,7 +494,15 @@ const module = undefined;
     "series-1": "#4FB3FF",
     "series-2": "#FFB454",
     "series-3": "#C084FC",
-    "series-4": "#5FE0A8"
+    "series-4": "#5FE0A8",
+    "tag-1": "#60A5FA",
+    "tag-2": "#FB923C",
+    "tag-3": "#A78BFA",
+    "tag-4": "#34D399",
+    "tag-5": "#E879F9",
+    "tag-6": "#22D3EE",
+    "tag-7": "#FACC15",
+    "tag-8": "#A3E635"
   }
 };
   root.FrostingTokens = api;

@@ -30,6 +30,7 @@ build does the rest.
 | core | `bg` `surface` `border` `text` `muted` `accent` `accent-text` `button` `button-text` `progress-fill` `progress-track` | always |
 | status | `ok` `warn` `bad` | dashboards, monitors |
 | series | `series-1` … `series-4` | charts |
+| tag | `tag-1` … `tag-8` | telling projects or categories apart (strips, underlines, dots) |
 
 Each role has a light and a dark default. The dark defaults come from an early desktop
 widget; the light defaults come from the first site that used Frosting.
@@ -57,10 +58,11 @@ roles with a minimum WCAG contrast ratio:
 - `muted` and `accent-text` on `bg` and `surface`: **4.5:1**
 - `button-text` on `button`: **4.5:1**
 - shapes (`accent`, `button`, `progress-fill`, status dots, series lines) on `bg`: **3:1**
+- tags (`tag-1` … `tag-8`) on `bg` and `surface`: **3:1**
 
 The engine never saves a silently unreadable look: hand edits are checked and badged;
 generated looks are **fitted** (hue and saturation kept, lightness moved until every contract
-passes). Status and series roles are *shape* colours: for text in those colours, use the
+passes). Status, series and tag roles are *shape* colours: for text in those colours, use the
 engine's `ink()` helper to pick a readable text colour over them.
 
 ## 5. A look, on disk

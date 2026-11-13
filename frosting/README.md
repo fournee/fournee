@@ -28,7 +28,7 @@ var store = FrostingStore.createStore(FrostingStore.localStorageAdapter('myapp')
 FrostingPanel.mount(document.getElementById('frosting'), { store: store });
 ```
 
-Then write CSS against the roles: `var(--fr-surface)`, `var(--fr-ok)`, `var(--fr-series-1)`…
+Then write CSS against the roles: `var(--fr-surface)`, `var(--fr-ok)`, `var(--fr-series-1)`, `var(--fr-tag-1)`…
 Apply the published look before first paint (inject a `<style>` at build/serve time); see SPEC §6.
 
 Storage adapters: `localStorageAdapter(ns)`, `httpAdapter(baseUrl)` (GET/PUT `{base}/{key}`),
