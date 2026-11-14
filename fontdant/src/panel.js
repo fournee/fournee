@@ -197,8 +197,16 @@
       var e = x.e, stack = withOwn(function () { return F.faceStack(e.id, slot); });
       return '<button type="button" class="fd-face" data-face="' + esc(e.id) + '" aria-pressed="' + (e.id === cur) + '">' +
         '<b class="fd-face__aa" aria-hidden="true" style="font-family:' + esc(stack) + '">Aa</b>' +
-        '<span class="fd-face__name">' + esc(e.family) + (x.own ? ' · Your fonts' : e.lucky ? '' : ' (maybe)') + '</span>' +
+        '<span class="fd-face__name">' + esc(e.family) + (x.own || e.lucky ? '' : ' (maybe)') + '</span>' +
         '<span class="fd-face__sample" style="font-family:' + esc(stack) + '">' + esc(SLOT_SAMPLE[slot]) + '</span></button>';
+    }
+    /* library cards first, then this client's own fonts in a labelled group */
+    function panelCards(slot, tab, cur) {
+      var all = tabFonts(slot, tab), lib = all.filter(function (x) { return !x.own; }), mine = all.filter(function (x) { return x.own; });
+      var gid = 'fd-g-' + slot + '-' + tab;
+      return lib.map(function (x) { return faceCard(x, slot, cur); }).join('') + (mine.length ?
+        '<div class="fd-pick__own" role="group" aria-labelledby="' + gid + '"><span class="fd-pick__own-h" id="' + gid + '">Your fonts' + (opts.client ? ' · ' + esc(opts.client) : '') + '</span>' +
+        mine.map(function (x) { return faceCard(x, slot, cur); }).join('') + '</div>' : '');
     }
     function paintPickers() {
       var active = document.activeElement, box = active && el.contains(active) && active.closest('.fd-pick'), keep = null;
@@ -216,7 +224,7 @@
           '<button type="button" class="fr-btn fr-btn--ghost fd-pick__dice" data-dice aria-label="Pick a random ' + esc(L.tabs[open].label) + ' font for ' + SLOT_LABEL[slot] + '">🎲</button></div>';
         var panels = tabs.map(function (t) {
           return '<div class="fd-pick__panel" role="tabpanel" id="fd-p-' + slot + '-' + t + '" aria-labelledby="fd-t-' + slot + '-' + t + '"' + (t === open ? '' : ' hidden') + '>' +
-            (t === open ? tabFonts(slot, t).map(function (x) { return faceCard(x, slot, cur); }).join('') : '') + '</div>';
+            (t === open ? panelCards(slot, t, cur) : '') + '</div>';
         }).join('');
         $('[data-slot="' + slot + '"]').innerHTML = head + panels;
       });

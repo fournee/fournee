@@ -113,7 +113,11 @@ for (const [name, type] of [['chromium', chromium], ['firefox', firefox]]) {
     await p3.goto(`${base}/fontdant/test/picker.html?own=1`); await p3.evaluate(() => window.panel.ready);
     await p3.click('[data-slot="display"] [role="tab"][data-tab="serif"]');
     expect((await facesIn(p3, 'display')).includes('my-serif'), name, 'own serif font is in the Serif tab');
-    expect(/Your fonts/.test(await text(p3, '[data-slot="display"] [data-face="my-serif"]')), name, 'and is marked as yours');
+    const grp = await p3.$$eval('[data-slot="display"] [role="tabpanel"]:not([hidden]) [role="group"]', (gs) => gs.map((g) => ({ label: document.getElementById(g.getAttribute('aria-labelledby'))?.textContent, faces: [...g.querySelectorAll('[data-face]')].map((f) => f.getAttribute('data-face')), name: g.querySelector('.fd-face__name')?.textContent })));
+    expect(grp.length === 1 && grp[0].label === 'Your fonts · Acme' && grp[0].faces.join() === 'my-serif', name, 'it sits in a "Your fonts · Acme" group, alone', grp);
+    expect(!/Your fonts/.test(grp[0]?.name || ''), name, 'the card name carries no Your fonts suffix', grp);
+    const order = await p3.evaluate(() => { const c = [...document.querySelectorAll('[data-slot="display"] [role="tabpanel"]:not([hidden]) [data-face]')]; return c.findIndex((x) => x.closest('[role="group"]')) > c.findIndex((x) => !x.closest('[role="group"]')); });
+    expect(order, name, 'the group follows the library cards');
     await p3.click('[data-slot="display"] [role="tab"][data-tab="sans"]');
     expect(!(await facesIn(p3, 'display')).includes('my-serif'), name, 'own serif font is not in Sans');
     await p3.click('[data-slot="display"] [role="tab"][data-tab="serif"]');

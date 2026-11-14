@@ -95,8 +95,8 @@ try {
     await page.click('[data-add-go]');
     await page.waitForFunction(() => /Added Alegreya Sans/.test(document.querySelector('.fd-pal [data-flash]').textContent));
     await page.click('.fd-pal [data-slot="display"] [data-tab="sans"]');   // no category: it sits in Sans, marked as the user's own
-    const opt = await page.$$eval('.fd-pal [data-slot="display"] [data-face="alegreya-sans"]', (cs) => cs.map((c) => c.textContent));
-    expect(opt.length === 1 && /Alegreya Sans/.test(opt[0]) && /Your fonts/.test(opt[0]), 'it is offered in the picker marked "Your fonts"', opt);
+    const opt = await page.$$eval('.fd-pal [data-slot="display"] [data-face="alegreya-sans"]', (cs) => cs.map((c) => ({ text: c.textContent, group: c.closest('[role="group"]') ? document.getElementById(c.closest('[role="group"]').getAttribute('aria-labelledby')).textContent : null })));
+    expect(opt.length === 1 && /Alegreya Sans/.test(opt[0].text) && !/Your fonts/.test(opt[0].text) && opt[0].group === 'Your fonts · Corner Bakery', 'it is offered in the Sans tab inside the "Your fonts · Corner Bakery" group', opt);
     await page.click('.fd-pal [data-slot="display"] [data-face="alegreya-sans"]');
     const css = await page.evaluate(() => document.getElementById('fontdant-live').textContent);
     expect(/font-family: "Alegreya Sans fd-display";\n  src: url\("data:[^;"]*;base64,[^"]+"\) format\("woff2"\)/.test(css) && /font-weight: 800;/.test(css), 'picking it emits its own @font-face (inline files: no saveFontFile here)', css.slice(0, 200));
