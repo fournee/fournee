@@ -125,6 +125,17 @@ for (const [name, type] of [['chromium', chromium], ['firefox', firefox]]) {
     expect((await draftFaces(p3)).display === 'my-serif', name, 'picking the own font sets the face');
     await p3.close();
 
+    // compact cards: several per row at the playground's slot-picker width
+    const p5 = await browser.newPage({ viewport: { width: 1100, height: 900 } });
+    await p5.goto(`${base}/fontdant/test/picker.html`); await p5.evaluate(() => window.panel.ready);
+    await p5.click('[data-slot="text"] [role="tab"][data-tab="sans"]');
+    for (const w of [266, 560]) {
+      await p5.addStyleTag({ content: `.fd-pick[data-slot="text"], [data-slot="text"] > .fd-pick { width: ${w}px !important; }` });
+      const perRow = await p5.$$eval('[data-slot="text"] [role="tabpanel"]:not([hidden]) [data-face]', (cs) => { const top = cs[0].getBoundingClientRect().top; return cs.filter((c) => Math.abs(c.getBoundingClientRect().top - top) < 4).length; });
+      expect(perRow >= (w > 400 ? 3 : 2), name, `cards per row at ${w}px`, perRow);
+    }
+    await p5.close();
+
     // nothing under 12px, light and dark (visible picker text)
     for (const scheme of ['light', 'dark']) {
       const p4 = await browser.newPage({ colorScheme: scheme });

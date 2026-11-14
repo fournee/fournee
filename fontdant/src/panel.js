@@ -24,7 +24,6 @@
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SLOTS = ['display', 'text', 'mono'];
   var SLOT_LABEL = { display: 'Display', text: 'Text', mono: 'Mono' };
-  var SLOT_SAMPLE = { display: 'Corner Bakery', text: 'Fresh bread, baked daily', mono: 'order #9f2c4b' };
   /* a font the user added has no curated tab: its category says where it sits (brief rule 6) */
   var CATEGORY_TAB = { serif: 'serif', mono: 'mono' };
   var WEIGHT_WORDS = /[\s-]+(Thin|Hairline|ExtraLight|UltraLight|Light|Regular|Book|Normal|Medium|SemiBold|DemiBold|Bold|ExtraBold|UltraBold|Heavy|Black)?\s*(Italic|Oblique)?$/i;
@@ -197,8 +196,7 @@
       var e = x.e, stack = withOwn(function () { return F.faceStack(e.id, slot); });
       return '<button type="button" class="fd-face" data-face="' + esc(e.id) + '" aria-pressed="' + (e.id === cur) + '">' +
         '<b class="fd-face__aa" aria-hidden="true" style="font-family:' + esc(stack) + '">Aa</b>' +
-        '<span class="fd-face__name">' + esc(e.family) + (x.own || e.lucky ? '' : ' (maybe)') + '</span>' +
-        '<span class="fd-face__sample" style="font-family:' + esc(stack) + '">' + esc(SLOT_SAMPLE[slot]) + '</span></button>';
+        '<span class="fd-face__name" style="font-family:' + esc(stack) + '">' + esc(e.family) + (x.own || e.lucky ? '' : ' <i class="fd-face__maybe">(maybe)</i>') + '</span></button>';
     }
     /* library cards first, then this client's own fonts in a labelled group */
     function panelCards(slot, tab, cur) {
