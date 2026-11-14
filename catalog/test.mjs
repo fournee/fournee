@@ -50,7 +50,7 @@ for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
     const lp = await ctx.newPage(); await lp.emulateMedia({ colorScheme: scheme });
     await lp.goto(base + 'fontdant.html', { waitUntil: 'networkidle' });
     const lib = JSON.parse(await readFile(join(here, '..', 'fontdant', 'fonts', 'library.json'), 'utf8'));
-    const tabs = await lp.$$eval('#lib-tabs [role="tab"]', (t) => t.map((x) => x.textContent.replace(/ \(\d+\)/, '')));
+    const tabs = await lp.$$eval('#lib-tabs [role="tab"]', (t) => t.map((x) => x.firstChild.textContent));
     ok(JSON.stringify(tabs) === JSON.stringify(['Sans', 'Serif', 'Decorative', 'Mono']), `${tag} ${scheme} library: four tabs (${tabs})`);
     ok(await lp.$eval('#lib-tabs', (e) => e.getAttribute('role')) === 'tablist', `${tag} ${scheme} library: ARIA tablist`);
     const counts = {};
@@ -64,6 +64,20 @@ for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
     }
     const ids = Object.keys(lib.fonts);
     ok(ids.every((id) => counts[id] === 1) && Object.keys(counts).length === ids.length, `${tag} ${scheme} library: every family in exactly one tab (${ids.length} families)`);
+    // #library lands with the tablist fully visible below the sticky nav; the library comes before Type presets; tabs are at least h-sm
+    const hp = await ctx.newPage(); await hp.emulateMedia({ colorScheme: scheme });
+    await hp.goto(base + 'fontdant.html#library', { waitUntil: 'networkidle' }); await hp.waitForTimeout(400);
+    const g = await hp.evaluate(() => {
+      const nav = document.querySelector('.mise-nav').getBoundingClientRect(), tl = document.getElementById('lib-tabs').getBoundingClientRect();
+      const probe = document.createElement('div'); probe.style.fontSize = 'var(--fd-step-h-sm)'; document.body.appendChild(probe); const hsm = parseFloat(getComputedStyle(probe).fontSize); probe.remove();
+      const tabPx = [...document.querySelectorAll('#lib-tabs [role="tab"]')].map((t) => parseFloat(getComputedStyle(t).fontSize));
+      const lib = document.getElementById('library-section'), pre = document.getElementById('presets');
+      return { navB: nav.bottom, top: tl.top, bottom: tl.bottom, vh: innerHeight, hsm, tabPx, before: !!(lib.compareDocumentPosition(pre) & Node.DOCUMENT_POSITION_FOLLOWING) };
+    });
+    ok(g.top >= g.navB - 1 && g.bottom <= g.vh, `${tag} ${scheme} #library: tablist visible below the nav (nav ${g.navB}, tabs ${g.top}-${g.bottom}, vh ${g.vh})`);
+    ok(g.tabPx.length === 4 && g.tabPx.every((x) => x >= g.hsm - 0.5), `${tag} ${scheme} library: tabs at least the h-sm step (${g.tabPx} vs ${g.hsm})`);
+    ok(g.before, `${tag} ${scheme} library: comes before Type presets`);
+    await hp.close();
     await lp.close();
   }
   // light/dark: switch on one page, it holds on the next; the Frosting catalog follows

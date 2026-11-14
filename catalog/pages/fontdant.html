@@ -17,12 +17,19 @@
   .preset .sample-h { font-size: var(--fd-step-h-sm); margin: 8px 0 2px; }
   .preset .sample-b { margin: 0; }
   .preset .faces { color: var(--fr-muted); font-size: var(--fd-step-sm); }
-  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
-  .tabs [role="tab"] { font: inherit; font-size: var(--fd-step-sm); padding: 8px 14px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); color: var(--fr-text); cursor: pointer; }
-  .tabs [role="tab"][aria-selected="true"] { border-color: var(--fr-accent); font-weight: 600; }
-  .lib-card { padding: 14px; border: 1px solid var(--fr-border); border-radius: 10px; background: var(--fr-surface); }
-  .lib-card h3 { margin: 0 0 4px; }
-  .lib-card .sample { font-size: var(--fd-step-h-sm); margin: 6px 0; overflow-wrap: anywhere; }
+  #library-section { scroll-margin-top: calc(var(--mise-nav-h, 56px) + 8px); }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px 4px; margin: 12px 0 0; border-bottom: 1px solid var(--fr-border-strong); }
+  .tabs [role="tab"] { font-family: var(--fd-face-display); font-size: var(--fd-step-h-sm); line-height: 1.2; padding: 10px 18px; border: 1px solid transparent; border-bottom: 0; border-radius: 10px 10px 0 0; background: transparent; color: var(--fr-text-secondary); cursor: pointer; }
+  .tabs [role="tab"] small { font-family: var(--fd-face-text); font-size: var(--fd-step-sm); color: var(--fr-muted); margin-left: 6px; }
+  .tabs [role="tab"][aria-selected="true"] { background: var(--fr-surface); color: var(--fr-text); border-color: var(--fr-border-strong); margin-bottom: -1px; }
+  .tabs [role="tab"]:focus-visible { outline: 2px solid var(--fr-focus-ring); outline-offset: 2px; }
+  .blurb { margin: 12px 0; color: var(--fr-text-secondary); }
+  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 12px; }
+  .lib-card { padding: 14px; border: 1px solid var(--fr-border); border-radius: 10px; background: var(--fr-surface); min-width: 0; }
+  .lib-card h3 { margin: 0 0 4px; font-family: var(--fd-face-text); font-weight: var(--fd-weight-emph); }
+  .lib-card .aa { font-size: var(--fd-step-display); line-height: 1.1; margin: 4px 0; overflow-wrap: anywhere; }
+  .lib-card .sample-h { font-size: var(--fd-step-h-sm); margin: 6px 0; overflow-wrap: anywhere; }
+  .lib-card .sample-b { font-size: var(--fd-step-md); margin: 6px 0 10px; overflow-wrap: anywhere; }
   .lib-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; color: var(--fr-muted); font-size: var(--fd-step-sm); }
   .lib-card dd { margin: 0; overflow-wrap: anywhere; }
 </style>
@@ -32,6 +39,12 @@
   <h1>Fontdant</h1>
   <p class="lede">Type for every project: three face slots (display, text, mono), a size ladder per mode, weights, and a self-hosted font library. Pages use the <code>--fd-*</code> steps and faces and the <code>.fd-*</code> roles, never literal sizes or font stacks. Nothing goes under 12px.</p>
 
+  <section id="library-section"><h2 id="library">The font library</h2>
+  <p class="muted">Served from this site's <code>fonts/</code>, never from Google. "Lucky" fonts can be picked by 🎲.</p>
+  <div class="tabs" role="tablist" aria-label="Font library" id="lib-tabs"></div>
+  <div id="lib-panels"></div>
+  </section>
+
   <h2>Type presets</h2>
   <div class="presets" id="presets"></div>
 
@@ -39,10 +52,6 @@
   <p class="muted">Each mode's steps, and the floors the checks hold them to.</p>
   <div class="scroll"><table id="ladder"></table></div>
 
-  <h2>The font library</h2>
-  <p class="muted">Served from this site's <code>fonts/</code>, never from Google. "Lucky" fonts can be picked by 🎲.</p>
-  <div class="tabs" role="tablist" aria-label="Font library" id="lib-tabs"></div>
-  <div id="library"></div>
 </main>
 <script src="assets/type-tokens.js"></script>
 <script src="assets/library.js"></script>
@@ -67,17 +76,17 @@
   document.getElementById('ladder').innerHTML = '<thead><tr><th>Step</th>' + modes.map(function (m) { return '<th>' + esc(T.modes[m].label || m) + '</th>'; }).join('') + '</tr></thead><tbody>' +
     T.stepOrder.map(function (s) { return '<tr><td><code>--fd-step-' + esc(s) + '</code></td>' + modes.map(function (m) { return '<td><code>' + esc(T.modes[m].steps[s]) + '</code></td>'; }).join('') + '</tr>'; }).join('') +
     '<tr><td>Floors (px)</td>' + modes.map(function (m) { var f = T.modes[m].floors || {}; return '<td>' + Object.keys(f).map(function (k) { return esc(k) + ' ' + f[k]; }).join(', ') + '</td>'; }).join('') + '</tr></tbody>';
-  var tabIds = Object.keys(L.tabs), byTab = {}, sampleText = 'Corner Bakery opens at seven';
+  var tabIds = Object.keys(L.tabs), byTab = {}, blurbs = { sans: 'Standard, clean letters without the little feet. The everyday choice for apps and sites.', serif: 'Letters with feet and contrast. Bookish, editorial, trustworthy.', decorative: 'Character faces for headings and logos: condensed, slab, script, playful, retro.', mono: 'Fixed-width faces for code, numbers and labels; also usable for headings.' };
   Object.keys(L.fonts).forEach(function (id) { var e = L.fonts[id]; (byTab[e.tab] = byTab[e.tab] || []).push(e); });
   tabIds.forEach(function (t) { (byTab[t] = byTab[t] || []).sort(function (a, b) { return a.family.localeCompare(b.family); }); });
-  var tabsEl = document.getElementById('lib-tabs'), libEl = document.getElementById('library'), loaded = {};
+  var tabsEl = document.getElementById('lib-tabs'), libEl = document.getElementById('lib-panels'), loaded = {};
   tabsEl.innerHTML = tabIds.map(function (t) {
-    return '<button type="button" role="tab" id="tab-' + esc(t) + '" aria-controls="panel-' + esc(t) + '" data-tab="' + esc(t) + '">' + esc(L.tabs[t].label) + ' (' + byTab[t].length + ')</button>';
+    return '<button type="button" role="tab" id="tab-' + esc(t) + '" aria-controls="panel-' + esc(t) + '" data-tab="' + esc(t) + '">' + esc(L.tabs[t].label) + '<small>' + byTab[t].length + '</small></button>';
   }).join('');
   libEl.innerHTML = tabIds.map(function (t) {
-    return '<div role="tabpanel" id="panel-' + esc(t) + '" aria-labelledby="tab-' + esc(t) + '" hidden><div class="presets">' + byTab[t].map(function (e) {
+    return '<div role="tabpanel" id="panel-' + esc(t) + '" aria-labelledby="tab-' + esc(t) + '" hidden><p class="blurb">' + esc(blurbs[t] || '') + '</p><div class="lib-grid">' + byTab[t].map(function (e) {
       var w = e.weights || {}, ws = w.kind === 'variable' ? w.min + '–' + w.max : (w.available || []).join(', '), slot = (e.slots || ['display'])[0];
-      return '<div class="lib-card" data-family="' + esc(e.id) + '"><h3>' + esc(e.family) + '</h3><div class="sample" data-face="' + esc(e.id) + '" data-slot="' + esc(slot) + '">' + sampleText + '</div><dl>' +
+      return '<div class="lib-card" data-family="' + esc(e.id) + '"><h3>' + esc(e.family) + '</h3><div class="sample aa" data-face="' + esc(e.id) + '" data-slot="' + esc(slot) + '">Aa Gg</div><div class="sample sample-h" data-face="' + esc(e.id) + '" data-slot="' + esc(slot) + '">Fresh bread every morning</div><div class="sample sample-b" data-face="' + esc(e.id) + '" data-slot="' + esc(slot) + '">The quick brown fox jumps over the lazy dog. 0123456789</div><dl>' +
         '<dt>Slots</dt><dd>' + esc((e.slots || []).join(', ')) + '</dd><dt>Weights</dt><dd>' + esc(ws) + '</dd><dt>Licence</dt><dd>' + esc((e.licence || {}).id || '') + '</dd><dt>Lucky</dt><dd>' + (e.lucky ? 'yes' : 'no') + '</dd></dl></div>';
     }).join('') + '</div></div>';
   }).join('');
