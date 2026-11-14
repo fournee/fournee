@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- **Fontdant: the Mode switch is readable and fits.** The selected segment was dark text on a dark fill in dark mode and the
+  switch was clipped by the live preview in the narrow controls column. It now uses the surface fill with an accent ring
+  (as the "Choosing for" switch does) and drops below its label so the whole switch shows.
 - **Fontdant: one Faces picker, four tabs across the top.** The three per-slot pickers (a narrow column beside the live
   preview, tabs wrapping, one tiny card per row) are replaced by one full-width picker: "Choosing for" Headings / Body /
   Code, one never-wrapping row of Sans, Serif, Decorative and Mono tabs with the 🎲 at its right end, and a grid of

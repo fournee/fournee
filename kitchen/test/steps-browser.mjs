@@ -67,6 +67,15 @@ for (const name of only ? [only] : ['chromium', 'firefox']) {
   // Fontdant: lucky first, sections in order
   await page.click('.mise-shell__tab[data-tab="fontdant"]');
   ok(await page.$eval('[data-cards] > :first-child', (b) => b.hasAttribute('data-lucky')), '🎲 is the first type card');
+  // the Mode switch: the selected segment is readable and the whole switch sits clear of the live preview
+  const modeBox = await page.evaluate(() => {
+    const body = document.querySelector('[data-body="fontdant"]'), seg = body.querySelector('[data-modes]'), r = seg.getBoundingClientRect(), pv = body.querySelector('.fd-pal__preview').getBoundingClientRect();
+    const sel = seg.querySelector('button[aria-checked="true"]'), cs = getComputedStyle(sel), cv = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+    const L = (c) => { cv.fillStyle = '#000'; cv.fillStyle = c; cv.fillRect(0, 0, 1, 1); return [...cv.getImageData(0, 0, 1, 1).data].slice(0, 3).map((v) => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0); };
+    const a = L(cs.color), b = L(cs.backgroundColor);
+    return { contrast: (Math.max(a, b) + .05) / (Math.min(a, b) + .05), clipped: seg.scrollWidth > seg.clientWidth, overlap: !(r.right <= pv.left + 1 || r.left >= pv.right - 1 || r.bottom <= pv.top + 1 || r.top >= pv.bottom - 1) };
+  });
+  ok(modeBox.contrast >= 4.5 && !modeBox.clipped && !modeBox.overlap, 'Mode switch readable (4.5:1) and not clipped or covered: ' + JSON.stringify(modeBox));
   const fheads = await page.$$eval('[data-body="fontdant"] h3', (hs) => hs.map((h) => h.childNodes[0].textContent.trim()));
   ok(fheads.join('|') === 'Type presets|Faces|Size|Mode|Add a font', 'Fontdant order: ' + fheads.join('|'));
 

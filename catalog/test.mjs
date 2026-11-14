@@ -45,6 +45,34 @@ async function checkFaces(ctx, w, tag) {
     await p.close();
   }
 }
+// The Mode switch on the steps page (Fontdant step): the selected segment is readable (text on its own fill, 4.5:1)
+// in light and dark, and the whole switch is visible: not clipped, inside its column, clear of the live preview.
+async function checkMode(ctx, w, tag) {
+  for (const scheme of ['light', 'dark']) {
+    const p = await ctx.newPage(); await p.emulateMedia({ colorScheme: scheme });
+    await p.goto(base + 'steps.html', { waitUntil: 'networkidle' }); await p.waitForTimeout(600);
+    if (await p.evaluate(() => document.documentElement.getAttribute('data-theme')) !== scheme) await p.click('.mise-nav__theme');   // the catalog's own switch sets data-theme (and remembers it)
+    await p.waitForTimeout(200); const th = await p.evaluate(() => document.documentElement.getAttribute('data-theme')); ok(th === scheme, `${tag} ${scheme} Mode: page really is ${scheme} (${th})`);
+    // the steps page wears a look, which pins roles inline; in dark, wear Frosting's dark roles on the demo the way a dark look does
+    if (scheme === 'dark') await p.evaluate(() => Object.entries({ bg: '#0F1115', surface: '#171A21', border: '#262B36', text: '#E6E8EE', muted: '#8A92A6', accent: '#9D7BFF' }).forEach(([k, v]) => document.querySelector('.demo').style.setProperty('--fr-' + k, v)));
+    await p.click('.mise-shell__tab[data-tab="fontdant"]');
+    await p.waitForSelector('[data-body="fontdant"] [data-modes] button');
+    const g = await p.evaluate(() => {
+      const body = document.querySelector('[data-body="fontdant"]'), seg = body.querySelector('[data-modes]'), sel = seg.querySelector('button[aria-checked="true"]');
+      const cv = document.createElement('canvas'); cv.width = cv.height = 1; const cx = cv.getContext('2d', { willReadFrequently: true });
+      const rgb = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = '#000'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); return [...cx.getImageData(0, 0, 1, 1).data].slice(0, 3); };
+      const lum = (c) => { const [r, g, b] = c.map((v) => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * r + .7152 * g + .0722 * b; };
+      const cs = getComputedStyle(sel), a = lum(rgb(cs.color)), b = lum(rgb(cs.backgroundColor));
+      const r = seg.getBoundingClientRect(), box = seg.closest('.fd-pal__controls').getBoundingClientRect(), prev = body.querySelector('.fd-pal__preview').getBoundingClientRect();
+      const btns = [...seg.querySelectorAll('button')].map((x) => x.getBoundingClientRect());
+      const overlap = !(r.right <= prev.left + 1 || r.left >= prev.right - 1 || r.bottom <= prev.top + 1 || r.top >= prev.bottom - 1);
+      return { n: btns.length, contrast: (Math.max(a, b) + .05) / (Math.min(a, b) + .05), clipped: seg.scrollWidth > seg.clientWidth, inside: r.left >= box.left - 1 && r.right <= box.right + 1 && btns.every((x) => x.right <= r.right + 1 && x.left >= r.left - 1), overlap };
+    });
+    ok(g.n === 2 && g.contrast >= 4.5, `${tag} ${scheme} Mode: selected segment contrast ${g.contrast.toFixed(2)} (need 4.5)`);
+    ok(!g.clipped && g.inside && !g.overlap, `${tag} ${scheme} Mode: not clipped, inside its column, clear of the preview (${JSON.stringify(g)})`);
+    await p.close();
+  }
+}
 for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
   const ctx = await b.newContext({ viewport: { width: w, height: h }, colorScheme: 'light' });
   for (const [path, name] of PAGES) {
@@ -119,9 +147,10 @@ for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
   await p.click('.mise-nav__theme');
   ok(bgDark !== 'rgb(255, 255, 255)', `${tag}: dark actually changes the page (${bgDark})`);
   await checkFaces(ctx, w, tag);
+  await checkMode(ctx, w, tag);
   await ctx.close();
 }
-{ const c = await b.newContext({ viewport: { width: 1440, height: 900 } }); await checkFaces(c, 1440, 'wide'); await c.close(); }
+{ const c = await b.newContext({ viewport: { width: 1440, height: 900 } }); await checkFaces(c, 1440, 'wide'); await checkMode(c, 1440, 'wide'); await c.close(); }
 await b.close(); server.close();
 console.log((fails ? 'FAIL' : 'PASS') + ': the Fournée catalog: one bar on every page, light/dark everywhere, sticky, phone width');
 if (fails) process.exit(1);
