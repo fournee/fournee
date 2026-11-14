@@ -184,6 +184,20 @@ for (const [name, type] of [['chromium', chromium], ['firefox', firefox]]) {
       const per = await rowOf(p5);
       expect(per >= minPer, name, `${vw}/${panelW}: cards per row`, per);
       expect(await p5.evaluate(() => document.documentElement.scrollWidth <= innerWidth), name, `${vw}/${panelW}: no sideways scroll`);
+      // no font name is cut off: card names and the names under Headings / Body / Code show in full
+      const clipped = (pg, sel) => pg.$$eval(sel, (els) => els.filter((e) => e.offsetParent !== null && (e.scrollWidth > e.clientWidth + 1 || getComputedStyle(e).textOverflow === 'ellipsis' && getComputedStyle(e).whiteSpace === 'nowrap')).map((e) => e.textContent.trim()));
+      for (const slot of ['display', 'text', 'mono']) {
+        await slotSel(p5, slot);
+        for (const t of await enabledTabs(p5)) {
+          await p5.click(`${P} [role="tab"]:has-text("${t}")`);
+          await p5.$$eval(`${P} [role="tabpanel"] [data-face]`, (cs) => cs.forEach((c) => c.scrollIntoView()));
+          await p5.evaluate(() => document.fonts.ready);
+          const cut = await clipped(p5, `${P} .fd-face__name`);
+          expect(cut.length === 0, name, `${vw}/${panelW}: ${slot}/${t} card names cut off`, cut.slice(0, 5));
+        }
+      }
+      const cutSlots = await clipped(p5, `${P} .fd-pick__slots small`);
+      expect(cutSlots.length === 0, name, `${vw}/${panelW}: Choosing-for names cut off`, cutSlots);
       await p5.close();
     }
 

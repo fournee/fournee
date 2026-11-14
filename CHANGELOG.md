@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Fontdant: font names show in full.** Card names and the names under Headings / Body / Code now wrap onto a
+  second line instead of being cut off with "…" ("Schibsted Gr…"). A test checks every tab at four panel widths.
 - **Fontdant: the Mode switch is readable and fits.** The selected segment was dark text on a dark fill in dark mode and the
   switch was clipped by the live preview in the narrow controls column. It now uses the surface fill with an accent ring
   (as the "Choosing for" switch does) and drops below its label so the whole switch shows.
