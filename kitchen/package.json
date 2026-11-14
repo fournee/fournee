@@ -5,8 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:unit": "node test/run.mjs && node test/pass.mjs && node test/phase5.mjs && node test/standards.mjs",
-    "test:browser": "node test/browser.mjs && node test/pass-browser.mjs && node test/panel-browser.mjs && node test/playground-browser.mjs && node test/gradients-browser.mjs && node test/steps-browser.mjs",
+    "test:unit": "node test/run.mjs && node test/pass.mjs && node test/phase5.mjs && node test/standards.mjs && node test/suggest.mjs && node test/roles.mjs",
+    "test:browser": "node test/browser.mjs && node test/pass-browser.mjs && node test/panel-browser.mjs && node test/playground-browser.mjs && node test/gradients-browser.mjs && node test/steps-browser.mjs && node test/suggest-browser.mjs && node test/accent-browser.mjs && node test/roles-browser.mjs",
     "test": "npm run test:unit && npm run test:browser"
   },
   "files": [

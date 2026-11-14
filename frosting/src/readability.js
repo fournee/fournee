@@ -61,6 +61,89 @@
   /* Can any text colour reach 7:1 on this background? (Mid-tones can't.) */
   function bgHeadroom(bg) { return Math.max(contrast(bg, '#FFFFFF'), contrast(bg, '#000000')); }
 
+  /* The numeric parts of a colour for CSS that builds its own hsl(): { h, s, l }, h in degrees (0 to 359.9), s and l in
+     percent, one decimal each. A grey has no hue: when s rounds to 0, h is 0. A hue that rounds to 360 is 0. */
+  function accentParts(hexColor) {
+    var o = hsl(hexColor), r1 = function (n) { return Math.round(n * 10) / 10; }, s = r1(o.s);
+    return { h: s ? r1(o.h) % 360 : 0, s: s, l: r1(o.l) };
+  }
+  /* --<prefix>-accent-h / -s / -l for colors.accent, as CSS values (h unitless, s and l with %); {} when there is no valid accent. */
+  function channelVars(colors, prefix) {
+    var a = colors && colors.accent, out = {};
+    if (!HEX.test(a || '')) return out;
+    var p = accentParts(a), pre = '--' + (prefix || 'fr') + '-accent-';
+    out[pre + 'h'] = String(p.h); out[pre + 's'] = p.s + '%'; out[pre + 'l'] = p.l + '%';
+    return out;
+  }
+
+  /* ── calculated roles (v1.3.0) ──
+     A role with a `calc` block in tokens.json ({ from, to, weight, rules, alt?, minWeight? }) lies on the sRGB line from
+     one role (weight 0) to another (weight 100). complete(colors, opts) returns a copy of colors with every calculated
+     role filled, in role order: an override (#RRGGBB in opts.overrides, default colors.overrides) wins; otherwise the
+     nominal weight, or the nearest integer weight that passes the role's rules (ties go to the lower weight).
+     opts.roles: the role list (default FrostingTokens.roles); opts.contracts: contracts (e.g. a standards profile's) that
+     raise a calculated role's rule minimums where they name it;
+     opts.fills (default colors.fills): gradients on roles, so a rule against a filled ground holds at its worst point. Never throws; a missing input gives the static default. */
+  function calcRoles(list) { return (list || (root.FrostingTokens && root.FrostingTokens.roles) || []).filter(function (r) { return r && r.calc; }); }
+  function cleanOverrides(ov, list) {
+    var out = {};
+    if (!ov || typeof ov !== 'object') return out;
+    calcRoles(list).forEach(function (r) { var v = ov[r.name]; if (typeof v === 'string' && HEX.test(v)) out[r.name] = v.toUpperCase(); });
+    return out;
+  }
+  function calcRules(r, contracts, later) {
+    var rules = r.calc.rules.map(function (x) { return [x[0], x[1], true]; });
+    function raise(g, min) { for (var i = 0; i < rules.length; i++) if (rules[i][0] === g) { rules[i][1] = Math.max(rules[i][1], min); return; } rules.push([g, min, false]); }
+    (contracts || []).forEach(function (c) {
+      if (!c || c.level === 'warn') return;
+      var other = c.role === r.name ? c.against : c.role;
+      if (later[other]) return;   // a calculated role still to come fits itself to this one, not the other way round
+      if (c.role === r.name) raise(c.against, c.min); else if (c.against === r.name) raise(c.role, c.min);
+    });
+    return rules;
+  }
+  function resolve(r, col, contracts, later, fills) {
+    var c = r.calc, rules = calcRules(r, contracts, later);
+    var needed = [c.from, c.to].concat(c.alt ? [c.alt] : [], rules.filter(function (x) { return x[2]; }).map(function (x) { return x[0]; }));
+    if (!needed.every(function (k) { return HEX.test(col[k] || ''); })) return HEX.test(col.bg || '') && isDark(col.bg) ? r.dark : r.light;
+    // a ground painted with a gradient (FrostingFills) is judged at every sampled point, as the pass judges it
+    var Fl = root.FrostingFills;
+    rules = rules.filter(function (x) { return HEX.test(col[x[0]] || ''); }).map(function (x) {
+      var pts = Fl && fills && fills[x[0]] ? Fl.sample(fills[x[0]], col) : [];
+      return { min: x[1], at: pts.length ? pts : [col[x[0]]] };
+    });
+    function worstOf(h, x) { return Math.min.apply(null, x.at.map(function (g) { return contrast(h, g); })); }
+    function score(h) { return Math.min.apply(null, rules.map(function (x) { return worstOf(h, x) / x.min; })); }
+    function passes(h) { return rules.every(function (x) { return worstOf(h, x) >= x.min; }); }
+    function line(a, b, w) { return mix(col[a], col[b], w / 100); }
+    function order(w0, lo) {   // w0, w0-1, w0+1, w0-2, w0+2 … within [lo, 100]
+      var ws = [];
+      for (var d = 0; d <= 100; d++) { if (w0 - d >= lo) ws.push(w0 - d); if (d && w0 + d <= 100) ws.push(w0 + d); }
+      return ws;
+    }
+    function search(a, b, lo) { var ws = order(c.weight, lo); for (var i = 0; i < ws.length; i++) { var h = line(a, b, ws[i]); if (passes(h)) return h; } return null; }
+    if (!c.alt) {
+      var h = search(c.from, c.to, 0);
+      if (h) return h;
+      var best = null, bestS = -1;   // best effort: the weight whose worst rule comes closest
+      order(c.weight, 0).forEach(function (w) { var x = line(c.from, c.to, w), s = score(x); if (s > bestS) { bestS = s; best = x; } });
+      return best;
+    }
+    var lo = c.minWeight || 0, m = line(c.from, c.to, c.weight), a = line(c.from, c.alt, c.weight);
+    if (passes(m)) return m;
+    if (passes(a)) return a;
+    return search(c.from, c.to, lo) || search(c.from, c.alt, lo) || col[c.from].toUpperCase();
+  }
+  function complete(colors, opts) {
+    opts = opts || {};
+    var out = Object.assign({}, colors || {}), list = calcRoles(opts.roles);
+    var ov = cleanOverrides(opts.overrides !== undefined ? opts.overrides : out.overrides, list);
+    var fills = opts.fills !== undefined ? opts.fills : out.fills;
+    var later = {}; list.forEach(function (r) { later[r.name] = true; });
+    list.forEach(function (r) { delete later[r.name]; out[r.name] = ov[r.name] || resolve(r, out, opts.contracts, later, fills); });
+    return out;
+  }
+
   /* ── contracts ──
      check(theme, contracts): contracts default to tokens.json's list (via FrostingTokens) plus any
      registered by extensions. Returns [{label, ratio, min, ok}] in contract order; a missing role fails. */
@@ -76,7 +159,7 @@
 
   var api = {
     hexToRgb: hexToRgb, rgbToHex: rgbToHex, hsl: hsl, hex: hex, lum: lum, contrast: contrast, mix: mix, isDark: isDark,
-    fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
+    accentParts: accentParts, channelVars: channelVars, complete: complete, cleanOverrides: cleanOverrides, fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
   };
   root.FrostingColor = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

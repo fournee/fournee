@@ -31,6 +31,17 @@ FrostingPanel.mount(document.getElementById('frosting'), { store: store });
 Then write CSS against the roles: `var(--fr-surface)`, `var(--fr-ok)`, `var(--fr-series-1)`, `var(--fr-tag-1)`…
 Apply the published look before first paint (inject a `<style>` at build/serve time); see SPEC §6.
 
+**Calculated roles.** Thirteen roles are worked out from the others and fitted to pass their contrast contracts:
+`text-secondary`, `accent-text-hover`, `button-hover`, `border-strong`, and `-soft`, `-text` and `-border` for each of
+`ok`, `warn` and `bad`. A recipe can override one by name (`frosting.overrides`). In plain CSS they are `color-mix()`
+expressions that follow your base roles but carry no contrast guarantee; build from a recipe for the guarantee.
+See SPEC §2 and §4.
+
+**Numeric accent.** `--fr-accent-h` (a bare hue in degrees), `--fr-accent-s` and `--fr-accent-l` (with `%`) sit beside
+`--fr-accent`. One line makes hue-driven CSS follow the look: `:root { --hue: var(--fr-accent-h, 210); }`. A grey
+accent has hue `0` and saturation `0%`, so multiply `--fr-accent-s` into your own saturation where grey should stay
+grey. See SPEC §4.
+
 Storage adapters: `localStorageAdapter(ns)`, `httpAdapter(baseUrl)` (GET/PUT `{base}/{key}`),
 `pywebviewAdapter()` (Python exposes `get_frosting`/`set_frosting`), `memoryAdapter()`.
 
@@ -38,12 +49,15 @@ Storage adapters: `localStorageAdapter(ns)`, `httpAdapter(baseUrl)` (GET/PUT `{b
 
 ```
 npm test        # builds dist/ from tokens.json, then checks every preset, 3000 lucky looks,
-                # locked backgrounds, both default palettes, and the store
+                # locked backgrounds, both default palettes, and the store; then the numeric accent,
+                # the calculated roles (including a guard that fails if one is removed), and
+                # back-compat against a frozen copy of v1.2.0 (no existing role value or contract moved)
 npm run catalog # assembles site/ for Cloudflare Pages
 ```
 
 To add a role: edit `tokens.json` (name, group, label, use, light, dark, and its contracts),
-run `npm test`, and teach `derive()` in `src/gallery.js` how to make it. Nothing else.
+run `npm test`, and teach `derive()` in `src/gallery.js` how to make it. Nothing else. A role that is calculated from
+others instead gets a `calc` block (see SPEC §2) and needs no change to `derive()`.
 
 ## Where it came from
 

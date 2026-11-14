@@ -28,7 +28,9 @@ build does the rest.
 | Group | Roles | Required |
 |---|---|---|
 | core | `bg` `surface` `border` `text` `muted` `accent` `accent-text` `button` `button-text` `progress-fill` `progress-track` | always |
+| core, calculated | `text-secondary` `accent-text-hover` `button-hover` `border-strong` | always (calculated when nobody sets them) |
 | status | `ok` `warn` `bad` | dashboards, monitors |
+| status, calculated | `ok-soft` `ok-text` `ok-border` `warn-soft` `warn-text` `warn-border` `bad-soft` `bad-text` `bad-border` | dashboards, monitors |
 | series | `series-1` … `series-4` | charts |
 | tag | `tag-1` … `tag-8` | telling projects or categories apart (strips, underlines, dots) |
 
@@ -41,6 +43,28 @@ widget; the light defaults come from the first site that used Frosting.
 
 **Derived colours** (`accent-soft`, `control-border`, `scrim`…) are `color-mix()` recipes
 over the roles. They follow a look automatically and are never edited.
+
+**Calculated roles.** Thirteen roles are worked out from other roles rather than picked: `text-secondary`
+(between `text` and `muted`), `accent-text-hover`, `button-hover`, `border-strong`, and a soft, text and border
+colour for each of `ok`, `warn` and `bad`. In `tokens.json` each is an ordinary role entry with a `calc` block:
+the two roles it lies between, a nominal weight, the contrast rules it must keep, and for `button-hover` an
+alternative direction. They sit in the colours map like any other role, so every reader of a look keeps working.
+
+- **Fitted.** The engine's `FrostingColor.complete(colors, opts)` computes them from the base roles and moves each
+  one along its line until its rules pass. It is called wherever a look is made or cleaned (the gallery, the store,
+  the recipe, the panel), so a look never carries a calculated colour that fails its contract. Two options change
+  what the fit holds to: `opts.contracts` is an accessibility standard's contract list (a stricter standard raises
+  the minimums the calculated roles must meet), and `opts.fills` is the look's gradients (a rule against a filled
+  ground holds at every sampled point of the gradient). `opts.overrides` and `opts.roles` are described below.
+- **Per-recipe override.** A recipe overrides a calculated role by naming it in `frosting.overrides`, a map from
+  role to `#RRGGBB` beside `colors` (a look on disk carries it as `colors.overrides`). Only calculated roles can be
+  overridden. An override is held to the same contract as the calculated value, and roles that depend on it use it.
+  Wearing another look or pressing Reset clears the overrides. The panel shows "calculated" under each calculated
+  role, and "your pick" with a "Use calculated" link once it is overridden.
+- **Plain CSS limit.** In `frosting.css` each calculated role is written as an sRGB `color-mix()` of its base roles.
+  It follows the base roles with no script, and the default palettes pass. A page that sets only some base roles
+  with `setProperty` gets that unfitted mix: close, but with no contrast guarantee. To get the guarantee, build the
+  page from a recipe (`MiseApply`, `project.mjs`) or run the pass on the resulting colours.
 
 ## 3. Extensions
 
@@ -59,11 +83,41 @@ roles with a minimum WCAG contrast ratio:
 - `button-text` on `button`: **4.5:1**
 - shapes (`accent`, `button`, `progress-fill`, status dots, series lines) on `bg`: **3:1**
 - tags (`tag-1` … `tag-8`) on `bg` and `surface`: **3:1**
+- `text-secondary` on `bg` and `surface`: **7:1**
+- `accent-text-hover` on `bg` and `surface`: **4.5:1**
+- `button-hover` on `bg`: **3:1**, and `button-text` on `button-hover`: **4.5:1**
+- `border-strong` on `bg` and `surface`: **3:1**
+- for each of `ok`, `warn` and `bad`: `<status>-text` on `bg`, `surface` and `<status>-soft` at **4.5:1**,
+  `text` on `<status>-soft` at **7:1**, and `<status>-border` on `bg` at **3:1**
+
+That is 60 contracts in all: the original 37 (unchanged, in the same order) and 23 for the calculated roles.
 
 The engine never saves a silently unreadable look: hand edits are checked and badged;
 generated looks are **fitted** (hue and saturation kept, lightness moved until every contract
 passes). Status, series and tag roles are *shape* colours: for text in those colours, use the
 engine's `ink()` helper to pick a readable text colour over them.
+
+### Numeric accent: `--fr-accent-h`, `--fr-accent-s`, `--fr-accent-l`
+
+Beside `--fr-accent`, Frosting emits its three HSL parts, from the same colour, in `frosting.css` (light, and both
+dark blocks), in `MiseApply` output, in the live panel and in the catalog:
+
+```css
+--fr-accent-h: 145.1;   /* degrees, a bare number, 0 to 359.9 */
+--fr-accent-s: 46.2%;   /* HSL saturation */
+--fr-accent-l: 33.5%;   /* HSL lightness */
+```
+
+They exist for component libraries that derive their colours from a hue number. One line re-themes them:
+
+```css
+:root { --hue: var(--fr-accent-h, 210); }                  /* hsl(var(--hue), 40%, 92%) now follows the accent */
+.chip { background: hsl(var(--fr-accent-h) calc(var(--fr-accent-s) * .8) 92%); }
+```
+
+A grey has no hue. When the accent's saturation rounds to 0, the hue is emitted as `0` and the saturation as `0%`.
+So use `--fr-accent-h` alone for the hue, and multiply `--fr-accent-s` into your own saturation wherever a grey
+accent should stay grey. These three are channels, not roles: they have no contracts and are never edited.
 
 ## 5. A look, on disk
 
@@ -76,7 +130,8 @@ engine's `ink()` helper to pick a readable text colour over them.
 ```
 
 - `colors` is a flat map of role → uppercase `#RRGGBB`. Unknown roles are dropped; missing
-  roles fall back to the defaults. That is the whole validation rule.
+  roles fall back to the defaults. That is the whole validation rule. Calculated roles are recomputed from the base
+  roles on every clean, unless the look names them in `colors.overrides`.
 - A project stores up to three things: the **published** look, a **draft**, and a list of
   **favorites** (max 40, names ≤ 40 chars). Where they live is the storage adapter's business
   (JSON file, localStorage, Cloudflare D1, a server) — the engine only sees `get`/`set`.

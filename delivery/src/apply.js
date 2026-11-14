@@ -30,6 +30,9 @@
     // gradient fills on roles: --<p>-<role>-fill (frosting/src/fills.js); frosting.css turns them off for forced colours, more contrast, print
     var F = root.FrostingFills, fd = F && r.frosting.fills ? F.declarations(r.frosting.fills, p) : {};
     Object.keys(fd).forEach(function (k) { decl += '\n  ' + k + ': ' + fd[k] + ';'; });
+    // the accent's numeric parts (--fr-accent-h/-s/-l), so hsl(var(--hue), s, l) sites can follow the recipe
+    var FC = root.FrostingColor, cv = FC && FC.channelVars ? FC.channelVars(colors, p) : {};
+    Object.keys(cv).forEach(function (k) { decl += '\n  ' + k + ': ' + cv[k] + ';'; });
     var contrast = S.css(r.frosting.colors, { prefix: p });
     // :root:root:root (specificity 0,3,0) so the recipe beats frosting.css's own scheme defaults
     // (:root:not([data-theme="light"]) under prefers-color-scheme: dark, and :root[data-theme="dark"], both 0,2,0):

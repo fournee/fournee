@@ -59,7 +59,7 @@
     { id: 'apca-bronze', label: 'APCA Bronze (future, not law)', group: 'Future', region: 'World', wcag: '3 draft', level: 'APCA', text: 4.5, ui: 3, apca: { body: 75, text: 60, large: 45 },
       note: 'APCA is a beta; WCAG 3\'s contrast method is still to be decided. Checked on top of WCAG 2 ratios.', src: 'international.md' },
   ];
-  var TEXT_ROLES = ['text', 'muted', 'accent-text', 'button-text'];
+  var TEXT_ROLES = ['text', 'muted', 'accent-text', 'button-text', 'text-secondary', 'accent-text-hover', 'ok-text', 'warn-text', 'bad-text'];
   var LARGE = { 7: 4.5, 4.5: 3 };
 
   function get(id) { for (var i = 0; i < P.length; i++) if (P[i].id === id) return P[i]; return null; }
@@ -158,6 +158,11 @@
     var type = look.type ? JSON.parse(JSON.stringify(look.type)) : null, changes = [], left = [];
     if (!p) return { colors: colors, fills: fills, type: type, changes: changes, left: left };
     var list = contracts(id, C.contracts(), house).filter(function (c) { return c.level !== 'warn'; });
+    // calculated roles (v1.3.0) are never fitted one by one: the base roles are, then complete() re-calculates them
+    // under this profile's contracts (an override stays as it is and is judged like any colour)
+    var calc = {}; ((root.FrostingTokens && root.FrostingTokens.roles) || []).forEach(function (r) { if (r.calc) calc[r.name] = true; });
+    var full = list;
+    list = full.filter(function (c) { return !calc[c.role] && !calc[c.against]; });
     var ui = p.ui == null ? 3 : p.ui;
     // roles that sit on others move; the grounds they sit on (bg, surface, button for button-text) stay put
     var extra = [];
@@ -212,6 +217,8 @@
       if (!f) { changes.push({ kind: 'gradient', what: k, from: 'gradient', to: 'solid', why: 'no lightness made it readable' }); delete fills[k]; }
       else if (JSON.stringify(f) !== JSON.stringify(fills[k])) { changes.push({ kind: 'gradient', what: k, from: fills[k].stops.join(' → '), to: f.stops.join(' → '), why: 'readable at its worst point' }); fills[k] = f; }
     });
+    // calculated roles follow the fitted base roles and fills, under this profile's contracts
+    if (C.complete) colors = C.complete(colors, { overrides: look.overrides || (look.colors && look.colors.overrides) || {}, contracts: full, fills: fills });
     // type: floors and leading
     if (type && FC) {
       var before = FC.resolve(type), wanted = Object.assign({}, type, { floors: floors(id, before.floors, house) });
@@ -225,7 +232,7 @@
       type = fitted;
     }
     // what still fails
-    C.check(colors, list).forEach(function (r) { if (!r.ok) left.push(r.label + ' ' + r.ratio + ':1 (needs ' + r.min + ')'); });
+    C.check(colors, full).forEach(function (r) { if (!r.ok) left.push(r.label + ' ' + r.ratio + ':1 (needs ' + r.min + ')'); });
     return { colors: colors, fills: fills, type: type, changes: changes, left: left };
   }
 

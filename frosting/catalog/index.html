@@ -144,6 +144,7 @@
   window.addEventListener('mise-theme', function (e) {
     mode = e.detail;
     T.roles.forEach(function (r) { document.documentElement.style.removeProperty('--' + T.prefix + '-' + r.name); });
+    Object.keys(T.channels || {}).forEach(function (k) { document.documentElement.style.removeProperty('--' + T.prefix + '-' + k); });
     store = S.createStore(S.localStorageAdapter(mode === 'dark' ? 'frosting-catalog' : 'frosting-catalog-light'), mode === 'dark' ? T.dark : T.light);
     P.mount(document.getElementById('mount'), { store: store, onChange: refresh }).ready.then(function () { refresh(); });
   });

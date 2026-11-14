@@ -14,9 +14,9 @@ accessibility rules before it ships.
 
 | Part | What it does |
 |---|---|
-| [**Frosting**](frosting/) | Colour by role (`--fr-*`): roles with light and dark defaults, readability contracts, ready-made looks, gradients, a colour panel |
+| [**Frosting**](frosting/) | Colour by role (`--fr-*`): 39 roles with light and dark defaults (13 of them calculated and fitted to pass), 60 readability contracts, the accent as plain numbers (`--fr-accent-h/-s/-l`), ready-made looks, gradients, a colour panel |
 | [**Fontdant**](fontdant/) | Type by role (`--fd-*`, `.fd-*` classes): a size ladder per mode, type contracts, the fit, and a library of 39 self-hosted open-licence font families |
-| [**Kitchen**](kitchen/) | The shared parts: the recipe format, the store, **the pass** (checks a look against WCAG 2.2 and 20 other standards), Sprinkles, and the four-step panel |
+| [**Kitchen**](kitchen/) | The shared parts: the recipe format, the store, **the pass** (checks a look against WCAG 2.2 and 20 other standards, and suggests a nearby colour that would pass), Sprinkles, and the four-step panel |
 | [**Delivery**](delivery/) | The same recipe in plain HTML, React, Svelte, Electron, pywebview, Qt and tkinter, plus a [DTCG](https://www.designtokens.org/) 2025.10 export |
 
 The **[catalog](https://fournee.github.io/fournee/)** shows all of it live, including a playground where you build a look in four steps (Frosting →
@@ -49,7 +49,10 @@ On Windows you can also double-click `scripts/try-the-panel.cmd`.
    ```css
    .card  { background: var(--fr-surface); color: var(--fr-text); border: 1px solid var(--fr-border); }
    .price { color: var(--fr-accent-text); }
+   .error { color: var(--fr-bad-text); background: var(--fr-bad-soft); border: 1px solid var(--fr-bad-border); }
    ```
+   Code that builds colours from a hue number can follow the recipe with one line, `--hue: var(--fr-accent-h, 210)`.
+   For a grey accent, also multiply `--fr-accent-s` into your own saturation (see [frosting/SPEC.md](frosting/SPEC.md)).
    ```html
    <h2 class="fd-heading-md">Today's bake</h2>
    <p class="fd-body">Every size, face and colour on this page comes from the recipe.</p>

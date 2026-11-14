@@ -1,5 +1,6 @@
 /* kitchen · recipe
-   A recipe is a saved business profile: { name, scheme, client, frosting: { colors }, fontdant: { … } }.
+   A recipe is a saved business profile: { name, scheme, client, frosting: { colors, overrides? }, fontdant: { … } }.
+   frosting.overrides (v1.3.0) pins calculated roles ({ role: '#RRGGBB' }); every other calculated role is recomputed.
    frosting's half is a look's colours; fontdant's half is a type look (mode, scaling, faces, dials, roles,
    styles, fonts) and may be empty. Validation follows frosting's one rule: unknown keys are dropped,
    missing ones fall back to defaults. Plain script (window.KitchenRecipe) or require()-able.
@@ -57,6 +58,16 @@
     // gradient fills on roles (frosting/src/fills.js); kept only when FrostingFills is loaded to validate them
     var F = root.FrostingFills, fills = F && fr.fills ? F.clean(fr.fills, Object.keys(out.frosting.colors)) : null;
     if (fills && Object.keys(fills).length) out.frosting.fills = fills;
+    // calculated roles (v1.3.0): recomputed from the recipe's own roles on every clean (a stored value is only a cache),
+    // except those named in frosting.overrides (or, for a look-shaped map, colors.overrides). Under a standards profile its
+    // contracts raise the calculated roles' minimums. Needs FrostingColor, like fills need FrostingFills.
+    var C = root.FrostingColor;
+    if (C && C.complete) {
+      var ov = C.cleanOverrides(isObj(fr.overrides) ? fr.overrides : fr.colors && fr.colors.overrides);
+      var KS = root.KitchenStandards, list = KS && out.standard && KS.get(out.standard) ? KS.contracts(out.standard, C.contracts(), true) : null;
+      out.frosting.colors = C.complete(out.frosting.colors, { overrides: ov, contracts: list, fills: out.frosting.fills || null });
+      if (Object.keys(ov).length) out.frosting.overrides = ov;
+    }
     return out;
   }
   function empty(defaults) { return clean({}, defaults); }
@@ -64,11 +75,12 @@
   /* Bridges to frosting's own shapes. */
   function fromLook(look, defaults) {   // frosting look on disk: { name, scheme, colors }
     look = isObj(look) ? look : {};
-    return clean({ name: look.name, scheme: look.scheme, frosting: { colors: look.colors, fills: look.colors && look.colors.fills } }, defaults);
+    return clean({ name: look.name, scheme: look.scheme, frosting: { colors: look.colors, fills: look.colors && look.colors.fills, overrides: look.colors && look.colors.overrides } }, defaults);
   }
   function toLook(recipe) {
     var colors = Object.assign({}, recipe.frosting.colors);
     if (recipe.frosting.fills) colors.fills = JSON.parse(JSON.stringify(recipe.frosting.fills));
+    if (recipe.frosting.overrides && Object.keys(recipe.frosting.overrides).length) colors.overrides = Object.assign({}, recipe.frosting.overrides);
     return { name: recipe.name, scheme: recipe.scheme, colors: colors };
   }
 

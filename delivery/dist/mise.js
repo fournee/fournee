@@ -1,10 +1,10 @@
 /* Fournée delivery bundle: frosting colours + fontdant type + kitchen recipe/Sprinkles + MiseApply.
    Built by delivery/scripts/build.mjs from: frosting/dist/tokens.js, frosting/src/readability.js, frosting/src/fills.js, fontdant/dist/type-tokens.js, fontdant/dist/library.js, fontdant/src/fontface.js, fontdant/src/typecheck.js, fontdant/src/emit.js, kitchen/src/recipe.js, kitchen/src/sprinkles.js, delivery/src/apply.js, delivery/src/dtcg.js. Do not edit; edit the sources. */
 /* ── frosting/dist/tokens.js ── */
-/* frosting tokens v1.0.0 — generated from tokens.json; do not edit. Plain script: window.FrostingTokens, or require()-able. */
+/* frosting tokens v1.3.0 — generated from tokens.json; do not edit. Plain script: window.FrostingTokens, or require()-able. */
 (function (root) {
   var api = {
-  "version": "1.0.0",
+  "version": "1.3.0",
   "prefix": "fr",
   "groups": {
     "core": "Always present. Every frosted page uses these.",
@@ -220,6 +220,295 @@
       "use": "Project or category tag 8 (lime). Strips, underlines, dots.",
       "light": "#4D7C0F",
       "dark": "#A3E635"
+    },
+    {
+      "name": "text-secondary",
+      "group": "core",
+      "label": "Secondary text",
+      "use": "Text between main and quiet text: descriptions, sub-headings. Calculated from text and muted unless a look sets it.",
+      "light": "#3D3B36",
+      "dark": "#B8BDCA",
+      "calc": {
+        "from": "text",
+        "to": "muted",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            7
+          ],
+          [
+            "surface",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "accent-text-hover",
+      "group": "core",
+      "label": "Accent text hover",
+      "use": "Accent-coloured text and links while hovered. Calculated from accent-text unless a look sets it.",
+      "light": "#214F33",
+      "dark": "#C4B4FB",
+      "calc": {
+        "from": "accent-text",
+        "to": "text",
+        "weight": 25,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "button-hover",
+      "group": "core",
+      "label": "Button hover",
+      "use": "Primary button fill while hovered. Calculated from button unless a look sets it.",
+      "light": "#2C7149",
+      "dark": "#A688FD",
+      "calc": {
+        "from": "button",
+        "to": "text",
+        "weight": 12,
+        "rules": [
+          [
+            "bg",
+            3
+          ],
+          [
+            "button-text",
+            4.5
+          ]
+        ],
+        "alt": "bg",
+        "minWeight": 4
+      }
+    },
+    {
+      "name": "border-strong",
+      "group": "core",
+      "label": "Strong border",
+      "use": "An emphasised divider or outline that reads as a boundary, such as an input edge. Calculated unless a look sets it.",
+      "light": "#8D8881",
+      "dark": "#676E7F",
+      "calc": {
+        "from": "border",
+        "to": "muted",
+        "weight": 65,
+        "rules": [
+          [
+            "bg",
+            3
+          ],
+          [
+            "surface",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ok-soft",
+      "group": "status",
+      "label": "OK tint",
+      "use": "Tinted ground for an OK message or badge. Main text stays readable on it.",
+      "light": "#E6EFEA",
+      "dark": "#152922",
+      "calc": {
+        "from": "bg",
+        "to": "ok",
+        "weight": 12,
+        "rules": [
+          [
+            "text",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ok-text",
+      "group": "status",
+      "label": "OK text",
+      "use": "Text in the OK hue, readable on the OK tint and on the background.",
+      "light": "#254C34",
+      "dark": "#92E2B9",
+      "calc": {
+        "from": "ok",
+        "to": "text",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "ok-soft",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ok-border",
+      "group": "status",
+      "label": "OK border",
+      "use": "Edge of an OK message or badge.",
+      "light": "#589772",
+      "dark": "#34B36E",
+      "calc": {
+        "from": "bg",
+        "to": "ok",
+        "weight": 80,
+        "rules": [
+          [
+            "bg",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "warn-soft",
+      "group": "status",
+      "label": "Warning tint",
+      "use": "Tinted ground for a warning message or badge. Main text stays readable on it.",
+      "light": "#F6EAE1",
+      "dark": "#2C271C",
+      "calc": {
+        "from": "bg",
+        "to": "warn",
+        "weight": 12,
+        "rules": [
+          [
+            "text",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "warn-text",
+      "group": "status",
+      "label": "Warning text",
+      "use": "Text in the warning hue, readable on the warning tint and on the background.",
+      "light": "#683711",
+      "dark": "#F3DA9E",
+      "calc": {
+        "from": "warn",
+        "to": "text",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "warn-soft",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "warn-border",
+      "group": "status",
+      "label": "Warning border",
+      "use": "Edge of a warning message or badge.",
+      "light": "#C3753A",
+      "dark": "#CFA742",
+      "calc": {
+        "from": "bg",
+        "to": "warn",
+        "weight": 80,
+        "rules": [
+          [
+            "bg",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bad-soft",
+      "group": "status",
+      "label": "Bad tint",
+      "use": "Tinted ground for an error message or badge. Main text stays readable on it.",
+      "light": "#F8E8E6",
+      "dark": "#2C1A1F",
+      "calc": {
+        "from": "bg",
+        "to": "bad",
+        "weight": 12,
+        "rules": [
+          [
+            "text",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bad-text",
+      "group": "status",
+      "label": "Bad text",
+      "use": "Text in the bad hue (error headings and bodies), readable on the bad tint and on the background.",
+      "light": "#722E24",
+      "dark": "#F3A2AD",
+      "calc": {
+        "from": "bad",
+        "to": "text",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "bad-soft",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bad-border",
+      "group": "status",
+      "label": "Bad border",
+      "use": "Edge of an error message or badge.",
+      "light": "#D36659",
+      "dark": "#CF4D5B",
+      "calc": {
+        "from": "bg",
+        "to": "bad",
+        "weight": 80,
+        "rules": [
+          [
+            "bg",
+            3
+          ]
+        ]
+      }
     }
   ],
   "contracts": [
@@ -444,8 +733,169 @@
       "role": "tag-8",
       "against": "surface",
       "min": 3
+    },
+    {
+      "label": "Secondary text",
+      "role": "text-secondary",
+      "against": "bg",
+      "min": 7
+    },
+    {
+      "label": "Secondary text on surfaces",
+      "role": "text-secondary",
+      "against": "surface",
+      "min": 7
+    },
+    {
+      "label": "Accent text hover",
+      "role": "accent-text-hover",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Accent text hover on surfaces",
+      "role": "accent-text-hover",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Button hover shape",
+      "role": "button-hover",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Button hover text",
+      "role": "button-text",
+      "against": "button-hover",
+      "min": 4.5
+    },
+    {
+      "label": "Strong border",
+      "role": "border-strong",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Strong border on surfaces",
+      "role": "border-strong",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "OK text",
+      "role": "ok-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "OK text on surfaces",
+      "role": "ok-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "OK text on tint",
+      "role": "ok-text",
+      "against": "ok-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Text on OK tint",
+      "role": "ok-soft",
+      "against": "text",
+      "min": 7
+    },
+    {
+      "label": "OK border",
+      "role": "ok-border",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Warning text",
+      "role": "warn-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Warning text on surfaces",
+      "role": "warn-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Warning text on tint",
+      "role": "warn-text",
+      "against": "warn-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Text on warning tint",
+      "role": "warn-soft",
+      "against": "text",
+      "min": 7
+    },
+    {
+      "label": "Warning border",
+      "role": "warn-border",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Bad text",
+      "role": "bad-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Bad text on surfaces",
+      "role": "bad-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Bad text on tint",
+      "role": "bad-text",
+      "against": "bad-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Text on bad tint",
+      "role": "bad-soft",
+      "against": "text",
+      "min": 7
+    },
+    {
+      "label": "Bad border",
+      "role": "bad-border",
+      "against": "bg",
+      "min": 3
     }
   ],
+  "channels": {
+    "accent-h": {
+      "from": "accent",
+      "channel": "h",
+      "unit": "",
+      "light": "145.1",
+      "dark": "255.5"
+    },
+    "accent-s": {
+      "from": "accent",
+      "channel": "s",
+      "unit": "%",
+      "light": "46.2",
+      "dark": "100"
+    },
+    "accent-l": {
+      "from": "accent",
+      "channel": "l",
+      "unit": "%",
+      "light": "33.5",
+      "dark": "74.1"
+    }
+  },
   "light": {
     "bg": "#FFFFFF",
     "surface": "#F5F3EF",
@@ -472,7 +922,20 @@
     "tag-5": "#A21CAF",
     "tag-6": "#0E7490",
     "tag-7": "#A16207",
-    "tag-8": "#4D7C0F"
+    "tag-8": "#4D7C0F",
+    "text-secondary": "#3D3B36",
+    "accent-text-hover": "#214F33",
+    "button-hover": "#2C7149",
+    "border-strong": "#8D8881",
+    "ok-soft": "#E6EFEA",
+    "ok-text": "#254C34",
+    "ok-border": "#589772",
+    "warn-soft": "#F6EAE1",
+    "warn-text": "#683711",
+    "warn-border": "#C3753A",
+    "bad-soft": "#F8E8E6",
+    "bad-text": "#722E24",
+    "bad-border": "#D36659"
   },
   "dark": {
     "bg": "#0F1115",
@@ -500,7 +963,20 @@
     "tag-5": "#E879F9",
     "tag-6": "#22D3EE",
     "tag-7": "#FACC15",
-    "tag-8": "#A3E635"
+    "tag-8": "#A3E635",
+    "text-secondary": "#B8BDCA",
+    "accent-text-hover": "#C4B4FB",
+    "button-hover": "#A688FD",
+    "border-strong": "#676E7F",
+    "ok-soft": "#152922",
+    "ok-text": "#92E2B9",
+    "ok-border": "#34B36E",
+    "warn-soft": "#2C271C",
+    "warn-text": "#F3DA9E",
+    "warn-border": "#CFA742",
+    "bad-soft": "#2C1A1F",
+    "bad-text": "#F3A2AD",
+    "bad-border": "#CF4D5B"
   }
 };
   root.FrostingTokens = api;
@@ -571,6 +1047,89 @@
   /* Can any text colour reach 7:1 on this background? (Mid-tones can't.) */
   function bgHeadroom(bg) { return Math.max(contrast(bg, '#FFFFFF'), contrast(bg, '#000000')); }
 
+  /* The numeric parts of a colour for CSS that builds its own hsl(): { h, s, l }, h in degrees (0 to 359.9), s and l in
+     percent, one decimal each. A grey has no hue: when s rounds to 0, h is 0. A hue that rounds to 360 is 0. */
+  function accentParts(hexColor) {
+    var o = hsl(hexColor), r1 = function (n) { return Math.round(n * 10) / 10; }, s = r1(o.s);
+    return { h: s ? r1(o.h) % 360 : 0, s: s, l: r1(o.l) };
+  }
+  /* --<prefix>-accent-h / -s / -l for colors.accent, as CSS values (h unitless, s and l with %); {} when there is no valid accent. */
+  function channelVars(colors, prefix) {
+    var a = colors && colors.accent, out = {};
+    if (!HEX.test(a || '')) return out;
+    var p = accentParts(a), pre = '--' + (prefix || 'fr') + '-accent-';
+    out[pre + 'h'] = String(p.h); out[pre + 's'] = p.s + '%'; out[pre + 'l'] = p.l + '%';
+    return out;
+  }
+
+  /* ── calculated roles (v1.3.0) ──
+     A role with a `calc` block in tokens.json ({ from, to, weight, rules, alt?, minWeight? }) lies on the sRGB line from
+     one role (weight 0) to another (weight 100). complete(colors, opts) returns a copy of colors with every calculated
+     role filled, in role order: an override (#RRGGBB in opts.overrides, default colors.overrides) wins; otherwise the
+     nominal weight, or the nearest integer weight that passes the role's rules (ties go to the lower weight).
+     opts.roles: the role list (default FrostingTokens.roles); opts.contracts: contracts (e.g. a standards profile's) that
+     raise a calculated role's rule minimums where they name it;
+     opts.fills (default colors.fills): gradients on roles, so a rule against a filled ground holds at its worst point. Never throws; a missing input gives the static default. */
+  function calcRoles(list) { return (list || (root.FrostingTokens && root.FrostingTokens.roles) || []).filter(function (r) { return r && r.calc; }); }
+  function cleanOverrides(ov, list) {
+    var out = {};
+    if (!ov || typeof ov !== 'object') return out;
+    calcRoles(list).forEach(function (r) { var v = ov[r.name]; if (typeof v === 'string' && HEX.test(v)) out[r.name] = v.toUpperCase(); });
+    return out;
+  }
+  function calcRules(r, contracts, later) {
+    var rules = r.calc.rules.map(function (x) { return [x[0], x[1], true]; });
+    function raise(g, min) { for (var i = 0; i < rules.length; i++) if (rules[i][0] === g) { rules[i][1] = Math.max(rules[i][1], min); return; } rules.push([g, min, false]); }
+    (contracts || []).forEach(function (c) {
+      if (!c || c.level === 'warn') return;
+      var other = c.role === r.name ? c.against : c.role;
+      if (later[other]) return;   // a calculated role still to come fits itself to this one, not the other way round
+      if (c.role === r.name) raise(c.against, c.min); else if (c.against === r.name) raise(c.role, c.min);
+    });
+    return rules;
+  }
+  function resolve(r, col, contracts, later, fills) {
+    var c = r.calc, rules = calcRules(r, contracts, later);
+    var needed = [c.from, c.to].concat(c.alt ? [c.alt] : [], rules.filter(function (x) { return x[2]; }).map(function (x) { return x[0]; }));
+    if (!needed.every(function (k) { return HEX.test(col[k] || ''); })) return HEX.test(col.bg || '') && isDark(col.bg) ? r.dark : r.light;
+    // a ground painted with a gradient (FrostingFills) is judged at every sampled point, as the pass judges it
+    var Fl = root.FrostingFills;
+    rules = rules.filter(function (x) { return HEX.test(col[x[0]] || ''); }).map(function (x) {
+      var pts = Fl && fills && fills[x[0]] ? Fl.sample(fills[x[0]], col) : [];
+      return { min: x[1], at: pts.length ? pts : [col[x[0]]] };
+    });
+    function worstOf(h, x) { return Math.min.apply(null, x.at.map(function (g) { return contrast(h, g); })); }
+    function score(h) { return Math.min.apply(null, rules.map(function (x) { return worstOf(h, x) / x.min; })); }
+    function passes(h) { return rules.every(function (x) { return worstOf(h, x) >= x.min; }); }
+    function line(a, b, w) { return mix(col[a], col[b], w / 100); }
+    function order(w0, lo) {   // w0, w0-1, w0+1, w0-2, w0+2 … within [lo, 100]
+      var ws = [];
+      for (var d = 0; d <= 100; d++) { if (w0 - d >= lo) ws.push(w0 - d); if (d && w0 + d <= 100) ws.push(w0 + d); }
+      return ws;
+    }
+    function search(a, b, lo) { var ws = order(c.weight, lo); for (var i = 0; i < ws.length; i++) { var h = line(a, b, ws[i]); if (passes(h)) return h; } return null; }
+    if (!c.alt) {
+      var h = search(c.from, c.to, 0);
+      if (h) return h;
+      var best = null, bestS = -1;   // best effort: the weight whose worst rule comes closest
+      order(c.weight, 0).forEach(function (w) { var x = line(c.from, c.to, w), s = score(x); if (s > bestS) { bestS = s; best = x; } });
+      return best;
+    }
+    var lo = c.minWeight || 0, m = line(c.from, c.to, c.weight), a = line(c.from, c.alt, c.weight);
+    if (passes(m)) return m;
+    if (passes(a)) return a;
+    return search(c.from, c.to, lo) || search(c.from, c.alt, lo) || col[c.from].toUpperCase();
+  }
+  function complete(colors, opts) {
+    opts = opts || {};
+    var out = Object.assign({}, colors || {}), list = calcRoles(opts.roles);
+    var ov = cleanOverrides(opts.overrides !== undefined ? opts.overrides : out.overrides, list);
+    var fills = opts.fills !== undefined ? opts.fills : out.fills;
+    var later = {}; list.forEach(function (r) { later[r.name] = true; });
+    list.forEach(function (r) { delete later[r.name]; out[r.name] = ov[r.name] || resolve(r, out, opts.contracts, later, fills); });
+    return out;
+  }
+
   /* ── contracts ──
      check(theme, contracts): contracts default to tokens.json's list (via FrostingTokens) plus any
      registered by extensions. Returns [{label, ratio, min, ok}] in contract order; a missing role fails. */
@@ -586,7 +1145,7 @@
 
   var api = {
     hexToRgb: hexToRgb, rgbToHex: rgbToHex, hsl: hsl, hex: hex, lum: lum, contrast: contrast, mix: mix, isDark: isDark,
-    fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
+    accentParts: accentParts, channelVars: channelVars, complete: complete, cleanOverrides: cleanOverrides, fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
   };
   root.FrostingColor = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
@@ -1853,7 +2412,8 @@
 
 /* ── kitchen/src/recipe.js ── */
 /* kitchen · recipe
-   A recipe is a saved business profile: { name, scheme, client, frosting: { colors }, fontdant: { … } }.
+   A recipe is a saved business profile: { name, scheme, client, frosting: { colors, overrides? }, fontdant: { … } }.
+   frosting.overrides (v1.3.0) pins calculated roles ({ role: '#RRGGBB' }); every other calculated role is recomputed.
    frosting's half is a look's colours; fontdant's half is a type look (mode, scaling, faces, dials, roles,
    styles, fonts) and may be empty. Validation follows frosting's one rule: unknown keys are dropped,
    missing ones fall back to defaults. Plain script (window.KitchenRecipe) or require()-able.
@@ -1911,6 +2471,16 @@
     // gradient fills on roles (frosting/src/fills.js); kept only when FrostingFills is loaded to validate them
     var F = root.FrostingFills, fills = F && fr.fills ? F.clean(fr.fills, Object.keys(out.frosting.colors)) : null;
     if (fills && Object.keys(fills).length) out.frosting.fills = fills;
+    // calculated roles (v1.3.0): recomputed from the recipe's own roles on every clean (a stored value is only a cache),
+    // except those named in frosting.overrides (or, for a look-shaped map, colors.overrides). Under a standards profile its
+    // contracts raise the calculated roles' minimums. Needs FrostingColor, like fills need FrostingFills.
+    var C = root.FrostingColor;
+    if (C && C.complete) {
+      var ov = C.cleanOverrides(isObj(fr.overrides) ? fr.overrides : fr.colors && fr.colors.overrides);
+      var KS = root.KitchenStandards, list = KS && out.standard && KS.get(out.standard) ? KS.contracts(out.standard, C.contracts(), true) : null;
+      out.frosting.colors = C.complete(out.frosting.colors, { overrides: ov, contracts: list, fills: out.frosting.fills || null });
+      if (Object.keys(ov).length) out.frosting.overrides = ov;
+    }
     return out;
   }
   function empty(defaults) { return clean({}, defaults); }
@@ -1918,11 +2488,12 @@
   /* Bridges to frosting's own shapes. */
   function fromLook(look, defaults) {   // frosting look on disk: { name, scheme, colors }
     look = isObj(look) ? look : {};
-    return clean({ name: look.name, scheme: look.scheme, frosting: { colors: look.colors, fills: look.colors && look.colors.fills } }, defaults);
+    return clean({ name: look.name, scheme: look.scheme, frosting: { colors: look.colors, fills: look.colors && look.colors.fills, overrides: look.colors && look.colors.overrides } }, defaults);
   }
   function toLook(recipe) {
     var colors = Object.assign({}, recipe.frosting.colors);
     if (recipe.frosting.fills) colors.fills = JSON.parse(JSON.stringify(recipe.frosting.fills));
+    if (recipe.frosting.overrides && Object.keys(recipe.frosting.overrides).length) colors.overrides = Object.assign({}, recipe.frosting.overrides);
     return { name: recipe.name, scheme: recipe.scheme, colors: colors };
   }
 
@@ -2119,6 +2690,9 @@
     // gradient fills on roles: --<p>-<role>-fill (frosting/src/fills.js); frosting.css turns them off for forced colours, more contrast, print
     var F = root.FrostingFills, fd = F && r.frosting.fills ? F.declarations(r.frosting.fills, p) : {};
     Object.keys(fd).forEach(function (k) { decl += '\n  ' + k + ': ' + fd[k] + ';'; });
+    // the accent's numeric parts (--fr-accent-h/-s/-l), so hsl(var(--hue), s, l) sites can follow the recipe
+    var FC = root.FrostingColor, cv = FC && FC.channelVars ? FC.channelVars(colors, p) : {};
+    Object.keys(cv).forEach(function (k) { decl += '\n  ' + k + ': ' + cv[k] + ';'; });
     var contrast = S.css(r.frosting.colors, { prefix: p });
     // :root:root:root (specificity 0,3,0) so the recipe beats frosting.css's own scheme defaults
     // (:root:not([data-theme="light"]) under prefers-color-scheme: dark, and :root[data-theme="dark"], both 0,2,0):

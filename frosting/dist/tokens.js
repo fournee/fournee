@@ -1,7 +1,7 @@
-/* frosting tokens v1.0.0 — generated from tokens.json; do not edit. Plain script: window.FrostingTokens, or require()-able. */
+/* frosting tokens v1.3.0 — generated from tokens.json; do not edit. Plain script: window.FrostingTokens, or require()-able. */
 (function (root) {
   var api = {
-  "version": "1.0.0",
+  "version": "1.3.0",
   "prefix": "fr",
   "groups": {
     "core": "Always present. Every frosted page uses these.",
@@ -217,6 +217,295 @@
       "use": "Project or category tag 8 (lime). Strips, underlines, dots.",
       "light": "#4D7C0F",
       "dark": "#A3E635"
+    },
+    {
+      "name": "text-secondary",
+      "group": "core",
+      "label": "Secondary text",
+      "use": "Text between main and quiet text: descriptions, sub-headings. Calculated from text and muted unless a look sets it.",
+      "light": "#3D3B36",
+      "dark": "#B8BDCA",
+      "calc": {
+        "from": "text",
+        "to": "muted",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            7
+          ],
+          [
+            "surface",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "accent-text-hover",
+      "group": "core",
+      "label": "Accent text hover",
+      "use": "Accent-coloured text and links while hovered. Calculated from accent-text unless a look sets it.",
+      "light": "#214F33",
+      "dark": "#C4B4FB",
+      "calc": {
+        "from": "accent-text",
+        "to": "text",
+        "weight": 25,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "button-hover",
+      "group": "core",
+      "label": "Button hover",
+      "use": "Primary button fill while hovered. Calculated from button unless a look sets it.",
+      "light": "#2C7149",
+      "dark": "#A688FD",
+      "calc": {
+        "from": "button",
+        "to": "text",
+        "weight": 12,
+        "rules": [
+          [
+            "bg",
+            3
+          ],
+          [
+            "button-text",
+            4.5
+          ]
+        ],
+        "alt": "bg",
+        "minWeight": 4
+      }
+    },
+    {
+      "name": "border-strong",
+      "group": "core",
+      "label": "Strong border",
+      "use": "An emphasised divider or outline that reads as a boundary, such as an input edge. Calculated unless a look sets it.",
+      "light": "#8D8881",
+      "dark": "#676E7F",
+      "calc": {
+        "from": "border",
+        "to": "muted",
+        "weight": 65,
+        "rules": [
+          [
+            "bg",
+            3
+          ],
+          [
+            "surface",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ok-soft",
+      "group": "status",
+      "label": "OK tint",
+      "use": "Tinted ground for an OK message or badge. Main text stays readable on it.",
+      "light": "#E6EFEA",
+      "dark": "#152922",
+      "calc": {
+        "from": "bg",
+        "to": "ok",
+        "weight": 12,
+        "rules": [
+          [
+            "text",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ok-text",
+      "group": "status",
+      "label": "OK text",
+      "use": "Text in the OK hue, readable on the OK tint and on the background.",
+      "light": "#254C34",
+      "dark": "#92E2B9",
+      "calc": {
+        "from": "ok",
+        "to": "text",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "ok-soft",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "ok-border",
+      "group": "status",
+      "label": "OK border",
+      "use": "Edge of an OK message or badge.",
+      "light": "#589772",
+      "dark": "#34B36E",
+      "calc": {
+        "from": "bg",
+        "to": "ok",
+        "weight": 80,
+        "rules": [
+          [
+            "bg",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "warn-soft",
+      "group": "status",
+      "label": "Warning tint",
+      "use": "Tinted ground for a warning message or badge. Main text stays readable on it.",
+      "light": "#F6EAE1",
+      "dark": "#2C271C",
+      "calc": {
+        "from": "bg",
+        "to": "warn",
+        "weight": 12,
+        "rules": [
+          [
+            "text",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "warn-text",
+      "group": "status",
+      "label": "Warning text",
+      "use": "Text in the warning hue, readable on the warning tint and on the background.",
+      "light": "#683711",
+      "dark": "#F3DA9E",
+      "calc": {
+        "from": "warn",
+        "to": "text",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "warn-soft",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "warn-border",
+      "group": "status",
+      "label": "Warning border",
+      "use": "Edge of a warning message or badge.",
+      "light": "#C3753A",
+      "dark": "#CFA742",
+      "calc": {
+        "from": "bg",
+        "to": "warn",
+        "weight": 80,
+        "rules": [
+          [
+            "bg",
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bad-soft",
+      "group": "status",
+      "label": "Bad tint",
+      "use": "Tinted ground for an error message or badge. Main text stays readable on it.",
+      "light": "#F8E8E6",
+      "dark": "#2C1A1F",
+      "calc": {
+        "from": "bg",
+        "to": "bad",
+        "weight": 12,
+        "rules": [
+          [
+            "text",
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bad-text",
+      "group": "status",
+      "label": "Bad text",
+      "use": "Text in the bad hue (error headings and bodies), readable on the bad tint and on the background.",
+      "light": "#722E24",
+      "dark": "#F3A2AD",
+      "calc": {
+        "from": "bad",
+        "to": "text",
+        "weight": 50,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "bad-soft",
+            4.5
+          ]
+        ]
+      }
+    },
+    {
+      "name": "bad-border",
+      "group": "status",
+      "label": "Bad border",
+      "use": "Edge of an error message or badge.",
+      "light": "#D36659",
+      "dark": "#CF4D5B",
+      "calc": {
+        "from": "bg",
+        "to": "bad",
+        "weight": 80,
+        "rules": [
+          [
+            "bg",
+            3
+          ]
+        ]
+      }
     }
   ],
   "contracts": [
@@ -441,8 +730,169 @@
       "role": "tag-8",
       "against": "surface",
       "min": 3
+    },
+    {
+      "label": "Secondary text",
+      "role": "text-secondary",
+      "against": "bg",
+      "min": 7
+    },
+    {
+      "label": "Secondary text on surfaces",
+      "role": "text-secondary",
+      "against": "surface",
+      "min": 7
+    },
+    {
+      "label": "Accent text hover",
+      "role": "accent-text-hover",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Accent text hover on surfaces",
+      "role": "accent-text-hover",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Button hover shape",
+      "role": "button-hover",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Button hover text",
+      "role": "button-text",
+      "against": "button-hover",
+      "min": 4.5
+    },
+    {
+      "label": "Strong border",
+      "role": "border-strong",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Strong border on surfaces",
+      "role": "border-strong",
+      "against": "surface",
+      "min": 3
+    },
+    {
+      "label": "OK text",
+      "role": "ok-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "OK text on surfaces",
+      "role": "ok-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "OK text on tint",
+      "role": "ok-text",
+      "against": "ok-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Text on OK tint",
+      "role": "ok-soft",
+      "against": "text",
+      "min": 7
+    },
+    {
+      "label": "OK border",
+      "role": "ok-border",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Warning text",
+      "role": "warn-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Warning text on surfaces",
+      "role": "warn-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Warning text on tint",
+      "role": "warn-text",
+      "against": "warn-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Text on warning tint",
+      "role": "warn-soft",
+      "against": "text",
+      "min": 7
+    },
+    {
+      "label": "Warning border",
+      "role": "warn-border",
+      "against": "bg",
+      "min": 3
+    },
+    {
+      "label": "Bad text",
+      "role": "bad-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Bad text on surfaces",
+      "role": "bad-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Bad text on tint",
+      "role": "bad-text",
+      "against": "bad-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Text on bad tint",
+      "role": "bad-soft",
+      "against": "text",
+      "min": 7
+    },
+    {
+      "label": "Bad border",
+      "role": "bad-border",
+      "against": "bg",
+      "min": 3
     }
   ],
+  "channels": {
+    "accent-h": {
+      "from": "accent",
+      "channel": "h",
+      "unit": "",
+      "light": "145.1",
+      "dark": "255.5"
+    },
+    "accent-s": {
+      "from": "accent",
+      "channel": "s",
+      "unit": "%",
+      "light": "46.2",
+      "dark": "100"
+    },
+    "accent-l": {
+      "from": "accent",
+      "channel": "l",
+      "unit": "%",
+      "light": "33.5",
+      "dark": "74.1"
+    }
+  },
   "light": {
     "bg": "#FFFFFF",
     "surface": "#F5F3EF",
@@ -469,7 +919,20 @@
     "tag-5": "#A21CAF",
     "tag-6": "#0E7490",
     "tag-7": "#A16207",
-    "tag-8": "#4D7C0F"
+    "tag-8": "#4D7C0F",
+    "text-secondary": "#3D3B36",
+    "accent-text-hover": "#214F33",
+    "button-hover": "#2C7149",
+    "border-strong": "#8D8881",
+    "ok-soft": "#E6EFEA",
+    "ok-text": "#254C34",
+    "ok-border": "#589772",
+    "warn-soft": "#F6EAE1",
+    "warn-text": "#683711",
+    "warn-border": "#C3753A",
+    "bad-soft": "#F8E8E6",
+    "bad-text": "#722E24",
+    "bad-border": "#D36659"
   },
   "dark": {
     "bg": "#0F1115",
@@ -497,7 +960,20 @@
     "tag-5": "#E879F9",
     "tag-6": "#22D3EE",
     "tag-7": "#FACC15",
-    "tag-8": "#A3E635"
+    "tag-8": "#A3E635",
+    "text-secondary": "#B8BDCA",
+    "accent-text-hover": "#C4B4FB",
+    "button-hover": "#A688FD",
+    "border-strong": "#676E7F",
+    "ok-soft": "#152922",
+    "ok-text": "#92E2B9",
+    "ok-border": "#34B36E",
+    "warn-soft": "#2C271C",
+    "warn-text": "#F3DA9E",
+    "warn-border": "#CFA742",
+    "bad-soft": "#2C1A1F",
+    "bad-text": "#F3A2AD",
+    "bad-border": "#CF4D5B"
   }
 };
   root.FrostingTokens = api;

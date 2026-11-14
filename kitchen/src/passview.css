@@ -22,3 +22,8 @@
 .mise-pass__fix { font: inherit; font-size: .9em; background: transparent; border: 0; padding: 0 2px; color: var(--fr-accent-text); text-decoration: underline; cursor: pointer; justify-self: end; white-space: nowrap; }
 .mise-pass__fix:focus-visible { outline: 2px solid var(--fr-focus-ring); outline-offset: 2px; }
 .mise-pass__sample { display: inline-block; grid-column: 3 / -1; justify-self: start; margin-top: 4px; padding: 3px 8px; border: 1px solid var(--fr-border); border-radius: 4px; line-height: 1.3; }
+/* the suggested passing colour: a swatch beside the hex and ratio (never colour alone), and a "Use this" button when the host offers one */
+.mise-pass__suggest { grid-column: 3 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; color: var(--fr-text); font-size: .9em; overflow-wrap: anywhere; }
+.mise-pass__swatch { display: inline-block; flex: none; width: 1.1em; height: 1.1em; border-radius: 3px; border: 1px solid var(--fr-border); }
+.mise-pass__use { font: inherit; background: transparent; border: 0; padding: 0 2px; color: var(--fr-accent-text); text-decoration: underline; cursor: pointer; white-space: nowrap; }
+.mise-pass__use:focus-visible { outline: 2px solid var(--fr-focus-ring); outline-offset: 2px; }

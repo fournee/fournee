@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node scripts/build.mjs && node test/run.mjs",
+    "test": "node scripts/build.mjs && node test/run.mjs && node test/accent.mjs && node test/roles.mjs && node test/backcompat.mjs",
     "catalog": "node scripts/build.mjs && node scripts/catalog.mjs"
   },
   "files": [

@@ -30,6 +30,9 @@
 .fr-sw { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 8px; padding: 6px 8px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); font-size: 12px; }
 .fr-sw input[type=color] { width: 34px; height: 28px; border: 0; padding: 0; background: none; cursor: pointer; }
 .fr-sw code { font-size: 11px; color: var(--fr-muted); }
+/* calculated roles (v1.3.0): the "calculated" caption, or "your pick" with a Use calculated link */
+.fr-sw__calc { font-size: inherit; color: var(--fr-text-secondary, var(--fr-muted)); }
+.fr-sw__calc .fr-link { font-size: inherit; }
 .fr-pal__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
 .fr-pal__actions [data-flash].is-error { color: var(--fr-bad); }
 .fr-pal__keys { margin-top: 8px; }

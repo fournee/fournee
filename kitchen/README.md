@@ -27,6 +27,11 @@ recipes.load().then(function (s) { /* s.theme, s.draft, s.favorites are recipes 
 recipes.saveDraft({ name: 'Corner Bakery', client: 'Corner Bakery Ltd', frosting: { colors: { accent: '#B4532A' } }, fontdant: {} });
 ```
 
+A recipe may override a calculated colour role by name: `frosting: { colors: {…}, overrides: { 'border-strong': '#7A766F' } }`.
+Only calculated roles (see frosting's SPEC §2) are accepted; other keys and non-hex values are dropped. `clean` fits every
+calculated role from the base roles (under the recipe's accessibility standard and its gradients) and keeps the overrides.
+`fromLook` and `toLook` carry them as the look's `colors.overrides`.
+
 Recipes live under their own keys (`recipe`, `recipe.draft`, `recipe.favorites`), beside a project's old frosting
 look. If no recipe is saved yet but a published frosting look is, `load()` starts from that look
 (`adoptedFrostingLook: true`). The fontdant half keeps only `mode scaling faces dials roles styles fonts`;
@@ -58,6 +63,21 @@ KitchenPass.failing(res, 'hard');           // e.g. ['T5', 'X4']
 Which colour a type role is painted in decides its cross-checks. Defaults: display, heading, body, ui, mono and
 metric use `text`; caption and eyebrow use `muted`; `ui-button` uses `button-text` on `button`. A recipe overrides
 this per role (`fontdant.roles.caption.color = 'accent-text'`, or a hex). Text is checked on `bg` and `surface`.
+**Suggestions.** A failed or warned contrast result (a frosting contract, X2, X3, X4, X5, X6's colour part, X8) carries an
+optional `suggest` field: the nearest colour of the same hue, moving lightness only, that reaches the contrast asked for
+on every ground the pass checks that colour on. It is absent when not applicable, `null` when no lightness works, or
+
+```js
+{ role: 'muted', from: '#455768', to: '#445566', direction: 'darker', deltaL: 0.6, target: 7, ratio: 7.01,
+  against: [{ role: 'bg', hex: '#F2F5F8', ratio: 7.01, min: 7 }, …] }   // illustrative values
+```
+
+`role` is the role that moves (`null` for a literal hex), `deltaL` the lightness change in HSL points, `ratio` the worst
+ratio over `against`, floored so `7.00` never hides 6.996. When `suggest` is `null` the result also has `suggestTarget`,
+the strictest ratio it was judged against, so a view can say "no colour of this hue reaches 7:1 here".
+`KitchenPass.suggest(fg, rules, opts)` is the pure function behind it (`rules` is `[[groundHex, min], …]`). The pass view
+shows the swatch, the hex and the ratio, and a "Use this" button when you give `KitchenPassView` an `onSuggest` hook.
+
 Hard checks fail a recipe; warnings badge it; info notes (level `info`) only advise. Licence checks L1–L6 join
 when `FontdantLicence` is loaded: `run(recipe, { domain, injection, traffic, subset })`. A project's own roles go in `fontdant.extensions.roles` (standard
 role schema plus `base`, the core role whose job it does). They are checked like core roles, and **the 12px floor
@@ -72,6 +92,8 @@ npm test   # unit: recipe round-trips through all four adapters, FrostingStore a
            #       a replay of a workbench app's store calls
            # unit: the pass (defaults, 26 presets, 3,000 lucky, the 300@10px-on-muted case, X1–X9, T13 input,
            #       extensions, the HUD gauge fixture)
+           # unit: suggestions (suggest.mjs), calculated roles and overrides in recipes and fitting (roles.mjs)
            # browser (Chromium): the shell with frosting's real panel, preset → draft → publish → reload
            # browser (Chromium + Firefox): T13 at 320px; the pass tab in the panel
+           # browser (Chromium): the suggestion in the pass view, the live numeric accent, the override UI
 ```

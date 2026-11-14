@@ -1,0 +1,522 @@
+/* === recipe.json (dark) === */
+:root:root:root {
+  --fr-bg: #14161A;
+  --fr-surface: #1D2026;
+  --fr-border: #323741;
+  --fr-text: #ECEDEF;
+  --fr-muted: #A6ACB4;
+  --fr-accent: #7CC4A0;
+  --fr-accent-text: #9AD7B8;
+  --fr-button: #7CC4A0;
+  --fr-button-text: #0E1512;
+  --fr-progress-fill: #9D7BFF;
+  --fr-progress-track: #262B36;
+  --fr-ok: #3DDC84;
+  --fr-warn: #FFCC4D;
+  --fr-bad: #FF5C6C;
+  --fr-series-1: #4FB3FF;
+  --fr-series-2: #FFB454;
+  --fr-series-3: #C084FC;
+  --fr-series-4: #5FE0A8;
+  --fr-tag-1: #60A5FA;
+  --fr-tag-2: #FB923C;
+  --fr-tag-3: #A78BFA;
+  --fr-tag-4: #34D399;
+  --fr-tag-5: #E879F9;
+  --fr-tag-6: #22D3EE;
+  --fr-tag-7: #FACC15;
+  --fr-tag-8: #A3E635;
+  color-scheme: dark;
+}
+@media (prefers-contrast: more) { :root:not([data-mise-contrast="normal"]) { --fr-muted: #A6ACB4 !important; } }
+:root[data-mise-contrast="more"] { --fr-muted: #A6ACB4 !important; }
+/* display: fraunces (size-adjust 103.93%) */
+@font-face {
+  font-family: "Fraunces fd-display";
+  src: url("fonts/fraunces/fraunces-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 103.93%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces fd-display";
+  src: url("fonts/fraunces/fraunces-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 103.93%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces fd-display fallback";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT");
+  font-style: normal;
+  size-adjust: 132.9%;
+  ascent-override: 76.48%;
+  descent-override: 19.94%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Fraunces fd-display fallback";
+  src: local("Times New Roman Italic"), local("TimesNewRomanPS-ItalicMT");
+  font-style: italic;
+  size-adjust: 132.9%;
+  ascent-override: 76.48%;
+  descent-override: 19.94%;
+  line-gap-override: 0%;
+}
+
+/* text: source-sans-3 (size-adjust 114.21%) */
+@font-face {
+  font-family: "Source Sans 3 fd-text";
+  src: url("fonts/source-sans-3/source-sans-3-latin-wght.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 114.21%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Sans 3 fd-text";
+  src: url("fonts/source-sans-3/source-sans-3-latin-wght-italic.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 114.21%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Sans 3 fd-text fallback";
+  src: local("Arial"), local("ArialMT");
+  font-style: normal;
+  size-adjust: 102.6%;
+  ascent-override: 113.98%;
+  descent-override: 44.52%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Source Sans 3 fd-text fallback";
+  src: local("Arial Italic"), local("Arial-ItalicMT");
+  font-style: italic;
+  size-adjust: 102.6%;
+  ascent-override: 113.98%;
+  descent-override: 44.52%;
+  line-gap-override: 0%;
+}
+
+/* mono: ibm-plex-mono (size-adjust 105.79%) */
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-500-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-600-italic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono";
+  src: url("fonts/ibm-plex-mono/ibm-plex-mono-latin-700-italic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: optional;
+  size-adjust: 105.79%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  font-style: normal;
+  size-adjust: 105.78%;
+  ascent-override: 102.52%;
+  descent-override: 27.5%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "IBM Plex Mono fd-mono fallback";
+  src: local("Courier New Italic"), local("CourierNewPS-ItalicMT");
+  font-style: italic;
+  size-adjust: 105.78%;
+  ascent-override: 102.52%;
+  descent-override: 27.5%;
+  line-gap-override: 0%;
+}
+:root {
+  --fd-face-display: "Fraunces fd-display", "Fraunces fd-display fallback", "Fraunces", system-ui, sans-serif;
+  --fd-face-text: "Source Sans 3 fd-text", "Source Sans 3 fd-text fallback", "Source Sans 3", system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fd-face-mono: "IBM Plex Mono fd-mono", "IBM Plex Mono fd-mono fallback", "IBM Plex Mono", ui-monospace, 'Cascadia Code', Consolas, monospace;
+  --fd-weight-title: 650;
+  --fd-eyebrow-lower-weight: 600;
+}
+/* extension roles: deck-time */
+:root {
+  --fd-deck-time-family: var(--fd-face-display);
+  --fd-deck-time-size: clamp(calc(1.5rem * var(--fd-scaling)), min(2.6vw, 4.2vh), calc(2.375rem * var(--fd-scaling)));
+  --fd-deck-time-weight: 600;
+  --fd-deck-time-leading: 1;
+  --fd-deck-time-tracking: 0;
+  --fd-deck-time-numeric: tabular-nums;
+  --fd-deck-time-transform: none;
+  --fd-deck-time-style: normal;
+}
+.fd-deck-time {
+  font-family: var(--fd-deck-time-family); font-size: var(--fd-deck-time-size); font-weight: var(--fd-deck-time-weight);
+  line-height: var(--fd-deck-time-leading); letter-spacing: var(--fd-deck-time-tracking); font-variant-numeric: var(--fd-deck-time-numeric);
+  text-transform: var(--fd-deck-time-transform); font-style: var(--fd-deck-time-style); font-synthesis: none;
+}
+/* === light defaults === */
+:root:root:root {
+  --fr-bg: #FFFFFF;
+  --fr-surface: #F5F3EF;
+  --fr-border: #E3DED6;
+  --fr-text: #1C1B19;
+  --fr-muted: #5E5A53;
+  --fr-accent: #2E7D4F;
+  --fr-accent-text: #22603C;
+  --fr-button: #2E7D4F;
+  --fr-button-text: #FFFFFF;
+  --fr-progress-fill: #2E7D4F;
+  --fr-progress-track: #E7E3DC;
+  --fr-ok: #2E7D4F;
+  --fr-warn: #B45309;
+  --fr-bad: #C8402F;
+  --fr-series-1: #1F5F8B;
+  --fr-series-2: #D9622B;
+  --fr-series-3: #6B2D5C;
+  --fr-series-4: #5C6B3A;
+  --fr-tag-1: #1D4ED8;
+  --fr-tag-2: #C2410C;
+  --fr-tag-3: #7C3AED;
+  --fr-tag-4: #047857;
+  --fr-tag-5: #A21CAF;
+  --fr-tag-6: #0E7490;
+  --fr-tag-7: #A16207;
+  --fr-tag-8: #4D7C0F;
+  color-scheme: light;
+}
+@media (prefers-contrast: more) { :root:not([data-mise-contrast="normal"]) { --fr-muted: #55524B !important; } }
+:root[data-mise-contrast="more"] { --fr-muted: #55524B !important; }
+/* display: inter (size-adjust 100%) */
+@font-face {
+  font-family: "Inter fd-display";
+  src: url("fonts/inter/inter-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-display";
+  src: url("fonts/inter/inter-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-display fallback";
+  src: local("Arial"), local("ArialMT");
+  font-style: normal;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter fd-display fallback";
+  src: local("Arial Italic"), local("Arial-ItalicMT");
+  font-style: italic;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+
+/* text: inter (size-adjust 100%) */
+@font-face {
+  font-family: "Inter fd-text";
+  src: url("fonts/inter/inter-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-text";
+  src: url("fonts/inter/inter-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-text fallback";
+  src: local("Arial"), local("ArialMT");
+  font-style: normal;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter fd-text fallback";
+  src: local("Arial Italic"), local("Arial-ItalicMT");
+  font-style: italic;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+
+/* mono: jetbrains-mono (size-adjust 99.25%) */
+@font-face {
+  font-family: "JetBrains Mono fd-mono";
+  src: url("fonts/jetbrains-mono/jetbrains-mono-latin-wght.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: optional;
+  size-adjust: 99.25%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono fd-mono";
+  src: url("fonts/jetbrains-mono/jetbrains-mono-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: optional;
+  size-adjust: 99.25%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono fd-mono fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  font-style: normal;
+  size-adjust: 99.24%;
+  ascent-override: 102.02%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "JetBrains Mono fd-mono fallback";
+  src: local("Courier New Italic"), local("CourierNewPS-ItalicMT");
+  font-style: italic;
+  size-adjust: 99.24%;
+  ascent-override: 102.02%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+:root {
+  --fd-face-display: "Inter fd-display", "Inter fd-display fallback", "Inter", system-ui, sans-serif;
+  --fd-face-text: "Inter fd-text", "Inter fd-text fallback", "Inter", system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fd-face-mono: "JetBrains Mono fd-mono", "JetBrains Mono fd-mono fallback", "JetBrains Mono", ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+/* === dark defaults === */
+:root:root:root {
+  --fr-bg: #0F1115;
+  --fr-surface: #171A21;
+  --fr-border: #262B36;
+  --fr-text: #E6E8EE;
+  --fr-muted: #8A92A6;
+  --fr-accent: #9D7BFF;
+  --fr-accent-text: #B9A3FF;
+  --fr-button: #9D7BFF;
+  --fr-button-text: #0F1115;
+  --fr-progress-fill: #9D7BFF;
+  --fr-progress-track: #262B36;
+  --fr-ok: #3DDC84;
+  --fr-warn: #FFCC4D;
+  --fr-bad: #FF5C6C;
+  --fr-series-1: #4FB3FF;
+  --fr-series-2: #FFB454;
+  --fr-series-3: #C084FC;
+  --fr-series-4: #5FE0A8;
+  --fr-tag-1: #60A5FA;
+  --fr-tag-2: #FB923C;
+  --fr-tag-3: #A78BFA;
+  --fr-tag-4: #34D399;
+  --fr-tag-5: #E879F9;
+  --fr-tag-6: #22D3EE;
+  --fr-tag-7: #FACC15;
+  --fr-tag-8: #A3E635;
+  color-scheme: dark;
+}
+@media (prefers-contrast: more) { :root:not([data-mise-contrast="normal"]) { --fr-muted: #9EA5B5 !important; } }
+:root[data-mise-contrast="more"] { --fr-muted: #9EA5B5 !important; }
+/* display: inter (size-adjust 100%) */
+@font-face {
+  font-family: "Inter fd-display";
+  src: url("fonts/inter/inter-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-display";
+  src: url("fonts/inter/inter-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-display fallback";
+  src: local("Arial"), local("ArialMT");
+  font-style: normal;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter fd-display fallback";
+  src: local("Arial Italic"), local("Arial-ItalicMT");
+  font-style: italic;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+
+/* text: inter (size-adjust 100%) */
+@font-face {
+  font-family: "Inter fd-text";
+  src: url("fonts/inter/inter-latin-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-text";
+  src: url("fonts/inter/inter-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  size-adjust: 100%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter fd-text fallback";
+  src: local("Arial"), local("ArialMT");
+  font-style: normal;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Inter fd-text fallback";
+  src: local("Arial Italic"), local("Arial-ItalicMT");
+  font-style: italic;
+  size-adjust: 107.4%;
+  ascent-override: 90.2%;
+  descent-override: 22.46%;
+  line-gap-override: 0%;
+}
+
+/* mono: jetbrains-mono (size-adjust 99.25%) */
+@font-face {
+  font-family: "JetBrains Mono fd-mono";
+  src: url("fonts/jetbrains-mono/jetbrains-mono-latin-wght.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: optional;
+  size-adjust: 99.25%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono fd-mono";
+  src: url("fonts/jetbrains-mono/jetbrains-mono-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: italic;
+  font-display: optional;
+  size-adjust: 99.25%;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono fd-mono fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  font-style: normal;
+  size-adjust: 99.24%;
+  ascent-override: 102.02%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "JetBrains Mono fd-mono fallback";
+  src: local("Courier New Italic"), local("CourierNewPS-ItalicMT");
+  font-style: italic;
+  size-adjust: 99.24%;
+  ascent-override: 102.02%;
+  descent-override: 30.01%;
+  line-gap-override: 0%;
+}
+:root {
+  --fd-face-display: "Inter fd-display", "Inter fd-display fallback", "Inter", system-ui, sans-serif;
+  --fd-face-text: "Inter fd-text", "Inter fd-text fallback", "Inter", system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fd-face-mono: "JetBrains Mono fd-mono", "JetBrains Mono fd-mono fallback", "JetBrains Mono", ui-monospace, 'Cascadia Code', Consolas, monospace;
+}

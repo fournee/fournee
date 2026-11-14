@@ -1,5 +1,5 @@
 /* Fournée base stylesheet: frosting role variables + fontdant role classes. Built by delivery/scripts/build.mjs. */
-/* frosting tokens v1.0.0 — generated from tokens.json by scripts/build.mjs; do not edit.
+/* frosting tokens v1.3.0 — generated from tokens.json by scripts/build.mjs; do not edit.
    Light defaults on :root; dark defaults under prefers-color-scheme: dark (unless data-theme="light")
    and under an explicit data-theme="dark". A look overrides any of these with setProperty. */
 :root {
@@ -15,10 +15,23 @@
   --fr-button-text: #FFFFFF;
   --fr-progress-fill: #2E7D4F;
   --fr-progress-track: #E7E3DC;
+  --fr-text-secondary: color-mix(in srgb, var(--fr-muted) 50%, var(--fr-text));
+  --fr-accent-text-hover: color-mix(in srgb, var(--fr-text) 25%, var(--fr-accent-text));
+  --fr-button-hover: color-mix(in srgb, var(--fr-text) 12%, var(--fr-button));
+  --fr-border-strong: color-mix(in srgb, var(--fr-muted) 65%, var(--fr-border));
   /* ── status ── Optional. Dashboards and monitors: dots, meters, badges. */
   --fr-ok: #2E7D4F;
   --fr-warn: #B45309;
   --fr-bad: #C8402F;
+  --fr-ok-soft: color-mix(in srgb, var(--fr-ok) 12%, var(--fr-bg));
+  --fr-ok-text: color-mix(in srgb, var(--fr-text) 50%, var(--fr-ok));
+  --fr-ok-border: color-mix(in srgb, var(--fr-ok) 80%, var(--fr-bg));
+  --fr-warn-soft: color-mix(in srgb, var(--fr-warn) 12%, var(--fr-bg));
+  --fr-warn-text: color-mix(in srgb, var(--fr-text) 50%, var(--fr-warn));
+  --fr-warn-border: color-mix(in srgb, var(--fr-warn) 80%, var(--fr-bg));
+  --fr-bad-soft: color-mix(in srgb, var(--fr-bad) 12%, var(--fr-bg));
+  --fr-bad-text: color-mix(in srgb, var(--fr-text) 50%, var(--fr-bad));
+  --fr-bad-border: color-mix(in srgb, var(--fr-bad) 80%, var(--fr-bg));
   /* ── series ── Optional. Chart lines and bars, in order of use. */
   --fr-series-1: #1F5F8B;
   --fr-series-2: #D9622B;
@@ -42,6 +55,10 @@
   --fr-tip-bg: var(--fr-text);
   --fr-tip-text: var(--fr-bg);
   --fr-focus-ring: var(--fr-accent);
+  /* ── channels ── Numeric parts of a role, for CSS that builds its own hsl(). Not roles: no contracts, never edited. Values are checked against FrostingColor.accentParts of the default accents. */
+  --fr-accent-h: 145.1;
+  --fr-accent-s: 46.2%;
+  --fr-accent-l: 33.5%;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -71,6 +88,9 @@
   --fr-tag-6: #22D3EE;
   --fr-tag-7: #FACC15;
   --fr-tag-8: #A3E635;
+  --fr-accent-h: 255.5;
+  --fr-accent-s: 100%;
+  --fr-accent-l: 74.1%;
   }
 }
 :root[data-theme="dark"] {
@@ -100,6 +120,9 @@
   --fr-tag-6: #22D3EE;
   --fr-tag-7: #FACC15;
   --fr-tag-8: #A3E635;
+  --fr-accent-h: 255.5;
+  --fr-accent-s: 100%;
+  --fr-accent-l: 74.1%;
 }
 /* Gradient fills (src/fills.js): a look may set --fr-<role>-fill on top of a role's solid colour. Paint
    background-color: var(--fr-<role>); background-image: var(--fr-<role>-fill, none).
@@ -133,6 +156,19 @@
     --fr-tag-6-fill: none !important;
     --fr-tag-7-fill: none !important;
     --fr-tag-8-fill: none !important;
+    --fr-text-secondary-fill: none !important;
+    --fr-accent-text-hover-fill: none !important;
+    --fr-button-hover-fill: none !important;
+    --fr-border-strong-fill: none !important;
+    --fr-ok-soft-fill: none !important;
+    --fr-ok-text-fill: none !important;
+    --fr-ok-border-fill: none !important;
+    --fr-warn-soft-fill: none !important;
+    --fr-warn-text-fill: none !important;
+    --fr-warn-border-fill: none !important;
+    --fr-bad-soft-fill: none !important;
+    --fr-bad-text-fill: none !important;
+    --fr-bad-border-fill: none !important;
   }
 }
 

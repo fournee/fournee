@@ -70,6 +70,7 @@
       'progress-fill': fill, 'progress-track': track,
       'ok': status(sh.ok), 'warn': status(sh.warn), 'bad': status(sh.bad),
     }, series, tags(bg, surface));
+    theme = C.complete(theme, { roles: roles() });   // the calculated roles (v1.3.0), from the roles above, fitted
     exts.forEach(function (e) { if (e.derive) Object.assign(theme, e.derive(theme, spec, C)); });
     return theme;
   }
@@ -121,7 +122,7 @@
   /* presets(lockBg): the derived looks, then the brand looks (left out when a background is locked: they're exact) */
   function presets(lockBg) {
     var out = PRESETS.map(function (p) { return { name: p.name, scheme: SCHEMES[p.scheme], colors: derive(p, lockBg) }; });
-    if (!lockBg) BRANDS.forEach(function (b) { out.push({ name: b.name, scheme: 'Brand', standard: b.standard, note: b.note, colors: Object.assign(tags(b.colors.bg, b.colors.surface), b.colors) }); });
+    if (!lockBg) BRANDS.forEach(function (b) { out.push({ name: b.name, scheme: 'Brand', standard: b.standard, note: b.note, colors: C.complete(Object.assign(tags(b.colors.bg, b.colors.surface), b.colors), { roles: roles() }) }); });
     return out;
   }
 
@@ -163,6 +164,8 @@
       var stride = n % 3 ? 3 : 7, fam = (i * stride) % n, round = Math.floor(i / n), h = off + fam * (360 / n);
       var hue = hex({ h: h, s: 70, l: dark ? 62 : 40 });
       var o = { accent: fit(hue, [[page.bg, 3], [page.surface, 3]]), 'accent-text': fit(hue, [[page.bg, 4.5], [page.surface, 4.5]]) };
+      // the card's own link hover, calculated over the page plus the card's accent (the page's overrides do not apply)
+      o['accent-text-hover'] = C.complete(Object.assign({}, page, o), { overrides: {} })['accent-text-hover'];
       if (Fl) {
         var tint = function (t) { return mix(page.surface, hex({ h: h, s: 55, l: dark ? 30 : 88 }), t); };
         var f = { stops: [tint(dark ? 0.55 : 0.6), tint(dark ? 0.15 : 0.2)], angle: angles[round % angles.length], space: 'oklab' };

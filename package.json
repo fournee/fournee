@@ -1,6 +1,6 @@
 {
   "name": "fournee",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Fournée: a theming toolkit. Colour and type by role, one recipe, many batches. Frosting (colour), Fontdant (type), kitchen (shared store, panel, recipe format, the pass), delivery (wrappers and exports).",
   "private": true,
   "type": "module",

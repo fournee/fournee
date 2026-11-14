@@ -24,8 +24,18 @@
     // the standards dial (kitchen/src/standards.js) the look is judged by
     var std = colors && typeof colors.standard === 'string' ? colors.standard : defaults.standard;
     if (typeof std === 'string' && /^[a-z0-9-]{2,40}$/.test(std)) out.standard = std;
+    // calculated roles (v1.3.0): recomputed from the look's own roles on every clean (a stored value is only a cache),
+    // except those named in colors.overrides; needs FrostingColor, like fills need FrostingFills
+    var C = root.FrostingColor;
+    if (C && C.complete) {
+      var ov = C.cleanOverrides(colors && colors.overrides);
+      if (Object.keys(ov).length) out.overrides = ov;
+      out = C.complete(out, { overrides: ov, contracts: standardContracts(C, out.standard) });
+    }
     return out;
   }
+  /* a standards profile's contracts (KitchenStandards, when loaded) raise the calculated roles' minimums */
+  function standardContracts(C, std) { var KS = root.KitchenStandards; return KS && std && KS.get(std) ? KS.contracts(std, C.contracts(), true) : null; }
   /* Favorites: [{name, colors}], at most 40, names ≤ 40 chars with control chars and <> stripped. */
   function cleanFavorites(list, defaults) {
     return (Array.isArray(list) ? list : []).slice(0, 40).map(function (f) {

@@ -5,6 +5,8 @@
 
    mount(el, { recipe: () => recipe, specimenUrl?, onResult?(result), passOpts?, onPick?(r), samples? })   passOpts: domain, injection… for the licence checks → { refresh(), result(), ready }
    refresh() re-runs the pass (call it after the recipe changes); onResult lets the shell badge its tab.
+   onSuggest(result, suggest): a failed or warned result that carries `suggest` shows the colour that would pass
+   (swatch, hex, ratio); with this hook it also gets a "Use this" button that hands the suggestion to the caller.
    onPick: every item that needs attention (failing, warning or note) gets a Fix / Look button that hands its result
    (with r.where: { tab, role, … }) to the caller, which takes you to the setting. samples: show the failing text
    as it looks (its colours, size and weight). */
@@ -24,6 +26,19 @@
       if (!opts.samples || !w || !hex(w.fg) || !hex(w.bg)) return '';
       return '<span class="mise-pass__sample" style="color:' + w.fg + ';background:' + w.bg + (w.size ? ';font-size:' + w.size + 'px' : '') + (w.weight ? ';font-weight:' + w.weight : '') + '">' + esc(w.style ? 'Sample · ' + w.style : 'Sample text') + '</span>';
     }
+    // the suggested passing colour (KitchenPass `suggest`), or the plain sentence when none exists
+    function suggestion(r, index) {
+      if (r.suggest === null) return '<span class="mise-pass__suggest" data-pass-nosuggest>No colour of this hue reaches ' + (r.suggestTarget != null ? esc(r.suggestTarget) + ':1' : 'the contrast asked for') + ' here. Change the background or the hue.</span>';
+      var s = r.suggest;
+      if (!s || !hex(s.to)) return '';
+      var binding = (s.against || []).slice().sort(function (a, b) { return a.ratio - b.ratio; })[0];
+      var on = binding ? ' on ' + esc(binding.role || binding.hex) : '';
+      var w = Object.assign({}, r.where || {}, { fg: s.to });
+      if (!hex(w.bg) && binding) w.bg = binding.hex;
+      return '<span class="mise-pass__suggest"><span class="mise-pass__swatch" aria-hidden="true" style="background:' + s.to + '"></span>' +
+        'Try <strong>' + esc(s.to) + '</strong> · ' + esc(s.ratio) + ':1' + on + ' (' + esc(s.target) + ':1 asked)' +
+        (opts.onSuggest ? ' <button type="button" class="mise-pass__use" data-pass-suggest="' + index + '">Use this</button>' : '') + '</span>' + sample(w);
+    }
     function item(r) {
       var kind = r.pending ? 'pending' : r.level === 'info' ? 'info' : r.ok ? 'ok' : r.level === 'hard' ? 'hard' : 'warn';
       var pick = opts.onPick && r.where && (kind === 'hard' || kind === 'warn' || kind === 'info') && last ? last.results.indexOf(r) : -1;
@@ -32,9 +47,11 @@
         '<span class="mise-pass__id">' + esc(r.id === r.label ? '' : r.id) + '</span>' +
         '<span class="mise-pass__label">' + esc(r.label) + (kind === 'warn' ? ' <em>(warning)</em>' : kind === 'info' ? ' <em>(note)</em>' : '') + '</span>' +
         (pick >= 0 ? '<button type="button" class="mise-pass__fix" data-pass-pick="' + pick + '">' + (kind === 'hard' ? 'Fix' : 'Look') + ' →</button>' : '') +
-        (r.detail ? '<span class="mise-pass__detail">' + esc(r.detail) + '</span>' : '') + (kind !== 'ok' && kind !== 'pending' ? sample(r.where) : '') + '</li>';
+        (r.detail ? '<span class="mise-pass__detail">' + esc(r.detail) + '</span>' : '') + (kind !== 'ok' && kind !== 'pending' ? sample(r.where) + suggestion(r, last ? last.results.indexOf(r) : -1) : '') + '</li>';
     }
     el.addEventListener('click', function (e) {
+      var u = e.target.closest && e.target.closest('[data-pass-suggest]');
+      if (u && last && opts.onSuggest) { var sr = last.results[+u.getAttribute('data-pass-suggest')]; if (sr && sr.suggest) opts.onSuggest(sr, sr.suggest); return; }
       var b = e.target.closest && e.target.closest('[data-pass-pick]'); if (!b || !last || !opts.onPick) return;
       var r = last.results[+b.getAttribute('data-pass-pick')]; if (r) opts.onPick(r);
     });

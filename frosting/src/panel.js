@@ -11,6 +11,8 @@
    - steps: mount(…, { steps: true }) is step 1 of the Fournée steps (KitchenSteps): Build around a colour, Ready-made
      looks (🎲 first), Every role, My palettes, then the host's extras ({ extras: { title, mount(el) } }). The dial,
      Fit and Publish live in the later steps, which drive this panel through setDraft / setStandard / publish …
+   Since v1.3.0 calculated roles (tokens.json `calc`) follow the base roles: every change re-runs FrostingColor.complete;
+   editing a calculated swatch records draft.overrides[role], "Use calculated" clears it, and a new look or Reset clears all.
    Needs FrostingTokens, FrostingColor, FrostingGallery, FrostingStore (FrostingFills, KitchenStandards optional). */
 (function (root) {
   'use strict';
@@ -80,6 +82,8 @@
     var state = { theme: {}, draft: {}, favorites: [] }, list = [], current = null, more = {};
     // opts.roles: show only these roles' pickers (a card that uses six roles); opts.labels: { role: 'what it paints here' }
     var allRoles = G.roles(), roleNames = allRoles.map(function (r) { return r.name; });
+    // calculated roles (v1.3.0): follow the base roles through complete(); editing one records an override
+    var calcSet = {}; allRoles.forEach(function (r) { if (r.calc) calcSet[r.name] = true; });
     var roles = (opts.roles ? allRoles.filter(function (r) { return opts.roles.indexOf(r.name) >= 0; }) : allRoles).map(function (r) {
       return opts.labels && opts.labels[r.name] ? Object.assign({}, r, { label: opts.labels[r.name] }) : r;
     });
@@ -91,13 +95,29 @@
     function fills() { return state.draft.fills || {}; }
     function setFill(k, f) { var fs = Object.assign({}, fills()); if (f) fs[k] = f; else delete fs[k]; if (Object.keys(fs).length) state.draft.fills = fs; else delete state.draft.fills; }
     function fromItem(colors) {   // a look worn from the gallery or favourites: its colours (and fills), the dial kept
-      var d = Object.assign({}, start, colors); delete d.fills;
+      var d = Object.assign({}, start, colors); delete d.fills; delete d.overrides;   // a new look: no overrides
       if (colors && colors.fills && F) { var f = F.clean(colors.fills, roleNames); if (Object.keys(f).length) d.fills = f; }
       if (state.draft.standard) d.standard = state.draft.standard; else delete d.standard;
       return d;
     }
+    function overridesOf() { return state.draft.overrides || {}; }
+    function setOverride(k, v) {
+      var ov = Object.assign({}, overridesOf()); if (v) ov[k] = v; else delete ov[k];
+      if (Object.keys(ov).length) state.draft.overrides = ov; else delete state.draft.overrides;
+    }
+    function recalc() {   // re-run complete() on the draft, under the standard the badge judges by
+      if (C.complete) state.draft = C.complete(state.draft, { roles: allRoles, contracts: contracts() });
+    }
+    function syncCalc() {   // calculated swatches show their new values without a repaint (keeps the field being typed in)
+      Object.keys(calcSet).forEach(function (k) {
+        [$('[data-k="' + k + '"]'), $('[data-hex="' + k + '"]')].forEach(function (i) { if (i && i !== document.activeElement && typeof state.draft[k] === 'string') i.value = state.draft[k]; });
+      });
+    }
     function apply() {
+      recalc(); syncCalc();
       roleNames.forEach(function (k) { if (typeof state.draft[k] === 'string') target.style.setProperty(prefix + k, state.draft[k]); });
+      var cv = C.channelVars ? C.channelVars(state.draft, pfx) : {};   // --<p>-accent-h/-s/-l follow the accent (v1.3.0)
+      Object.keys(cv).forEach(function (k) { target.style.setProperty(k, cv[k]); });
       if (F) F.apply(target, fills(), pfx, roleNames);
       if (opts.onChange) opts.onChange(state.draft);
     }
@@ -133,7 +153,8 @@
         var v = state.draft[r.name], live = state.theme[r.name], f = F && fills()[r.name];
         var differs = base && (v !== base[r.name] || !same(f, base.fills && base.fills[r.name]));
         return '<div class="fr-sw' + (f ? ' has-fill' : '') + '" title="' + esc(r.use) + '"><input type="color" value="' + v + '" data-k="' + r.name + '" aria-label="' + esc(r.label) + '">' +
-          '<span>' + esc(r.label) + '<br><code>' + prefix + r.name + '</code>' + (live !== v ? ' <span class="fr-tag fr-tag--warn">draft</span>' : '') + '</span>' +
+          '<span>' + esc(r.label) + '<br><code>' + prefix + r.name + '</code>' + (live !== v ? ' <span class="fr-tag fr-tag--warn">draft</span>' : '') +
+          (calcSet[r.name] ? '<br><span class="fr-sw__calc">' + (overridesOf()[r.name] ? 'your pick · <button type="button" class="fr-link" data-usecalc="' + r.name + '">Use calculated</button>' : 'calculated') + '</span>' : '') + '</span>' +
           '<input type="text" value="' + v + '" data-hex="' + r.name + '" maxlength="7" aria-label="' + esc(r.label) + ' hex">' +
           (F || differs ? '<span class="fr-sw__tools">' +
             (F ? '<button type="button" class="fr-chip" aria-pressed="' + !!f + '" data-gtoggle="' + r.name + '">Gradient</button>' : '') +
@@ -178,12 +199,12 @@
     /* ── Fit to a standard: judge → fit → preview (before / after) → keep or undo ── */
     function recipeOf(d, type) {
       var colors = {}; roleNames.forEach(function (k) { if (typeof d[k] === 'string') colors[k] = d[k]; });
-      return { colors: colors, fills: d.fills || null, type: type || null };
+      return { colors: colors, fills: d.fills || null, type: type || null, overrides: d.overrides || null };
     }
     function problems() {
       var id = state.draft.standard, P = root.KitchenPass, R = root.KitchenRecipe, t = opts.type ? opts.type.get() : null;
       if (P && R) {
-        var rc = recipeOf(state.draft, t), res = P.run(R.clean({ frosting: { colors: rc.colors, fills: rc.fills }, fontdant: t || {}, standard: id }, { colors: defaults }), { standard: id });
+        var rc = recipeOf(state.draft, t), res = P.run(R.clean({ frosting: { colors: rc.colors, fills: rc.fills, overrides: rc.overrides || {} }, fontdant: t || {}, standard: id }, { colors: defaults }), { standard: id });
         return res.results.filter(function (r) { return !r.ok && !r.pending && r.level === 'hard' && (t || r.source !== 'fontdant'); }).map(function (r) { return r.label + (r.detail ? ': ' + r.detail : ''); });
       }
       var l = contracts(); return C.check(state.draft, l).filter(function (r, i) { return !r.ok && l[i].level !== 'warn'; }).map(function (r) { return r.label + ' ' + r.ratio + ':1 (needs ' + r.min + ')'; });
@@ -219,7 +240,7 @@
       fitting = { id: id, original: original, fitted: { draft: d, type: r.type }, changes: r.changes, left: r.left, showing: 'after' };
       showLook('after'); handEdited('Fitted to ' + K.get(id).label);
     }
-    function repaint() { paintSwatches(); apply(); paint(); }
+    function repaint() { recalc(); paintSwatches(); apply(); paint(); }
     function wear(item) {
       var hadFocus = el.pal.contains(document.activeElement);
       current = item;
@@ -267,12 +288,13 @@
       fitting = null;   // editing by hand keeps what's on the page
       var v2 = t.value.trim(); if (!C.HEX.test(v2)) return;
       state.draft[k2] = v2.toUpperCase();
+      if (calcSet[k2]) setOverride(k2, state.draft[k2]);   // a calculated role picked by hand stays put
       var pair = t.hasAttribute('data-k') ? $('[data-hex="' + k2 + '"]') : $('[data-k="' + k2 + '"]'); if (pair) pair.value = state.draft[k2];
       apply(); handEdited();
     });
     container.addEventListener('change', function (e) {
       var sp = e.target.getAttribute('data-space'); if (sp) editFill(sp, function (f) { f.space = e.target.value; return f; });
-      if (e.target.hasAttribute('data-stop') || e.target.hasAttribute('data-k')) { paintSwatches(); badge(); }
+      if (e.target.hasAttribute('data-stop') || e.target.hasAttribute('data-k') || e.target.hasAttribute('data-hex')) { paintSwatches(); badge(); }
     });
     $('[data-prev]').addEventListener('click', function () { step(-1); });
     $('[data-next]').addEventListener('click', function () { step(1); });
@@ -300,8 +322,9 @@
       else if (t.hasAttribute('data-fitkeep')) { if (fitting && fitting.showing === 'before') showLook('after'); fitting = null; paint(); flash('Kept. Publish to make it the look.'); }
       else if (t.hasAttribute('data-fitundo')) { if (fitting) { showLook('before'); fitting = null; paint(); flash('Back to your look.'); } }
       else if ((a = t.getAttribute('data-gtoggle'))) { setFill(a, fills()[a] ? null : F.seed(state.draft[a])); repaint(); handEdited(); }
+      else if ((a = t.getAttribute('data-usecalc'))) { setOverride(a, null); repaint(); handEdited(); }
       else if ((a = t.getAttribute('data-backto'))) {
-        state.draft[a] = base[a]; setFill(a, base.fills && base.fills[a] ? JSON.parse(JSON.stringify(base.fills[a])) : null); repaint(); handEdited();
+        setOverride(a, null); state.draft[a] = base[a]; setFill(a, base.fills && base.fills[a] ? JSON.parse(JSON.stringify(base.fills[a])) : null); repaint(); handEdited();
       }
       else if ((a = t.getAttribute('data-angle'))) { var q = a.split(':'); editFill(q[0], function (f) { f.angle = +q[1]; return f; }); }
       else if ((a = t.getAttribute('data-flip'))) editFill(a, F.flip);
@@ -332,7 +355,7 @@
       store.saveDraft(state.draft).then(function () { return store.publish(); }).then(function () { state.theme = JSON.parse(JSON.stringify(state.draft)); paintSwatches(); flash('Published.'); }).catch(function (e) { flash(e.message, true); });
     });
     function resetDraft() {
-      var std = state.draft.standard; state.draft = JSON.parse(JSON.stringify(start)); if (std) state.draft.standard = std;
+      var std = state.draft.standard; state.draft = JSON.parse(JSON.stringify(start)); delete state.draft.overrides; if (std) state.draft.standard = std;
       repaint(); handEdited(base ? 'The page\'s look' : 'The defaults'); flash(base ? 'Back to the page\'s look. Save or publish to keep it.' : 'Draft reset to the defaults. Save or publish to keep it.');
     }
     $('[data-reset]').addEventListener('click', resetDraft);
