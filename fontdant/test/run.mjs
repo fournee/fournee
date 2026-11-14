@@ -3,8 +3,8 @@
 //  - the generated CSS carries every style's longhands, the mode block, the scope block, the coarse floor, the alias faces
 //  - fit raises a dial below its floor and badges it; fixes order; clamps scaling; snaps weights a face lacks
 //  - a dense console app's 8 dials map one-to-one onto fontdant dials in dense mode, and its low-vision preset fits clean
-//  - the font library: 39 entries, every face lands on its slot target, Inter's aliases are 100%, fallbacks have overrides
-//  - bring your own font: a file not in the library becomes a valid entry (Lora), and a font whose hhea/typo disagree (Arial) is flagged (F5)
+//  - the font library: 63 entries, every face lands on its slot target, Inter's aliases are 100%, fallbacks have overrides
+//  - bring your own font: a file becomes a valid entry (Lora, re-measured from the fixture), and a font whose hhea/typo disagree (Arial) is flagged (F5)
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { metricsFromFile, makeEntry } from '../src/metrics.mjs';
@@ -98,13 +98,13 @@ expect(T.stepOrder.length === 9 && Object.keys(T.weights).length === 5, '9 size 
 
 /* 6. the font library and the fit aliases */
 const ids = Object.keys(L.fonts);
-expect(ids.length === 39, '39 library fonts (37 + DM Mono and Roboto for the NASA and CERN looks), got', ids.length);
-expect(ids.filter((id) => L.fonts[id].lucky).length === 32, '32 lucky fonts');
+expect(ids.length === 63, '63 library fonts (39 + the 24 added for the font tabs), got', ids.length);
+expect(ids.filter((id) => L.fonts[id].lucky).length === 46, '46 lucky fonts');
 for (const id of ids) {
   const e = L.fonts[id];
   expect(e.metrics.unitsPerEm > 0 && e.metrics.capHeight > 0 && e.metrics.xHeight > 0 && e.metrics.xWidthAvg > 0, id, 'metrics present');
   expect(e.metrics.names.fullName && e.metrics.names.postscriptName, id, 'both local() names');
-  expect(e.licence.id === 'OFL-1.1' && e.licence.licensee === 'n/a (open)', id, 'open licence block', e.licence.id);
+  expect(['OFL-1.1', 'Apache-2.0'].includes(e.licence.id) && e.licence.licensee === 'n/a (open)', id, 'open licence block', e.licence.id);
   for (const slot of e.slots) {
     const a = F.adjusted(id, slot);
     expect(a && near(a.metric === 'cap-height' ? a.cap : a.x, a.target, 1e-6), id, slot, 'lands on the slot target', a);
@@ -135,7 +135,7 @@ expect(L.systemFallbacks.sans && L.systemFallbacks.serif && L.systemFallbacks.mo
 
 /* 6b. italics: every family Google ships with italics has them, emitted as font-style: italic in the same alias */
 const withIt = ids.filter((id) => L.fonts[id].italics.kind !== 'none');
-expect(withIt.length === 29, '29 families with italics, got', withIt.length);
+expect(withIt.length === 42, '42 families with italics, got', withIt.length);
 for (const id of ['anton', 'bebas-neue', 'young-serif', 'syne', 'unbounded', 'space-grotesk', 'manrope', 'bricolage-grotesque', 'big-shoulders', 'cinzel']) expect(L.fonts[id].italics.kind === 'none', id, 'has no italics');
 expect(L.fonts['ibm-plex-mono'].italics.kind === 'static' && L.fonts['ibm-plex-mono'].italics.available.join() === '400,500,600,700', 'IBM Plex Mono static italics 400–700');
 const interBlocks = F.faceBlocks('inter', 'text', { baseUrl: '/fonts' });

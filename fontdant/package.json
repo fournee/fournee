@@ -7,9 +7,9 @@
   "scripts": {
     "fetch": "node scripts/fetch-library.mjs",
     "build": "node scripts/build-library.mjs && node scripts/build.mjs",
-    "test:unit": "npm run build && node test/run.mjs",
+    "test:unit": "npm run build && node test/run.mjs && node test/library-tabs.mjs",
     "test:browser": "node test/browser.mjs",
-    "test": "npm run build && node test/run.mjs && node test/browser.mjs"
+    "test": "npm run build && node test/run.mjs && node test/library-tabs.mjs && node test/browser.mjs"
   },
   "files": [
     "dist",

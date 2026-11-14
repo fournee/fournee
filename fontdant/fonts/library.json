@@ -36,7 +36,43 @@
     "mono": {
       "label": "Mono",
       "slots": [
-        "mono"
+        "mono",
+        "display"
+      ]
+    },
+    "decorative": {
+      "label": "Decorative",
+      "slots": [
+        "display"
+      ]
+    }
+  },
+  "tabs": {
+    "sans": {
+      "label": "Sans",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    "serif": {
+      "label": "Serif",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    "decorative": {
+      "label": "Decorative",
+      "slots": [
+        "display"
+      ]
+    },
+    "mono": {
+      "label": "Mono",
+      "slots": [
+        "mono",
+        "display"
       ]
     }
   },
@@ -193,7 +229,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "inter-tight": {
       "id": "inter-tight",
@@ -337,7 +374,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/intertight/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "arimo": {
       "id": "arimo",
@@ -480,7 +518,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/arimo/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "archivo": {
       "id": "archivo",
@@ -634,7 +673,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/archivo/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "schibsted-grotesk": {
       "id": "schibsted-grotesk",
@@ -778,7 +818,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/schibstedgrotesk/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "instrument-sans": {
       "id": "instrument-sans",
@@ -931,7 +972,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentsans/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "geist": {
       "id": "geist",
@@ -1075,7 +1117,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/geist/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "mona-sans": {
       "id": "mona-sans",
@@ -1229,7 +1272,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/monasans/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "public-sans": {
       "id": "public-sans",
@@ -1373,7 +1417,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/publicsans/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "roboto": {
       "id": "roboto",
@@ -1528,7 +1573,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/roboto/",
         "checked": "2026-11-10"
-      }
+      },
+      "tab": "sans"
     },
     "source-sans-3": {
       "id": "source-sans-3",
@@ -1672,7 +1718,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourcesans3/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "libre-franklin": {
       "id": "libre-franklin",
@@ -1816,7 +1863,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/librefranklin/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "manrope": {
       "id": "manrope",
@@ -1933,7 +1981,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "atkinson-hyperlegible-next": {
       "id": "atkinson-hyperlegible-next",
@@ -2077,7 +2126,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegiblenext/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "source-serif-4": {
       "id": "source-serif-4",
@@ -2231,7 +2281,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/sourceserif4/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "eb-garamond": {
       "id": "eb-garamond",
@@ -2374,7 +2425,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/ebgaramond/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "cormorant-garamond": {
       "id": "cormorant-garamond",
@@ -2516,7 +2568,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/cormorantgaramond/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "libre-baskerville": {
       "id": "libre-baskerville",
@@ -2658,7 +2711,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/librebaskerville/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "jost": {
       "id": "jost",
@@ -2801,7 +2855,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/jost/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "newsreader": {
       "id": "newsreader",
@@ -2954,7 +3009,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/newsreader/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "fraunces": {
       "id": "fraunces",
@@ -3107,7 +3163,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "bricolage-grotesque": {
       "id": "bricolage-grotesque",
@@ -3243,7 +3300,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/bricolagegrotesque/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "syne": {
       "id": "syne",
@@ -3359,7 +3417,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/syne/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "decorative"
     },
     "unbounded": {
       "id": "unbounded",
@@ -3475,7 +3534,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/unbounded/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "decorative"
     },
     "space-grotesk": {
       "id": "space-grotesk",
@@ -3590,7 +3650,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacegrotesk/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "big-shoulders": {
       "id": "big-shoulders",
@@ -3717,7 +3778,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/bigshoulders/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "decorative"
     },
     "young-serif": {
       "id": "young-serif",
@@ -3815,7 +3877,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/youngserif/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "anton": {
       "id": "anton",
@@ -3913,7 +3976,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/anton/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "decorative"
     },
     "bebas-neue": {
       "id": "bebas-neue",
@@ -4011,14 +4075,16 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/bebasneue/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "decorative"
     },
     "jetbrains-mono": {
       "id": "jetbrains-mono",
       "family": "JetBrains Mono",
       "shelf": "mono",
       "slots": [
-        "mono"
+        "mono",
+        "display"
       ],
       "lucky": true,
       "category": "mono",
@@ -4154,14 +4220,16 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "mono"
     },
     "ibm-plex-mono": {
       "id": "ibm-plex-mono",
       "family": "IBM Plex Mono",
       "shelf": "mono",
       "slots": [
-        "mono"
+        "mono",
+        "display"
       ],
       "lucky": true,
       "category": "mono",
@@ -4442,14 +4510,16 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexmono/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "mono"
     },
     "dm-mono": {
       "id": "dm-mono",
       "family": "DM Mono",
       "shelf": "mono",
       "slots": [
-        "mono"
+        "mono",
+        "display"
       ],
       "lucky": false,
       "category": "mono",
@@ -4623,14 +4693,16 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmmono/",
         "checked": "2026-11-10"
-      }
+      },
+      "tab": "mono"
     },
     "geist-mono": {
       "id": "geist-mono",
       "family": "Geist Mono",
       "shelf": "mono",
       "slots": [
-        "mono"
+        "mono",
+        "display"
       ],
       "lucky": true,
       "category": "mono",
@@ -4766,14 +4838,16 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/geistmono/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "mono"
     },
     "space-mono": {
       "id": "space-mono",
       "family": "Space Mono",
       "shelf": "mono",
       "slots": [
-        "mono"
+        "mono",
+        "display"
       ],
       "lucky": true,
       "category": "mono",
@@ -4946,7 +5020,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/spacemono/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "mono"
     },
     "hanken-grotesk": {
       "id": "hanken-grotesk",
@@ -5090,7 +5165,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/hankengrotesk/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "plus-jakarta-sans": {
       "id": "plus-jakarta-sans",
@@ -5234,7 +5310,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/plusjakartasans/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "sans"
     },
     "playfair-display": {
       "id": "playfair-display",
@@ -5377,7 +5454,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
     },
     "cinzel": {
       "id": "cinzel",
@@ -5493,7 +5571,8 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/cinzel/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "decorative"
     },
     "instrument-serif": {
       "id": "instrument-serif",
@@ -5619,7 +5698,3245 @@
         },
         "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/",
         "checked": "2026-11-08"
-      }
+      },
+      "tab": "serif"
+    },
+    "dm-sans": {
+      "id": "dm-sans",
+      "family": "DM Sans",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "dm-sans-latin-wght.woff2",
+          "weight": "100 1000",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 62724
+        },
+        {
+          "style": "italic",
+          "file": "dm-sans-latin-wght-italic.woff2",
+          "weight": "100 1000",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 76248,
+          "metrics": {
+            "hhea": {
+              "ascent": 992,
+              "descent": -310,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 992,
+              "descent": -310,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1012,
+              "descent": 310
+            },
+            "capHeight": 700,
+            "xHeight": 526,
+            "xWidthAvg": 472
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 100,
+        "max": 1000,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 100,
+        "max": 1000
+      },
+      "axes": {
+        "opsz": [
+          9,
+          9,
+          40
+        ],
+        "wght": [
+          100,
+          400,
+          1000
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "DM Sans 9pt",
+          "fullName": "DM Sans 9pt Regular",
+          "postscriptName": "DMSans-9ptRegular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 992,
+          "descent": -310,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 992,
+          "descent": -310,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1012,
+          "descent": 310
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 526,
+        "xWidthAvg": 472,
+        "zeroAdvance": 656,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.526,
+          "xWidthAvg": 0.472,
+          "ascent": 0.992,
+          "descent": 0.31,
+          "lineGap": 0
+        },
+        "axes": {
+          "opsz": [
+            9,
+            9,
+            40
+          ],
+          "wght": [
+            100,
+            400,
+            1000
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 270
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Colophon Foundry",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmsans/",
+        "checked": "2026-11-14"
+      },
+      "tab": "sans"
+    },
+    "work-sans": {
+      "id": "work-sans",
+      "family": "Work Sans",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "work-sans-latin-wght.woff2",
+          "weight": "100 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 50316
+        },
+        {
+          "style": "italic",
+          "file": "work-sans-latin-wght-italic.woff2",
+          "weight": "100 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 48180,
+          "metrics": {
+            "hhea": {
+              "ascent": 930,
+              "descent": -243,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 930,
+              "descent": -243,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1105,
+              "descent": 343
+            },
+            "capHeight": 660,
+            "xHeight": 500,
+            "xWidthAvg": 495
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 100,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 100,
+        "max": 900
+      },
+      "axes": {
+        "wght": [
+          100,
+          400,
+          900
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Work Sans",
+          "fullName": "Work Sans Regular",
+          "postscriptName": "WorkSans-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 930,
+          "descent": -243,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 930,
+          "descent": -243,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1105,
+          "descent": 343
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 660,
+        "xHeight": 500,
+        "xWidthAvg": 501,
+        "zeroAdvance": 622,
+        "ratios": {
+          "cap": 0.66,
+          "x": 0.5,
+          "xWidthAvg": 0.501,
+          "ascent": 0.93,
+          "descent": 0.243,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            100,
+            400,
+            900
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 348
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Wei Huang",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/worksans/",
+        "checked": "2026-11-14"
+      },
+      "tab": "sans"
+    },
+    "figtree": {
+      "id": "figtree",
+      "family": "Figtree",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "figtree-latin-wght.woff2",
+          "weight": "300 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 20156
+        },
+        {
+          "style": "italic",
+          "file": "figtree-latin-wght-italic.woff2",
+          "weight": "300 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 20928,
+          "metrics": {
+            "hhea": {
+              "ascent": 950,
+              "descent": -250,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 950,
+              "descent": -250,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 979,
+              "descent": 222
+            },
+            "capHeight": 700,
+            "xHeight": 500,
+            "xWidthAvg": 449
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 300,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 300,
+        "max": 900
+      },
+      "axes": {
+        "wght": [
+          300,
+          300,
+          900
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Figtree Light",
+          "fullName": "Figtree Light",
+          "postscriptName": "Figtree-Light"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 950,
+          "descent": -250,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 950,
+          "descent": -250,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 979,
+          "descent": 222
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 500,
+        "xWidthAvg": 442,
+        "zeroAdvance": 638,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.5,
+          "xWidthAvg": 0.442,
+          "ascent": 0.95,
+          "descent": 0.25,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            300,
+            300,
+            900
+          ]
+        },
+        "weightClass": 300,
+        "italic": false,
+        "glyphCount": 265
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Erik Kennedy",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/figtree/",
+        "checked": "2026-11-14"
+      },
+      "tab": "sans"
+    },
+    "ibm-plex-sans": {
+      "id": "ibm-plex-sans",
+      "family": "IBM Plex Sans",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "ibm-plex-sans-latin-wght.woff2",
+          "weight": "100 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 65488
+        },
+        {
+          "style": "italic",
+          "file": "ibm-plex-sans-latin-wght-italic.woff2",
+          "weight": "100 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 75808,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1120,
+              "descent": 275
+            },
+            "capHeight": 698,
+            "xHeight": 516,
+            "xWidthAvg": 440
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 100,
+        "max": 700,
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 100,
+        "max": 700
+      },
+      "axes": {
+        "wght": [
+          100,
+          400,
+          700
+        ],
+        "wdth": [
+          75,
+          100,
+          100
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "IBM Plex Sans",
+          "fullName": "IBM Plex Sans Regular",
+          "postscriptName": "IBMPlexSans-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1025,
+          "descent": -275,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1025,
+          "descent": -275,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1120,
+          "descent": 275
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 698,
+        "xHeight": 516,
+        "xWidthAvg": 448,
+        "zeroAdvance": 600,
+        "ratios": {
+          "cap": 0.698,
+          "x": 0.516,
+          "xWidthAvg": 0.448,
+          "ascent": 1.025,
+          "descent": 0.275,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            100,
+            400,
+            700
+          ],
+          "wdth": [
+            75,
+            100,
+            100
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 271
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Mike Abbink, Bold Monday",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "IBM Plex Sans",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/",
+        "checked": "2026-11-14"
+      },
+      "tab": "sans"
+    },
+    "rubik": {
+      "id": "rubik",
+      "family": "Rubik",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "rubik-latin-wght.woff2",
+          "weight": "300 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 35348
+        },
+        {
+          "style": "italic",
+          "file": "rubik-latin-wght-italic.woff2",
+          "weight": "300 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 36616,
+          "metrics": {
+            "hhea": {
+              "ascent": 935,
+              "descent": -250,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 935,
+              "descent": -250,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1066,
+              "descent": 466
+            },
+            "capHeight": 700,
+            "xHeight": 520,
+            "xWidthAvg": 456
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 300,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 300,
+        "max": 900
+      },
+      "axes": {
+        "wght": [
+          300,
+          300,
+          900
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Rubik Light",
+          "fullName": "Rubik Light",
+          "postscriptName": "Rubik-Light"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 935,
+          "descent": -250,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 935,
+          "descent": -250,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1066,
+          "descent": 466
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 520,
+        "xWidthAvg": 454,
+        "zeroAdvance": 616,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.52,
+          "xWidthAvg": 0.454,
+          "ascent": 0.935,
+          "descent": 0.25,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            300,
+            300,
+            900
+          ]
+        },
+        "weightClass": 300,
+        "italic": false,
+        "glyphCount": 293
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Hubert and Fischer, Meir Sadan, Cyreal, Daniel Grumer, Omaima Dajani",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/rubik/",
+        "checked": "2026-11-14"
+      },
+      "tab": "sans"
+    },
+    "lexend": {
+      "id": "lexend",
+      "family": "Lexend",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "lexend-latin-wght.woff2",
+          "weight": "100 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 39680
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 100,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {
+        "wght": [
+          100,
+          400,
+          900
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Lexend",
+          "fullName": "Lexend Regular",
+          "postscriptName": "Lexend-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1000,
+          "descent": -250,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1000,
+          "descent": -250,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1200,
+          "descent": 390
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 525,
+        "xWidthAvg": 489,
+        "zeroAdvance": 607,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.525,
+          "xWidthAvg": 0.489,
+          "ascent": 1,
+          "descent": 0.25,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            100,
+            400,
+            900
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 290
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Bonnie Shaver-Troup, Thomas Jockin, Santiago Orozco, Héctor Gómez, Superunion",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "Lexend",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/lexend/",
+        "checked": "2026-11-14"
+      },
+      "tab": "sans"
+    },
+    "lora": {
+      "id": "lora",
+      "family": "Lora",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "lora-latin-wght.woff2",
+          "weight": "400 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 37788
+        },
+        {
+          "style": "italic",
+          "file": "lora-latin-wght-italic.woff2",
+          "weight": "400 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 40772,
+          "metrics": {
+            "hhea": {
+              "ascent": 1006,
+              "descent": -274,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1006,
+              "descent": -274,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1206,
+              "descent": 294
+            },
+            "capHeight": 700,
+            "xHeight": 500,
+            "xWidthAvg": 452
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 400,
+        "max": 700,
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 400,
+        "max": 700
+      },
+      "axes": {
+        "wght": [
+          400,
+          400,
+          700
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Lora",
+          "fullName": "Lora Regular",
+          "postscriptName": "Lora-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1006,
+          "descent": -274,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1006,
+          "descent": -274,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1206,
+          "descent": 294
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 500,
+        "xWidthAvg": 467,
+        "zeroAdvance": 621,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.5,
+          "xWidthAvg": 0.467,
+          "ascent": 1.006,
+          "descent": 0.274,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            400,
+            400,
+            700
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 282
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Cyreal",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "Lora",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/lora/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "merriweather": {
+      "id": "merriweather",
+      "family": "Merriweather",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "merriweather-latin-wght.woff2",
+          "weight": "300 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 368920
+        },
+        {
+          "style": "italic",
+          "file": "merriweather-latin-wght-italic.woff2",
+          "weight": "300 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 372140,
+          "metrics": {
+            "hhea": {
+              "ascent": 1968,
+              "descent": -546,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1968,
+              "descent": -546,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 2476,
+              "descent": 988
+            },
+            "capHeight": 1486,
+            "xHeight": 1110,
+            "xWidthAvg": 896
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 300,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 300,
+        "max": 900
+      },
+      "axes": {
+        "wght": [
+          300,
+          300,
+          900
+        ],
+        "wdth": [
+          87,
+          100,
+          112
+        ],
+        "opsz": [
+          18,
+          18,
+          144
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Merriweather Light",
+          "fullName": "Merriweather Light",
+          "postscriptName": "Merriweather-Light"
+        },
+        "unitsPerEm": 2000,
+        "hhea": {
+          "ascent": 1968,
+          "descent": -546,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1968,
+          "descent": -546,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 2476,
+          "descent": 988
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 1486,
+        "xHeight": 1110,
+        "xWidthAvg": 945,
+        "zeroAdvance": 1270,
+        "ratios": {
+          "cap": 0.743,
+          "x": 0.555,
+          "xWidthAvg": 0.4725,
+          "ascent": 0.984,
+          "descent": 0.273,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            300,
+            300,
+            900
+          ],
+          "wdth": [
+            87,
+            100,
+            112
+          ],
+          "opsz": [
+            18,
+            18,
+            144
+          ]
+        },
+        "weightClass": 300,
+        "italic": false,
+        "glyphCount": 290
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Sorkin Type",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "Merriweather",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/merriweather/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "literata": {
+      "id": "literata",
+      "family": "Literata",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "literata-latin-wght.woff2",
+          "weight": "200 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 110080
+        },
+        {
+          "style": "italic",
+          "file": "literata-latin-wght-italic.woff2",
+          "weight": "200 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 113180,
+          "metrics": {
+            "hhea": {
+              "ascent": 1177,
+              "descent": -308,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1177,
+              "descent": -308,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1177,
+              "descent": 308
+            },
+            "capHeight": 700,
+            "xHeight": 507,
+            "xWidthAvg": 448
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 200,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 200,
+        "max": 900
+      },
+      "axes": {
+        "opsz": [
+          7,
+          12,
+          72
+        ],
+        "wght": [
+          200,
+          400,
+          900
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Literata",
+          "fullName": "Literata Regular",
+          "postscriptName": "Literata-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1177,
+          "descent": -308,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1177,
+          "descent": -308,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1177,
+          "descent": 308
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 507,
+        "xWidthAvg": 476,
+        "zeroAdvance": 578,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.507,
+          "xWidthAvg": 0.476,
+          "ascent": 1.177,
+          "descent": 0.308,
+          "lineGap": 0
+        },
+        "axes": {
+          "opsz": [
+            7,
+            12,
+            72
+          ],
+          "wght": [
+            200,
+            400,
+            900
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 300
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "TypeTogether",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/literata/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "crimson-pro": {
+      "id": "crimson-pro",
+      "family": "Crimson Pro",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "crimson-pro-latin-wght.woff2",
+          "weight": "200 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 48200
+        },
+        {
+          "style": "italic",
+          "file": "crimson-pro-latin-wght-italic.woff2",
+          "weight": "200 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 51432,
+          "metrics": {
+            "hhea": {
+              "ascent": 918,
+              "descent": -220,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 918,
+              "descent": -220,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1006,
+              "descent": 295
+            },
+            "capHeight": 587,
+            "xHeight": 430,
+            "xWidthAvg": 373
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 200,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 200,
+        "max": 900
+      },
+      "axes": {
+        "wght": [
+          200,
+          400,
+          900
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Crimson Pro",
+          "fullName": "Crimson Pro Regular",
+          "postscriptName": "CrimsonPro-Regular"
+        },
+        "unitsPerEm": 1024,
+        "hhea": {
+          "ascent": 918,
+          "descent": -220,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 918,
+          "descent": -220,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1006,
+          "descent": 295
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 587,
+        "xHeight": 430,
+        "xWidthAvg": 407,
+        "zeroAdvance": 579,
+        "ratios": {
+          "cap": 0.5732,
+          "x": 0.4199,
+          "xWidthAvg": 0.3975,
+          "ascent": 0.8965,
+          "descent": 0.2148,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            200,
+            400,
+            900
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 308
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Jacques Le Bailly",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/crimsonpro/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "ibm-plex-serif": {
+      "id": "ibm-plex-serif",
+      "family": "IBM Plex Serif",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "ibm-plex-serif-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 19580
+        },
+        {
+          "style": "normal",
+          "file": "ibm-plex-serif-latin-500.woff2",
+          "weight": "500",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 20308,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 520,
+            "xWidthAvg": 478
+          }
+        },
+        {
+          "style": "normal",
+          "file": "ibm-plex-serif-latin-600.woff2",
+          "weight": "600",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 20516,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 522,
+            "xWidthAvg": 484
+          }
+        },
+        {
+          "style": "normal",
+          "file": "ibm-plex-serif-latin-700.woff2",
+          "weight": "700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 19904,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 524,
+            "xWidthAvg": 492
+          }
+        },
+        {
+          "style": "italic",
+          "file": "ibm-plex-serif-latin-400-italic.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 20900,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 516,
+            "xWidthAvg": 420
+          }
+        },
+        {
+          "style": "italic",
+          "file": "ibm-plex-serif-latin-500-italic.woff2",
+          "weight": "500",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 21696,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 520,
+            "xWidthAvg": 436
+          }
+        },
+        {
+          "style": "italic",
+          "file": "ibm-plex-serif-latin-600-italic.woff2",
+          "weight": "600",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 22016,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 522,
+            "xWidthAvg": 446
+          }
+        },
+        {
+          "style": "italic",
+          "file": "ibm-plex-serif-latin-700-italic.woff2",
+          "weight": "700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 21336,
+          "metrics": {
+            "hhea": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1025,
+              "descent": -275,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1150,
+              "descent": 286
+            },
+            "capHeight": 698,
+            "xHeight": 524,
+            "xWidthAvg": 456
+          }
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "static",
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "IBM Plex Serif",
+          "fullName": "IBM Plex Serif Regular",
+          "postscriptName": "IBMPlexSerif-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1025,
+          "descent": -275,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1025,
+          "descent": -275,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1150,
+          "descent": 286
+        },
+        "useTypoMetrics": false,
+        "metricTablesDisagree": false,
+        "capHeight": 698,
+        "xHeight": 516,
+        "xWidthAvg": 469,
+        "zeroAdvance": 600,
+        "ratios": {
+          "cap": 0.698,
+          "x": 0.516,
+          "xWidthAvg": 0.469,
+          "ascent": 1.025,
+          "descent": 0.275,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 263
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Mike Abbink, Bold Monday",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "IBM Plex Serif",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexserif/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "gelasio": {
+      "id": "gelasio",
+      "family": "Gelasio",
+      "shelf": "text",
+      "slots": [
+        "text",
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "gelasio-latin-wght.woff2",
+          "weight": "400 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 34832
+        },
+        {
+          "style": "italic",
+          "file": "gelasio-latin-wght-italic.woff2",
+          "weight": "400 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 40068,
+          "metrics": {
+            "hhea": {
+              "ascent": 1900,
+              "descent": -700,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1900,
+              "descent": -700,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 2600,
+              "descent": 800
+            },
+            "capHeight": 1419,
+            "xHeight": 986,
+            "xWidthAvg": 919
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 400,
+        "max": 700,
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 400,
+        "max": 700
+      },
+      "axes": {
+        "wght": [
+          400,
+          400,
+          700
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Gelasio",
+          "fullName": "Gelasio Regular",
+          "postscriptName": "Gelasio-Regular"
+        },
+        "unitsPerEm": 2048,
+        "hhea": {
+          "ascent": 1900,
+          "descent": -700,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1900,
+          "descent": -700,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 2600,
+          "descent": 800
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 1419,
+        "xHeight": 986,
+        "xWidthAvg": 901,
+        "zeroAdvance": 1257,
+        "ratios": {
+          "cap": 0.6929,
+          "x": 0.4814,
+          "xWidthAvg": 0.4399,
+          "ascent": 0.9277,
+          "descent": 0.3418,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            400,
+            400,
+            700
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 310
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Eben Sorkin",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/gelasio/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "bodoni-moda": {
+      "id": "bodoni-moda",
+      "family": "Bodoni Moda",
+      "shelf": "display-classic",
+      "slots": [
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "bodoni-moda-latin-wght.woff2",
+          "weight": "400 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 46260
+        },
+        {
+          "style": "italic",
+          "file": "bodoni-moda-latin-wght-italic.woff2",
+          "weight": "400 900",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 53756,
+          "metrics": {
+            "hhea": {
+              "ascent": 2250,
+              "descent": -800,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 2250,
+              "descent": -800,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 2250,
+              "descent": 800
+            },
+            "capHeight": 1500,
+            "xHeight": 920,
+            "xWidthAvg": 864
+          }
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 400,
+        "max": 900,
+        "available": [
+          400,
+          500,
+          600,
+          700,
+          800
+        ]
+      },
+      "italics": {
+        "kind": "variable",
+        "min": 400,
+        "max": 900
+      },
+      "axes": {
+        "wght": [
+          400,
+          400,
+          900
+        ],
+        "opsz": [
+          6,
+          11,
+          96
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Bodoni Moda",
+          "fullName": "Bodoni Moda Regular",
+          "postscriptName": "BodoniModa-Regular"
+        },
+        "unitsPerEm": 2000,
+        "hhea": {
+          "ascent": 2250,
+          "descent": -800,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 2250,
+          "descent": -800,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 2250,
+          "descent": 800
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 1500,
+        "xHeight": 920,
+        "xWidthAvg": 923,
+        "zeroAdvance": 1239,
+        "ratios": {
+          "cap": 0.75,
+          "x": 0.46,
+          "xWidthAvg": 0.4615,
+          "ascent": 1.125,
+          "descent": 0.4,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            400,
+            400,
+            900
+          ],
+          "opsz": [
+            6,
+            11,
+            96
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 250
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Owen Earl",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/bodonimoda/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "dm-serif-display": {
+      "id": "dm-serif-display",
+      "family": "DM Serif Display",
+      "shelf": "display-classic",
+      "slots": [
+        "display"
+      ],
+      "lucky": true,
+      "category": "serif",
+      "fallback": "serif",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "dm-serif-display-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 24744
+        },
+        {
+          "style": "italic",
+          "file": "dm-serif-display-latin-400-italic.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 24572,
+          "metrics": {
+            "hhea": {
+              "ascent": 1036,
+              "descent": -335,
+              "lineGap": 0
+            },
+            "typo": {
+              "ascent": 1036,
+              "descent": -335,
+              "lineGap": 0
+            },
+            "win": {
+              "ascent": 1036,
+              "descent": 335
+            },
+            "capHeight": 660,
+            "xHeight": 481,
+            "xWidthAvg": 428
+          }
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "DM Serif Display",
+          "fullName": "DM Serif Display Regular",
+          "postscriptName": "DMSerifDisplay-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1036,
+          "descent": -335,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1036,
+          "descent": -335,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1036,
+          "descent": 335
+        },
+        "useTypoMetrics": false,
+        "metricTablesDisagree": false,
+        "capHeight": 660,
+        "xHeight": 481,
+        "xWidthAvg": 445,
+        "zeroAdvance": 502,
+        "ratios": {
+          "cap": 0.66,
+          "x": 0.481,
+          "xWidthAvg": 0.445,
+          "ascent": 1.036,
+          "descent": 0.335,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 241
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Colophon Foundry",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "DM Serif Display",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmserifdisplay/",
+        "checked": "2026-11-14"
+      },
+      "tab": "serif"
+    },
+    "oswald": {
+      "id": "oswald",
+      "family": "Oswald",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "oswald-latin-wght.woff2",
+          "weight": "200 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 28488
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 200,
+        "max": 700,
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {
+        "wght": [
+          200,
+          400,
+          700
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Oswald",
+          "fullName": "Oswald Regular",
+          "postscriptName": "Oswald-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1193,
+          "descent": -289,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1193,
+          "descent": -289,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1325,
+          "descent": 377
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 810,
+        "xHeight": 578,
+        "xWidthAvg": 362,
+        "zeroAdvance": 517,
+        "ratios": {
+          "cap": 0.81,
+          "x": 0.578,
+          "xWidthAvg": 0.362,
+          "ascent": 1.193,
+          "descent": 0.289,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            200,
+            400,
+            700
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 241
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Vernon Adams, Kalapi Gajjar, Cyreal",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/oswald/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "archivo-black": {
+      "id": "archivo-black",
+      "family": "Archivo Black",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "archivo-black-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 18604
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Archivo Black",
+          "fullName": "Archivo Black Regular",
+          "postscriptName": "ArchivoBlack-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 878,
+          "descent": -210,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 878,
+          "descent": -210,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1035,
+          "descent": 312
+        },
+        "useTypoMetrics": false,
+        "metricTablesDisagree": false,
+        "capHeight": 688,
+        "xHeight": 528,
+        "xWidthAvg": 552,
+        "zeroAdvance": 667,
+        "ratios": {
+          "cap": 0.688,
+          "x": 0.528,
+          "xWidthAvg": 0.552,
+          "ascent": 0.878,
+          "descent": 0.21,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 231
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Omnibus-Type",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/archivoblack/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "abril-fatface": {
+      "id": "abril-fatface",
+      "family": "Abril Fatface",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "display",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "abril-fatface-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 13156
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Abril Fatface",
+          "fullName": "Abril Fatface",
+          "postscriptName": "AbrilFatface-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1058,
+          "descent": -291,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1058,
+          "descent": -291,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1058,
+          "descent": 291
+        },
+        "useTypoMetrics": false,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 476,
+        "xWidthAvg": 456,
+        "zeroAdvance": 664,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.476,
+          "xWidthAvg": 0.456,
+          "ascent": 1.058,
+          "descent": 0.291,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 229
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "TypeTogether",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "Abril Fatface",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/abrilfatface/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "alfa-slab-one": {
+      "id": "alfa-slab-one",
+      "family": "Alfa Slab One",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "display",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "alfa-slab-one-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 19052
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Alfa Slab One",
+          "fullName": "Alfa Slab One Regular",
+          "postscriptName": "AlfaSlabOne-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1036,
+          "descent": -333,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1036,
+          "descent": -333,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1238,
+          "descent": 327
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 778,
+        "xHeight": 556,
+        "xWidthAvg": 536,
+        "zeroAdvance": 732,
+        "ratios": {
+          "cap": 0.778,
+          "x": 0.556,
+          "xWidthAvg": 0.536,
+          "ascent": 1.036,
+          "descent": 0.333,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 277
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "JM Solé",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "Alfa Slab One",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/alfaslabone/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "pacifico": {
+      "id": "pacifico",
+      "family": "Pacifico",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "pacifico-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 32280
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Pacifico",
+          "fullName": "Pacifico Regular",
+          "postscriptName": "Pacifico-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1303,
+          "descent": -453,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1303,
+          "descent": -453,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1478,
+          "descent": 457
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 840,
+        "xHeight": 460,
+        "xWidthAvg": 409,
+        "zeroAdvance": 543,
+        "ratios": {
+          "cap": 0.84,
+          "x": 0.46,
+          "xWidthAvg": 0.409,
+          "ascent": 1.303,
+          "descent": 0.453,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 323
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Vernon Adams, Jacques Le Bailly, Botjo Nikoltchev, Ani Petrova",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/pacifico/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "caveat": {
+      "id": "caveat",
+      "family": "Caveat",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "caveat-latin-wght.woff2",
+          "weight": "400 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 74932
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 400,
+        "max": 700,
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {
+        "wght": [
+          400,
+          400,
+          700
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Caveat",
+          "fullName": "Caveat Regular",
+          "postscriptName": "Caveat-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 960,
+          "descent": -300,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 960,
+          "descent": -300,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 974,
+          "descent": 315
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 610,
+        "xHeight": 400,
+        "xWidthAvg": 338,
+        "zeroAdvance": 450,
+        "ratios": {
+          "cap": 0.61,
+          "x": 0.4,
+          "xWidthAvg": 0.338,
+          "ascent": 0.96,
+          "descent": 0.3,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            400,
+            400,
+            700
+          ]
+        },
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 352
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Impallari Type",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/caveat/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "permanent-marker": {
+      "id": "permanent-marker",
+      "family": "Permanent Marker",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "permanent-marker-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 29564
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Permanent Marker",
+          "fullName": "Permanent Marker Regular",
+          "postscriptName": "PermanentMarker-Regular"
+        },
+        "unitsPerEm": 1024,
+        "hhea": {
+          "ascent": 1136,
+          "descent": -325,
+          "lineGap": 31
+        },
+        "typo": {
+          "ascent": 622,
+          "descent": -61,
+          "lineGap": 61
+        },
+        "win": {
+          "ascent": 1136,
+          "descent": 325
+        },
+        "useTypoMetrics": false,
+        "metricTablesDisagree": true,
+        "capHeight": 758,
+        "xHeight": 625,
+        "xWidthAvg": 518,
+        "zeroAdvance": 703,
+        "ratios": {
+          "cap": 0.7402,
+          "x": 0.6104,
+          "xWidthAvg": 0.5059,
+          "ascent": 1.1094,
+          "descent": 0.3174,
+          "lineGap": 0.0303
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 215
+      },
+      "licence": {
+        "id": "Apache-2.0",
+        "licensor": "Font Diner",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/apache/permanentmarker/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "fredoka": {
+      "id": "fredoka",
+      "family": "Fredoka",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "sans",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": true,
+      "files": [
+        {
+          "style": "normal",
+          "file": "fredoka-latin-wght.woff2",
+          "weight": "300 700",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 67820
+        }
+      ],
+      "weights": {
+        "kind": "variable",
+        "min": 300,
+        "max": 700,
+        "available": [
+          400,
+          500,
+          600,
+          700
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {
+        "wght": [
+          300,
+          300,
+          700
+        ],
+        "wdth": [
+          75,
+          100,
+          125
+        ]
+      },
+      "metrics": {
+        "names": {
+          "family": "Fredoka Light",
+          "fullName": "Fredoka Light",
+          "postscriptName": "Fredoka-Light"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 974,
+          "descent": -236,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 974,
+          "descent": -236,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 999,
+          "descent": 252
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 700,
+        "xHeight": 500,
+        "xWidthAvg": 451,
+        "zeroAdvance": 594,
+        "ratios": {
+          "cap": 0.7,
+          "x": 0.5,
+          "xWidthAvg": 0.451,
+          "ascent": 0.974,
+          "descent": 0.236,
+          "lineGap": 0
+        },
+        "axes": {
+          "wght": [
+            300,
+            300,
+            700
+          ],
+          "wdth": [
+            75,
+            100,
+            125
+          ]
+        },
+        "weightClass": 300,
+        "italic": false,
+        "glyphCount": 230
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Milena Brandão, Hafontia",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/fredoka/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "lilita-one": {
+      "id": "lilita-one",
+      "family": "Lilita One",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "display",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "lilita-one-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 10672
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Lilita One",
+          "fullName": "Lilita One",
+          "postscriptName": "LilitaOne"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 923,
+          "descent": -220,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 922,
+          "descent": -219,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 923,
+          "descent": 220
+        },
+        "useTypoMetrics": false,
+        "metricTablesDisagree": true,
+        "capHeight": 704,
+        "xHeight": 506,
+        "xWidthAvg": 422,
+        "zeroAdvance": 639,
+        "ratios": {
+          "cap": 0.704,
+          "x": 0.506,
+          "xWidthAvg": 0.422,
+          "ascent": 0.923,
+          "descent": 0.22,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 214
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "Juan Montoreano",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": true
+        },
+        "reserved_font_name": "Lilita One",
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/lilitaone/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
+    },
+    "bungee": {
+      "id": "bungee",
+      "family": "Bungee",
+      "shelf": "decorative",
+      "slots": [
+        "display"
+      ],
+      "lucky": false,
+      "category": "display",
+      "fallback": "sans",
+      "provider": "google-fonts (self-hosted copy)",
+      "variable": false,
+      "files": [
+        {
+          "style": "normal",
+          "file": "bungee-latin-400.woff2",
+          "weight": "400",
+          "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+          "bytes": 14344
+        }
+      ],
+      "weights": {
+        "kind": "static",
+        "available": [
+          400
+        ]
+      },
+      "italics": {
+        "kind": "none",
+        "available": []
+      },
+      "axes": {},
+      "metrics": {
+        "names": {
+          "family": "Bungee",
+          "fullName": "Bungee Regular",
+          "postscriptName": "Bungee-Regular"
+        },
+        "unitsPerEm": 1000,
+        "hhea": {
+          "ascent": 1020,
+          "descent": -300,
+          "lineGap": 0
+        },
+        "typo": {
+          "ascent": 1020,
+          "descent": -300,
+          "lineGap": 0
+        },
+        "win": {
+          "ascent": 1647,
+          "descent": 927
+        },
+        "useTypoMetrics": true,
+        "metricTablesDisagree": false,
+        "capHeight": 720,
+        "xHeight": 500,
+        "xWidthAvg": 618,
+        "zeroAdvance": 727,
+        "ratios": {
+          "cap": 0.72,
+          "x": 0.5,
+          "xWidthAvg": 0.618,
+          "ascent": 1.02,
+          "descent": 0.3,
+          "lineGap": 0
+        },
+        "axes": {},
+        "weightClass": 400,
+        "italic": false,
+        "glyphCount": 346
+      },
+      "licence": {
+        "id": "OFL-1.1",
+        "licensor": "David Jonathan Ross",
+        "licensee": "n/a (open)",
+        "uses": [
+          "web",
+          "desktop",
+          "app"
+        ],
+        "domains": "any",
+        "cap": null,
+        "self_host": "allowed",
+        "modify": {
+          "subset": true,
+          "convert": true,
+          "metric_override_css": "allowed",
+          "rename_required": false
+        },
+        "reserved_font_name": null,
+        "term": {
+          "type": "perpetual"
+        },
+        "proof": "https://raw.githubusercontent.com/google/fonts/main/ofl/bungee/",
+        "checked": "2026-11-14"
+      },
+      "tab": "decorative"
     }
   },
   "systemFallbacks": {

@@ -316,6 +316,193 @@
     "instrument-serif-latin-400-italic.woff2"
    ],
    "licence": "OFL-1.1"
+  },
+  "dm-sans": {
+   "family": "DM Sans",
+   "files": [
+    "dm-sans-latin-wght.woff2",
+    "dm-sans-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "work-sans": {
+   "family": "Work Sans",
+   "files": [
+    "work-sans-latin-wght.woff2",
+    "work-sans-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "figtree": {
+   "family": "Figtree",
+   "files": [
+    "figtree-latin-wght.woff2",
+    "figtree-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "ibm-plex-sans": {
+   "family": "IBM Plex Sans",
+   "files": [
+    "ibm-plex-sans-latin-wght.woff2",
+    "ibm-plex-sans-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "rubik": {
+   "family": "Rubik",
+   "files": [
+    "rubik-latin-wght.woff2",
+    "rubik-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "lexend": {
+   "family": "Lexend",
+   "files": [
+    "lexend-latin-wght.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "lora": {
+   "family": "Lora",
+   "files": [
+    "lora-latin-wght.woff2",
+    "lora-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "merriweather": {
+   "family": "Merriweather",
+   "files": [
+    "merriweather-latin-wght.woff2",
+    "merriweather-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "literata": {
+   "family": "Literata",
+   "files": [
+    "literata-latin-wght.woff2",
+    "literata-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "crimson-pro": {
+   "family": "Crimson Pro",
+   "files": [
+    "crimson-pro-latin-wght.woff2",
+    "crimson-pro-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "ibm-plex-serif": {
+   "family": "IBM Plex Serif",
+   "files": [
+    "ibm-plex-serif-latin-400.woff2",
+    "ibm-plex-serif-latin-500.woff2",
+    "ibm-plex-serif-latin-600.woff2",
+    "ibm-plex-serif-latin-700.woff2",
+    "ibm-plex-serif-latin-400-italic.woff2",
+    "ibm-plex-serif-latin-500-italic.woff2",
+    "ibm-plex-serif-latin-600-italic.woff2",
+    "ibm-plex-serif-latin-700-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "gelasio": {
+   "family": "Gelasio",
+   "files": [
+    "gelasio-latin-wght.woff2",
+    "gelasio-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "bodoni-moda": {
+   "family": "Bodoni Moda",
+   "files": [
+    "bodoni-moda-latin-wght.woff2",
+    "bodoni-moda-latin-wght-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "dm-serif-display": {
+   "family": "DM Serif Display",
+   "files": [
+    "dm-serif-display-latin-400.woff2",
+    "dm-serif-display-latin-400-italic.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "oswald": {
+   "family": "Oswald",
+   "files": [
+    "oswald-latin-wght.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "archivo-black": {
+   "family": "Archivo Black",
+   "files": [
+    "archivo-black-latin-400.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "abril-fatface": {
+   "family": "Abril Fatface",
+   "files": [
+    "abril-fatface-latin-400.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "alfa-slab-one": {
+   "family": "Alfa Slab One",
+   "files": [
+    "alfa-slab-one-latin-400.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "pacifico": {
+   "family": "Pacifico",
+   "files": [
+    "pacifico-latin-400.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "caveat": {
+   "family": "Caveat",
+   "files": [
+    "caveat-latin-wght.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "permanent-marker": {
+   "family": "Permanent Marker",
+   "files": [
+    "permanent-marker-latin-400.woff2"
+   ],
+   "licence": "Apache-2.0"
+  },
+  "fredoka": {
+   "family": "Fredoka",
+   "files": [
+    "fredoka-latin-wght.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "lilita-one": {
+   "family": "Lilita One",
+   "files": [
+    "lilita-one-latin-400.woff2"
+   ],
+   "licence": "OFL-1.1"
+  },
+  "bungee": {
+   "family": "Bungee",
+   "files": [
+    "bungee-latin-400.woff2"
+   ],
+   "licence": "OFL-1.1"
   }
  }
 }
