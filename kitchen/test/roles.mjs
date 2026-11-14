@@ -20,10 +20,12 @@ const expect = (c, ...m) => { if (!c) { fails++; if (fails < 40) console.log('FA
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const light = { colors: FT.light, scheme: 'Light' }, dark = { colors: FT.dark, scheme: 'Dark' };
 const CALC = FT.roles.filter((r) => r.calc).map((r) => r.name);
-const NEW = FT.contracts.slice(37);
+const NEW = FT.contracts.slice(37, 60);
+const LADDER = FT.contracts.slice(60);
+const LADDER_LABELS = ['Text on hover tint', 'Text on selected tint', 'Text on pressed tint', 'Tint text', 'Tint text on surfaces', 'Tint text on faint tint', 'Tint text on soft tint', 'Tint text on hover tint', 'Tint text on selected tint', 'Tint text on pressed tint'];
 const v12 = (colors) => { const o = {}; FT.roles.filter((r) => !r.calc).forEach((r) => { o[r.name] = colors[r.name]; }); return o; };
 
-expect(CALC.length === 13, 'thirteen calculated roles', CALC.length);
+expect(CALC.length === 17, 'seventeen calculated roles (13 + the 4 tint-ladder roles)', CALC.length);
 
 /* C14: an override is kept, exactly, and roles that depend on it follow it */
 {
@@ -124,12 +126,21 @@ for (const d of [light, dark]) {
   expect(seen['text-secondary'] !== C.complete(Object.assign({}, r.frosting.colors, { muted: seen.muted }), { overrides: {} })['text-secondary'] || seen.muted === designed.muted, `C25 ${d.scheme}: text-secondary is not taken from the Plain muted`);
 }
 
+/* D: a failing tint-text override is reported against the derived tints, with their colour shown and a suggestion */
+{
+  const res = P.run(R.clean({ frosting: { colors: {}, overrides: { 'accent-tint-text': '#E0F0E8' } } }, light));
+  const soft = res.results.find((x) => x.label === 'Tint text on soft tint');
+  expect(soft && !soft.ok && soft.where.bg === C.mix(FT.light.bg, FT.light.accent, 0.12), 'D: the pass shows accent-soft as the ground of Tint text on soft tint', soft && soft.where);
+  expect(soft && soft.suggest && C.HEX.test(soft.suggest.to), 'D: the failing tint text gets a suggestion judged against the derived tints', soft && soft.suggest);
+}
+
 /* A10-style: defaults and presets pass with the new contracts in the pass, and none of them gets a suggestion */
 {
   for (const d of [light, dark]) {
     const res = P.run(R.clean({ scheme: d.scheme }, d));
     const fr = res.results.filter((x) => x.source === 'frosting');
-    expect(fr.length === 60 && NEW.every((c, i) => fr[37 + i].label === c.label), `A10 ${d.scheme}: the pass lists the 23 new contracts after the 37`, fr.length);
+    expect(fr.length === 70 && NEW.every((c, i) => fr[37 + i].label === c.label), `A10 ${d.scheme}: the pass lists the 23 new contracts after the 37`, fr.length);
+    expect(same(LADDER.map((c) => c.label), LADDER_LABELS) && LADDER.every((c, i) => fr[60 + i].label === c.label), `D ${d.scheme}: the pass lists the 10 tint-ladder contracts after the 60, in order`, fr.map((x) => x.label).slice(60));
     expect(fr.slice(37).every((x) => x.ok && !('suggest' in x)), `A10 ${d.scheme}: the new contracts pass, no suggestion`);
   }
   const presetFails = G.presets().filter((p) => P.run(R.clean({ frosting: { colors: p.colors } }, light)).results.some((x) => x.source === 'frosting' && !x.ok)).map((p) => p.name);

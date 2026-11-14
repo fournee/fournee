@@ -36,7 +36,23 @@ const CONTRACTS = [
   ['Text on bad tint', 'bad-soft', 'text', 7], ['Bad border', 'bad-border', 'bg', 3],
 ];
 const CHANNELS = ['accent-h', 'accent-s', 'accent-l'];
-const NEW_CONTRACTS = T.contracts.slice(37);
+const NEW_CONTRACTS = T.contracts.slice(37, 60);
+
+/* ── the tint ladder (Deliverable D): 4 more calculated roles, 10 more contracts, appended after the 13 and the 60 ── */
+const LADDER = ['accent-hover', 'accent-selected', 'accent-pressed', 'accent-tint-text'];
+const RUNGS = ['accent-hover', 'accent-selected', 'accent-pressed'];
+const LADDER_CONTRACTS = [
+  ['Text on hover tint', 'accent-hover', 'text', 4.5], ['Text on selected tint', 'accent-selected', 'text', 4.5], ['Text on pressed tint', 'accent-pressed', 'text', 4.5],
+  ['Tint text', 'accent-tint-text', 'bg', 4.5], ['Tint text on surfaces', 'accent-tint-text', 'surface', 4.5],
+  ['Tint text on faint tint', 'accent-tint-text', 'accent-faint', 4.5], ['Tint text on soft tint', 'accent-tint-text', 'accent-soft', 4.5],
+  ['Tint text on hover tint', 'accent-tint-text', 'accent-hover', 4.5], ['Tint text on selected tint', 'accent-tint-text', 'accent-selected', 4.5],
+  ['Tint text on pressed tint', 'accent-tint-text', 'accent-pressed', 4.5],
+];
+const LADDER_DEFAULTS = {
+  light: { 'accent-hover': '#DEEAE3', 'accent-selected': '#D1E2D8', 'accent-pressed': '#C4DBCE' },
+  dark: { 'accent-hover': '#26223A', 'accent-selected': '#2E2848', 'accent-pressed': '#372F57' },
+};
+const LADDER_CONTRACT_LIST = T.contracts.slice(60);
 
 const css = readFileSync(join(root, 'dist', 'frosting.css'), 'utf8').replace(/\r/g, '');
 const miseCss = readFileSync(join(mise, 'delivery', 'dist', 'mise.css'), 'utf8').replace(/\r/g, '');
@@ -73,20 +89,20 @@ CHANNELS.forEach((k) => {
   expect(new RegExp(`--fr-${k}:`).test(lightBlock) && (darkBlocks.match(new RegExp(`--fr-${k}:`, 'g')) || []).length === 2, `channel ${k}: --fr-${k} lines in dist/frosting.css`);
 });
 // count floor
-expect(json.roles.length >= 39 && T.roles.length >= 39, `at least 39 roles, got ${json.roles.length}`);
-expect(json.contracts.length >= 60 && T.contracts.length >= 60, `at least 60 contracts, got ${json.contracts.length}`);
+expect(json.roles.length >= 43 && T.roles.length >= 43, `at least 43 roles, got ${json.roles.length}`);
+expect(json.contracts.length >= 70 && T.contracts.length >= 70, `at least 70 contracts, got ${json.contracts.length}`);
 
 /* ── C1: exact counts, the old entries first and untouched, the new ones appended in the order of section 3.8 ── */
-expect(json.roles.length === 39 && json.contracts.length === 60, 'C1: 39 roles and 60 contracts', json.roles.length, json.contracts.length);
+expect(json.roles.length === 43 && json.contracts.length === 70, 'C1: 43 roles and 70 contracts', json.roles.length, json.contracts.length);
 expect(fx.roles.every((r, i) => same(json.roles[i], r)), 'C1: the first 26 roles equal the v1.2.0 entries');
 expect(fx.contracts.every((c, i) => same(json.contracts[i], c)), 'C1: the first 37 contracts equal the v1.2.0 ones');
-expect(same(json.roles.slice(26).map((r) => r.name), ROLES), 'C1: the 13 roles are appended in order', json.roles.slice(26).map((r) => r.name));
+expect(same(json.roles.slice(26, 39).map((r) => r.name), ROLES), 'C1: the 13 roles are appended in order', json.roles.slice(26, 39).map((r) => r.name));
 expect(same(NEW_CONTRACTS.map((c) => [c.label, c.role, c.against, c.min]), CONTRACTS), 'C3: the 23 contracts are appended in order');
 
-/* ── C4: the defaults pass all 60 ── */
+/* ── C4: the defaults pass all 70 ── */
 ['light', 'dark'].forEach((m) => {
   const bad = C.check(T[m]).filter((r) => !r.ok);
-  expect(!bad.length && C.check(T[m]).length >= 60, `C4: ${m} defaults pass every contract`, bad.map((r) => r.label));
+  expect(!bad.length && C.check(T[m]).length >= 70, `C4: ${m} defaults pass every contract`, bad.map((r) => r.label));
 });
 
 /* ── C6: the drift guard: complete() of the default base roles gives the stored hex, at the nominal weight ── */
@@ -197,5 +213,64 @@ for (const page of [{ ...T.dark, bg: '#0D0D0D', surface: '#171717', text: '#ECEC
   expect(sp.every((o) => o['accent-text-hover'] === C.complete(Object.assign({}, page, { accent: o.accent, 'accent-text': o['accent-text'] }), { overrides: {} })['accent-text-hover']), 'C21: the card hover is complete() over the page plus the card accent');
 }
 
-console.log(fails ? `FAIL: ${fails} roles checks` : `PASS: roles.mjs - ${ROLES.length} roles, ${CONTRACTS.length} contracts, ${CHANNELS.length} channels guarded; drift guard; ${looks.length} looks fitted (button-hover = button in ${rule5})`);
+/* ── D: the tint ladder ── */
+LADDER.forEach((n) => {
+  const r = json.roles.find((x) => x.name === n);
+  expect(r, `D: role ${n} is missing from tokens.json roles`);
+  if (!r) return;
+  expect(r.group === 'core' && r.calc && r.calc.from && r.calc.to && typeof r.calc.weight === 'number' && r.calc.rules.length, `D: role ${n}: group core and a calc block`);
+  expect(C.HEX.test(r.light || '') && C.HEX.test(r.dark || ''), `D: role ${n}: light and dark hex`);
+  expect(typeof r.label === 'string' && r.label.trim() && typeof r.use === 'string' && r.use.trim(), `D: role ${n}: label and use`);
+  expect(lightBlock.includes(`--fr-${n}:`) && miseCss.includes(`--fr-${n}:`), `D: role ${n}: a --fr-${n} line in frosting.css and mise.css`);
+  expect(!darkBlocks.includes(`--fr-${n}:`), `D: ${n} is not declared in a dark block`);
+  expect(presets.every((p) => C.HEX.test(p.colors[n] || '')) && luckies.every((l) => C.HEX.test(l.colors[n] || '')), `D: role ${n}: in every preset and lucky look`);
+});
+expect(same(json.roles.slice(39).map((r) => r.name), LADDER), 'D: the 4 ladder roles are appended after the 13, in order', json.roles.slice(39).map((r) => r.name));
+expect(same(LADDER_CONTRACT_LIST.map((c) => [c.label, c.role, c.against, c.min]), LADDER_CONTRACTS), 'D: the 10 ladder contracts are appended after the 60, in order', LADDER_CONTRACT_LIST.map((c) => c.label));
+const ladderCalc = (n) => (json.roles.find((x) => x.name === n) || {}).calc || {};
+expect(ladderCalc('accent-hover').from === 'bg' && ladderCalc('accent-hover').to === 'accent' && ladderCalc('accent-hover').weight === 16, 'D: accent-hover is bg to accent at 16');
+expect(ladderCalc('accent-selected').weight === 22 && ladderCalc('accent-pressed').weight === 28, 'D: selected 22, pressed 28');
+expect(ladderCalc('accent-tint-text').from === 'accent-text' && ladderCalc('accent-tint-text').to === 'text' && ladderCalc('accent-tint-text').weight === 0, 'D: accent-tint-text is accent-text to text at 0');
+// the spec's own default values are the oracle
+['light', 'dark'].forEach((m) => {
+  RUNGS.forEach((n) => expect(T[m][n] === LADDER_DEFAULTS[m][n], `D: ${m} default ${n} = ${LADDER_DEFAULTS[m][n]}`, T[m][n]));
+  expect(T[m]['accent-tint-text'] === T[m]['accent-text'], `D: ${m} accent-tint-text equals accent-text at the defaults`, T[m]['accent-tint-text']);
+  const bases = {}; json.roles.filter((r) => !r.calc).forEach((r) => { bases[r.name] = r[m]; });
+  const done = C.complete(bases);
+  LADDER.forEach((n) => expect(done[n] === T[m][n], `D: complete() of the ${m} defaults gives ${n} = ${T[m][n]}`, done[n]));
+  expect(!('accent-soft' in done) && !('accent-faint' in done), 'D: complete() does not add the derived tints to the colours');
+  expect(C.check(T[m], LADDER_CONTRACT_LIST).every((r) => r.ok), `D: ${m} defaults pass the 10 ladder contracts`, C.check(T[m], LADDER_CONTRACT_LIST).filter((r) => !r.ok).map((r) => r.label));
+});
+// over every look: all 10 contracts pass, and the ladder never reorders (each rung is the previous rung exactly, or at least 3 weight points above it)
+const weightOf = (l, h) => { for (let k = 0; k <= 100; k++) if (C.mix(l.bg, l.accent, k / 100) === h) return k; return -1; };
+let dBad = 0, dCollapse = 0;
+looks.forEach(([name, l]) => {
+  const bad = C.check(l, LADDER_CONTRACT_LIST).filter((r) => !r.ok);
+  if (bad.length) { dBad++; if (dBad < 6) console.log('  D', name, bad.map((r) => `${r.label} ${r.ratio}<${r.min}`).join('; ')); }
+  const chain = [C.mix(l.bg, l.accent, 0.12), l['accent-hover'], l['accent-selected'], l['accent-pressed']];
+  for (let i = 1; i < chain.length; i++) {
+    if (chain[i] === chain[i - 1]) { dCollapse++; continue; }
+    const a = weightOf(l, chain[i - 1]), b = weightOf(l, chain[i]);
+    if (a !== -1 && b !== -1 && b < a + 3) { dBad++; if (dBad < 6) console.log('  D reorder', name, a, b); }
+  }
+});
+expect(dBad === 0, `D: the ladder passes its 10 contracts and keeps its steps on ${looks.length} looks`, dBad);
+// collapse: a rung that cannot clear 4.5 against text equals the rung below, never a reordered colour
+{
+  const base = Object.assign({}, T.light, { accent: '#2E7D4F', text: '#7A7A7A' });   // text too pale for any tint to reach 4.5
+  const out = C.complete(base);
+  expect(out['accent-hover'] === C.mix(base.bg, base.accent, 0.12) && out['accent-selected'] === out['accent-hover'] && out['accent-pressed'] === out['accent-hover'], 'D: rungs that cannot clear 4.5 collapse onto the previous rung', [out['accent-hover'], out['accent-selected'], out['accent-pressed']]);
+}
+// an override pins a rung (uppercased); the next rung is still fitted
+{
+  const out = C.complete(T.light, { overrides: { 'accent-hover': '#ffffff' } });
+  expect(out['accent-hover'] === '#FFFFFF', 'D: an override pins accent-hover', out['accent-hover']);
+}
+// check() judges accent-faint and accent-soft although they are derived, not roles
+{
+  const r = C.check(T.light, [{ label: 'x', role: 'text', against: 'accent-soft', min: 7 }])[0];
+  expect(r.ratio > 0, 'D: check() resolves accent-soft from bg and accent', r.ratio);
+}
+
+console.log(fails ? `FAIL: ${fails} roles checks` : `PASS: roles.mjs - ${ROLES.length} roles (+ ${LADDER.length} tint-ladder roles), ${CONTRACTS.length} contracts, ${CHANNELS.length} channels guarded; drift guard; ${looks.length} looks fitted (button-hover = button in ${rule5})`);
 process.exit(fails ? 1 : 0);

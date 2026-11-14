@@ -18,6 +18,10 @@
   --fr-accent-text-hover: color-mix(in srgb, var(--fr-text) 25%, var(--fr-accent-text));
   --fr-button-hover: color-mix(in srgb, var(--fr-text) 12%, var(--fr-button));
   --fr-border-strong: color-mix(in srgb, var(--fr-muted) 65%, var(--fr-border));
+  --fr-accent-hover: color-mix(in srgb, var(--fr-accent) 16%, var(--fr-bg));
+  --fr-accent-selected: color-mix(in srgb, var(--fr-accent) 22%, var(--fr-bg));
+  --fr-accent-pressed: color-mix(in srgb, var(--fr-accent) 28%, var(--fr-bg));
+  --fr-accent-tint-text: color-mix(in srgb, var(--fr-text) 0%, var(--fr-accent-text));
   /* ── status ── Optional. Dashboards and monitors: dots, meters, badges. */
   --fr-ok: #2E7D4F;
   --fr-warn: #B45309;
@@ -168,5 +172,9 @@
     --fr-bad-soft-fill: none !important;
     --fr-bad-text-fill: none !important;
     --fr-bad-border-fill: none !important;
+    --fr-accent-hover-fill: none !important;
+    --fr-accent-selected-fill: none !important;
+    --fr-accent-pressed-fill: none !important;
+    --fr-accent-tint-text-fill: none !important;
   }
 }

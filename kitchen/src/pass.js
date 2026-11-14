@@ -234,6 +234,7 @@
     var S = root.KitchenSprinkles, sprinkles = recipe.sprinkles !== false;
     var plain = S ? S.plain(designed) : null;
     var colors = !sprinkles && plain ? plain.colors : designed;   // the pass checks what visitors see
+    if (C() && C().withDerived) colors = C().withDerived(colors);   // accent-faint and accent-soft, so contracts that name them show their colour and can be suggested against
     var look = recipe.fontdant || {};
     var R = root.FontdantCheck.resolve(look);
     // the standards dial: opts.standard beats recipe.standard; house rules stay on top unless opts.house === false

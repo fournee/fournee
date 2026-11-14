@@ -511,6 +511,110 @@ const module = undefined;
           ]
         ]
       }
+    },
+    {
+      "name": "accent-hover",
+      "group": "core",
+      "label": "Accent hover tint",
+      "use": "Hover on a faint or soft row, or a ghost control. Calculated from bg and accent; text stays readable on it.",
+      "light": "#DEEAE3",
+      "dark": "#26223A",
+      "calc": {
+        "from": "bg",
+        "to": "accent",
+        "weight": 16,
+        "rules": [
+          [
+            "text",
+            4.5
+          ]
+        ],
+        "after": "accent-soft",
+        "afterWeight": 12
+      }
+    },
+    {
+      "name": "accent-selected",
+      "group": "core",
+      "label": "Accent selected tint",
+      "use": "Selected row, current nav item, selected pill. Calculated from bg and accent; text stays readable on it.",
+      "light": "#D1E2D8",
+      "dark": "#2E2848",
+      "calc": {
+        "from": "bg",
+        "to": "accent",
+        "weight": 22,
+        "rules": [
+          [
+            "text",
+            4.5
+          ]
+        ],
+        "after": "accent-hover"
+      }
+    },
+    {
+      "name": "accent-pressed",
+      "group": "core",
+      "label": "Accent pressed tint",
+      "use": "Pressed or active fill. Calculated from bg and accent; text stays readable on it.",
+      "light": "#C4DBCE",
+      "dark": "#372F57",
+      "calc": {
+        "from": "bg",
+        "to": "accent",
+        "weight": 28,
+        "rules": [
+          [
+            "text",
+            4.5
+          ]
+        ],
+        "after": "accent-selected"
+      }
+    },
+    {
+      "name": "accent-tint-text",
+      "group": "core",
+      "label": "Accent tint text",
+      "use": "Accent-coloured text sitting on any accent tint, faint to pressed. Calculated from accent-text unless a look sets it.",
+      "light": "#22603C",
+      "dark": "#B9A3FF",
+      "calc": {
+        "from": "accent-text",
+        "to": "text",
+        "weight": 0,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "accent-faint",
+            4.5
+          ],
+          [
+            "accent-soft",
+            4.5
+          ],
+          [
+            "accent-hover",
+            4.5
+          ],
+          [
+            "accent-selected",
+            4.5
+          ],
+          [
+            "accent-pressed",
+            4.5
+          ]
+        ]
+      }
     }
   ],
   "contracts": [
@@ -873,6 +977,66 @@ const module = undefined;
       "role": "bad-border",
       "against": "bg",
       "min": 3
+    },
+    {
+      "label": "Text on hover tint",
+      "role": "accent-hover",
+      "against": "text",
+      "min": 4.5
+    },
+    {
+      "label": "Text on selected tint",
+      "role": "accent-selected",
+      "against": "text",
+      "min": 4.5
+    },
+    {
+      "label": "Text on pressed tint",
+      "role": "accent-pressed",
+      "against": "text",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text",
+      "role": "accent-tint-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on surfaces",
+      "role": "accent-tint-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on faint tint",
+      "role": "accent-tint-text",
+      "against": "accent-faint",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on soft tint",
+      "role": "accent-tint-text",
+      "against": "accent-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on hover tint",
+      "role": "accent-tint-text",
+      "against": "accent-hover",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on selected tint",
+      "role": "accent-tint-text",
+      "against": "accent-selected",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on pressed tint",
+      "role": "accent-tint-text",
+      "against": "accent-pressed",
+      "min": 4.5
     }
   ],
   "channels": {
@@ -937,7 +1101,11 @@ const module = undefined;
     "warn-border": "#C3753A",
     "bad-soft": "#F8E8E6",
     "bad-text": "#722E24",
-    "bad-border": "#D36659"
+    "bad-border": "#D36659",
+    "accent-hover": "#DEEAE3",
+    "accent-selected": "#D1E2D8",
+    "accent-pressed": "#C4DBCE",
+    "accent-tint-text": "#22603C"
   },
   "dark": {
     "bg": "#0F1115",
@@ -978,7 +1146,11 @@ const module = undefined;
     "warn-border": "#CFA742",
     "bad-soft": "#2C1A1F",
     "bad-text": "#F3A2AD",
-    "bad-border": "#CF4D5B"
+    "bad-border": "#CF4D5B",
+    "accent-hover": "#26223A",
+    "accent-selected": "#2E2848",
+    "accent-pressed": "#372F57",
+    "accent-tint-text": "#B9A3FF"
   }
 };
   root.FrostingTokens = api;
@@ -1090,10 +1262,10 @@ const module = undefined;
     });
     return rules;
   }
-  function resolve(r, col, contracts, later, fills) {
+  function resolve(r, col, contracts, later, fills, W) {
     var c = r.calc, rules = calcRules(r, contracts, later);
-    var needed = [c.from, c.to].concat(c.alt ? [c.alt] : [], rules.filter(function (x) { return x[2]; }).map(function (x) { return x[0]; }));
-    if (!needed.every(function (k) { return HEX.test(col[k] || ''); })) return HEX.test(col.bg || '') && isDark(col.bg) ? r.dark : r.light;
+    var needed = [c.from, c.to].concat(c.alt ? [c.alt] : [], c.after ? [c.after] : [], rules.filter(function (x) { return x[2]; }).map(function (x) { return x[0]; }));
+    if (!needed.every(function (k) { return HEX.test(col[k] || ''); })) { W[r.name] = c.weight; return HEX.test(col.bg || '') && isDark(col.bg) ? r.dark : r.light; }
     // a ground painted with a gradient (FrostingFills) is judged at every sampled point, as the pass judges it
     var Fl = root.FrostingFills;
     rules = rules.filter(function (x) { return HEX.test(col[x[0]] || ''); }).map(function (x) {
@@ -1110,6 +1282,13 @@ const module = undefined;
       return ws;
     }
     function search(a, b, lo) { var ws = order(c.weight, lo); for (var i = 0; i < ws.length; i++) { var h = line(a, b, ws[i]); if (passes(h)) return h; } return null; }
+    if (c.after) {   // a tint-ladder rung: searches down from its nominal weight, never at or below the rung below plus 2; else it equals that rung
+      var pw = W[c.after] != null ? W[c.after] : (c.afterWeight || 0);
+      for (var w = c.weight; w >= pw + 3; w--) { var t = line(c.from, c.to, w); if (passes(t)) { W[r.name] = w; return t; } }
+      W[r.name] = pw;
+      return col[c.after].toUpperCase();
+    }
+    W[r.name] = c.weight;
     if (!c.alt) {
       var h = search(c.from, c.to, 0);
       if (h) return h;
@@ -1122,13 +1301,28 @@ const module = undefined;
     if (passes(a)) return a;
     return search(c.from, c.to, lo) || search(c.from, c.alt, lo) || col[c.from].toUpperCase();
   }
+  /* the two derived tints (accent-faint 8%, accent-soft 12% of accent into bg; tokens.json "derived") added to a copy of colors when
+     bg and accent are valid and the map has none of its own: contracts and fit rules may name them as grounds. The input is not changed. */
+  function withDerived(colors) {
+    var out = Object.assign({}, colors || {});
+    if (HEX.test(out.bg || '') && HEX.test(out.accent || '')) {
+      if (!out['accent-faint']) out['accent-faint'] = mix(out.bg, out.accent, 0.08);
+      if (!out['accent-soft']) out['accent-soft'] = mix(out.bg, out.accent, 0.12);
+    }
+    return out;
+  }
   function complete(colors, opts) {
     opts = opts || {};
     var out = Object.assign({}, colors || {}), list = calcRoles(opts.roles);
     var ov = cleanOverrides(opts.overrides !== undefined ? opts.overrides : out.overrides, list);
     var fills = opts.fills !== undefined ? opts.fills : out.fills;
     var later = {}; list.forEach(function (r) { later[r.name] = true; });
-    list.forEach(function (r) { delete later[r.name]; out[r.name] = ov[r.name] || resolve(r, out, opts.contracts, later, fills); });
+    var work = withDerived(out), W = {};   // work: out plus the derived tints rules may name; W: the weight each rung used
+    list.forEach(function (r) {
+      delete later[r.name];
+      if (ov[r.name]) W[r.name] = r.calc.weight;
+      out[r.name] = work[r.name] = ov[r.name] || resolve(r, work, opts.contracts, later, fills, W);
+    });
     return out;
   }
 
@@ -1138,8 +1332,9 @@ const module = undefined;
   var extra = [];
   function contracts() { return ((root.FrostingTokens && root.FrostingTokens.contracts) || []).concat(extra); }
   function check(theme, list) {
+    var t = withDerived(theme);
     return (list || contracts()).map(function (c) {
-      var a = theme[c.role], b = theme[c.against], r = HEX.test(a || '') && HEX.test(b || '') ? contrast(a, b) : 0;
+      var a = t[c.role], b = t[c.against], r = HEX.test(a || '') && HEX.test(b || '') ? contrast(a, b) : 0;
       return { label: c.label, role: c.role, against: c.against, ratio: Math.round(r * 10) / 10, min: c.min, ok: r >= c.min };
     });
   }
@@ -1147,7 +1342,7 @@ const module = undefined;
 
   var api = {
     hexToRgb: hexToRgb, rgbToHex: rgbToHex, hsl: hsl, hex: hex, lum: lum, contrast: contrast, mix: mix, isDark: isDark,
-    accentParts: accentParts, channelVars: channelVars, complete: complete, cleanOverrides: cleanOverrides, fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
+    accentParts: accentParts, channelVars: channelVars, complete: complete, withDerived: withDerived, cleanOverrides: cleanOverrides, fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
   };
   root.FrostingColor = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

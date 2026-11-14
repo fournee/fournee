@@ -40,6 +40,8 @@ expect(luckyFails === 0, '3,000 lucky looks pass the pass', luckyFails);
 // frosting's contracts are in the pass unchanged
 const fr = run({}).results.filter((r) => r.source === 'frosting');
 expect(fr.length === FT.contracts.length && fr.every((r, i) => r.label === FT.contracts[i].label), 'frosting contracts appear unchanged, in order', fr.length);
+// the tint ladder's 10 contracts come last, after the 60, in tokens.json order (D)
+expect(fr.length === 70 && fr.slice(60).map((r) => r.label).join('|') === ['Text on hover tint', 'Text on selected tint', 'Text on pressed tint', 'Tint text', 'Tint text on surfaces', 'Tint text on faint tint', 'Tint text on soft tint', 'Tint text on hover tint', 'Tint text on selected tint', 'Tint text on pressed tint'].join('|'), 'the 10 tint-ladder contracts are appended after the 60, in order', fr.slice(60).map((r) => r.label));
 
 /* 2 ── the done criterion: weight 300 at 10px on muted */
 {

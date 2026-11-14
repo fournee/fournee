@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- **Frosting: the tint ladder.** Four new roles for the accent as a fill, built the way the other calculated roles are:
+  `accent-hover`, `accent-selected` and `accent-pressed` (each a stronger tint of the accent over the background, for hover,
+  selected and pressed rows) and `accent-tint-text` (accent text that stays readable on the page, on cards and on every
+  tint in the ladder). Each tint is fitted so ordinary text reads on it at 4.5:1; if a look cannot manage that, the tint
+  matches the one below it rather than jumping out of order. The two lighter tints you already had (`accent-faint`, `accent-soft`)
+  are unchanged. That is 43 roles and 70 readability contracts (ten new). At the default looks the tints are #DEEAE3 /
+  #D1E2D8 / #C4DBCE (light) and #26223A / #2E2848 / #372F57 (dark), and `accent-tint-text` equals `accent-text`. Additive only:
+  no existing role or contract changes. The readability checks can now name `accent-faint` and `accent-soft` as backgrounds.
+  The earlier line that the ladder was "specified, not built" is now out of date.
 - **Spec: comparing two standards now says what it means.** "Compare side by side" opens with a plain verdict ("Nearly
   the same for your page", "NASA is stricter: 2 things on your page would change") and each differing rule in plain
   words ("the keyboard focus ring must be stronger"). Below it, a sample card you drag across: your page now on the

@@ -28,7 +28,7 @@ build does the rest.
 | Group | Roles | Required |
 |---|---|---|
 | core | `bg` `surface` `border` `text` `muted` `accent` `accent-text` `button` `button-text` `progress-fill` `progress-track` | always |
-| core, calculated | `text-secondary` `accent-text-hover` `button-hover` `border-strong` | always (calculated when nobody sets them) |
+| core, calculated | `text-secondary` `accent-text-hover` `button-hover` `border-strong` `accent-hover` `accent-selected` `accent-pressed` `accent-tint-text` | always (calculated when nobody sets them) |
 | status | `ok` `warn` `bad` | dashboards, monitors |
 | status, calculated | `ok-soft` `ok-text` `ok-border` `warn-soft` `warn-text` `warn-border` `bad-soft` `bad-text` `bad-border` | dashboards, monitors |
 | series | `series-1` … `series-4` | charts |
@@ -44,7 +44,7 @@ widget; the light defaults come from the first site that used Frosting.
 **Derived colours** (`accent-soft`, `control-border`, `scrim`…) are `color-mix()` recipes
 over the roles. They follow a look automatically and are never edited.
 
-**Calculated roles.** Thirteen roles are worked out from other roles rather than picked: `text-secondary`
+**Calculated roles.** Seventeen roles are worked out from other roles rather than picked: `text-secondary`
 (between `text` and `muted`), `accent-text-hover`, `button-hover`, `border-strong`, and a soft, text and border
 colour for each of `ok`, `warn` and `bad`. In `tokens.json` each is an ordinary role entry with a `calc` block:
 the two roles it lies between, a nominal weight, the contrast rules it must keep, and for `button-hover` an
@@ -93,7 +93,11 @@ roles with a minimum WCAG contrast ratio:
 In about 4.2% of looks (248 of 5,962 in `frosting/test/roles.mjs`) no visible hover colour passes both `button-hover`
 rules, so `button-hover` equals `button`: a consumer should expect "no hover change" there.
 
-That is 60 contracts in all: the original 37 (unchanged, in the same order) and 23 for the calculated roles.
+- **Tint ladder.** `text` on `accent-hover`, `accent-selected` and `accent-pressed` at **4.5:1** (each is `bg` mixed 16%, 22% and 28% of the way
+  to `accent`, searched down from there, never at or below the rung below plus 2, else equal to it); `accent-tint-text` (`accent-text`
+  moved towards `text` until it passes) on `bg`, `surface`, `accent-faint`, `accent-soft` and the three rungs at **4.5:1**.
+
+That is 70 contracts in all: the original 37 (unchanged, in the same order), 23 for the calculated roles, and 10 for the tint ladder.
 
 The engine never saves a silently unreadable look: hand edits are checked and badged;
 generated looks are **fitted** (hue and saturation kept, lightness moved until every contract

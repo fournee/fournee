@@ -461,10 +461,13 @@ is not a valid hex. `fills.declarations` is the precedent for returning a variab
 Plain-CSS limit: `setProperty('--fr-accent', …)` by hand does not update the three (CSS cannot compute a hue from a
 colour). The README says so and points at `FrostingColor.channelVars` and `MiseApply`.
 
-## 6. Deliverable D: tint ladder (SPEC ONLY, not built in v1.3.0)
+## 6. Deliverable D: tint ladder (specified in v1.3.0, built after v1.4.0)
 
-Nothing in this section is implemented, added to `tokens.json`, or tested in v1.3.0. It is written so that a later
-change is a `tokens.json` edit plus tests, using the same `calc` schema and `complete()`.
+Not built in v1.3.0. It was written so that a later change is a `tokens.json` edit plus tests, using the same `calc`
+schema and `complete()`, and it has since been built that way (see the CHANGELOG, Unreleased). Build notes: the rung
+rule is the `after` (and, for the first rung, `afterWeight`) field of the `calc` block; `accent-faint` and
+`accent-soft` are named as grounds through `FrostingColor.withDerived`, so `check()` and the pass can judge them; the
+standards dial does not raise the ladder to the text minimum (a 7:1 profile cannot be met on the tints of every look).
 
 ### 6.1 The ladder
 
@@ -736,12 +739,13 @@ Standards, panel and delivery
   runs `accent.mjs`, `roles.mjs`, `backcompat.mjs`, `suggest.mjs` and the three new browser tests.
 - **X4** Given `package.json`, when read, then `version` is `1.3.0`.
 
-### Deliverable D: tint ladder (spec only)
+### Deliverable D: tint ladder (spec in v1.3.0, built later)
 
 - **D1** Given this section 6, when reviewed, then it names the four roles, formulas, contracts and the bg-only decision
   with reasons, and states that nothing is built.
-- **D2** Given the v1.3.0 tree, when `tokens.json` is read, then it contains no `accent-hover`, `accent-selected`,
-  `accent-pressed` or `accent-tint-text`.
+- **D2** (reversed once the ladder was built) Given the v1.3.0 tree, `tokens.json` had none of `accent-hover`,
+  `accent-selected`, `accent-pressed` or `accent-tint-text`. Now `frosting/test/roles.mjs` asserts that all four are
+  present, with their ten contracts, and that the spec's default values are produced.
 - **D3** Given the CHANGELOG, when read, then the tint ladder is listed as specified and not shipped.
 
 ## 9. Files per downstream leaf

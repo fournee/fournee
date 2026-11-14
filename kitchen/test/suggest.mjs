@@ -129,13 +129,16 @@ const consumer = { frosting: { colors: { bg: '#F2F5F8', surface: '#FBFCFD', mute
   for (let i = 0; i < 3000; i++) { const l = G.lucky(); looks.push({ colors: l.colors, scheme: l.scheme }); }
   let withSuggest = 0, drift = 0;
   const KEYS = ['id', 'label', 'level', 'ok', 'pending', 'detail', 'source', 'where'];
+  // the tint ladder's 10 contracts are new results, not existing ones: they name derived grounds (accent-faint, accent-soft), which the pass now shows
+  const NEWER = new Set(FT.contracts.slice(60).map((c) => c.label));
+  const old_ = (r) => r.results.filter((x) => !(x.source === 'frosting' && NEWER.has(x.label)));
   looks.forEach((l, i) => {
     const r = { scheme: l.scheme, frosting: { colors: l.colors } };
     const res = run(sp, r, l.scheme === 'Dark' ? dark : light);
     withSuggest += res.results.filter((x) => 'suggest' in x).length;
     if (i < 60 || i % 50 === 0) {
       const was = run(old, r, l.scheme === 'Dark' ? dark : light);
-      const a = res.results.map((x) => KEYS.map((k) => JSON.stringify(x[k])).join('|')), b = was.results.map((x) => KEYS.map((k) => JSON.stringify(x[k])).join('|'));
+      const a = old_(res).map((x) => KEYS.map((k) => JSON.stringify(x[k])).join('|')), b = old_(was).map((x) => KEYS.map((k) => JSON.stringify(x[k])).join('|'));
       if (a.length !== b.length || a.some((x, j) => x !== b[j])) drift++;
     }
   });
@@ -144,11 +147,11 @@ const consumer = { frosting: { colors: { bg: '#F2F5F8', surface: '#FBFCFD', mute
   if (old) {
     // and on a failing recipe too
     const a = run(sp, consumer), b = run(old, consumer);
-    expect(a.results.length === b.results.length && a.results.every((x, j) => KEYS.every((k) => JSON.stringify(x[k]) === JSON.stringify(b.results[j][k]))), 'A11: unchanged fields on the consumer recipe');
+    { const aa = old_(a), bb = old_(b); expect(aa.length === bb.length && aa.every((x, j) => KEYS.every((k) => JSON.stringify(x[k]) === JSON.stringify(bb[j][k]))), 'A11: unchanged fields on the consumer recipe'); }
     expect(JSON.stringify(a.summary) === JSON.stringify(b.summary), 'A11: summary unchanged');
     // Sprinkles absent, where X4 really warns and the new field appears
     const oldPlain = sandbox({ passSource: headSource }), c = run(sb, consumer), d = run(oldPlain, consumer);
-    expect(c.results.length === d.results.length && c.results.every((x, j) => KEYS.every((k) => JSON.stringify(x[k]) === JSON.stringify(d.results[j][k]))), 'A11: unchanged fields where X4 warns');
+    { const cc = old_(c), dd = old_(d); expect(cc.length === dd.length && cc.every((x, j) => KEYS.every((k) => JSON.stringify(x[k]) === JSON.stringify(dd[j][k]))), 'A11: unchanged fields where X4 warns'); }
     expect(c.results.filter((x) => 'suggest' in x).map((x) => x.id).join() === 'X4', 'only X4 gains a suggest on the consumer recipe', c.results.filter((x) => 'suggest' in x).map((x) => x.id));
   }
 }

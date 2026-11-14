@@ -506,6 +506,110 @@
           ]
         ]
       }
+    },
+    {
+      "name": "accent-hover",
+      "group": "core",
+      "label": "Accent hover tint",
+      "use": "Hover on a faint or soft row, or a ghost control. Calculated from bg and accent; text stays readable on it.",
+      "light": "#DEEAE3",
+      "dark": "#26223A",
+      "calc": {
+        "from": "bg",
+        "to": "accent",
+        "weight": 16,
+        "rules": [
+          [
+            "text",
+            4.5
+          ]
+        ],
+        "after": "accent-soft",
+        "afterWeight": 12
+      }
+    },
+    {
+      "name": "accent-selected",
+      "group": "core",
+      "label": "Accent selected tint",
+      "use": "Selected row, current nav item, selected pill. Calculated from bg and accent; text stays readable on it.",
+      "light": "#D1E2D8",
+      "dark": "#2E2848",
+      "calc": {
+        "from": "bg",
+        "to": "accent",
+        "weight": 22,
+        "rules": [
+          [
+            "text",
+            4.5
+          ]
+        ],
+        "after": "accent-hover"
+      }
+    },
+    {
+      "name": "accent-pressed",
+      "group": "core",
+      "label": "Accent pressed tint",
+      "use": "Pressed or active fill. Calculated from bg and accent; text stays readable on it.",
+      "light": "#C4DBCE",
+      "dark": "#372F57",
+      "calc": {
+        "from": "bg",
+        "to": "accent",
+        "weight": 28,
+        "rules": [
+          [
+            "text",
+            4.5
+          ]
+        ],
+        "after": "accent-selected"
+      }
+    },
+    {
+      "name": "accent-tint-text",
+      "group": "core",
+      "label": "Accent tint text",
+      "use": "Accent-coloured text sitting on any accent tint, faint to pressed. Calculated from accent-text unless a look sets it.",
+      "light": "#22603C",
+      "dark": "#B9A3FF",
+      "calc": {
+        "from": "accent-text",
+        "to": "text",
+        "weight": 0,
+        "rules": [
+          [
+            "bg",
+            4.5
+          ],
+          [
+            "surface",
+            4.5
+          ],
+          [
+            "accent-faint",
+            4.5
+          ],
+          [
+            "accent-soft",
+            4.5
+          ],
+          [
+            "accent-hover",
+            4.5
+          ],
+          [
+            "accent-selected",
+            4.5
+          ],
+          [
+            "accent-pressed",
+            4.5
+          ]
+        ]
+      }
     }
   ],
   "contracts": [
@@ -868,6 +972,66 @@
       "role": "bad-border",
       "against": "bg",
       "min": 3
+    },
+    {
+      "label": "Text on hover tint",
+      "role": "accent-hover",
+      "against": "text",
+      "min": 4.5
+    },
+    {
+      "label": "Text on selected tint",
+      "role": "accent-selected",
+      "against": "text",
+      "min": 4.5
+    },
+    {
+      "label": "Text on pressed tint",
+      "role": "accent-pressed",
+      "against": "text",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text",
+      "role": "accent-tint-text",
+      "against": "bg",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on surfaces",
+      "role": "accent-tint-text",
+      "against": "surface",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on faint tint",
+      "role": "accent-tint-text",
+      "against": "accent-faint",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on soft tint",
+      "role": "accent-tint-text",
+      "against": "accent-soft",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on hover tint",
+      "role": "accent-tint-text",
+      "against": "accent-hover",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on selected tint",
+      "role": "accent-tint-text",
+      "against": "accent-selected",
+      "min": 4.5
+    },
+    {
+      "label": "Tint text on pressed tint",
+      "role": "accent-tint-text",
+      "against": "accent-pressed",
+      "min": 4.5
     }
   ],
   "channels": {
@@ -932,7 +1096,11 @@
     "warn-border": "#C3753A",
     "bad-soft": "#F8E8E6",
     "bad-text": "#722E24",
-    "bad-border": "#D36659"
+    "bad-border": "#D36659",
+    "accent-hover": "#DEEAE3",
+    "accent-selected": "#D1E2D8",
+    "accent-pressed": "#C4DBCE",
+    "accent-tint-text": "#22603C"
   },
   "dark": {
     "bg": "#0F1115",
@@ -973,7 +1141,11 @@
     "warn-border": "#CFA742",
     "bad-soft": "#2C1A1F",
     "bad-text": "#F3A2AD",
-    "bad-border": "#CF4D5B"
+    "bad-border": "#CF4D5B",
+    "accent-hover": "#26223A",
+    "accent-selected": "#2E2848",
+    "accent-pressed": "#372F57",
+    "accent-tint-text": "#B9A3FF"
   }
 };
   root.FrostingTokens = api;

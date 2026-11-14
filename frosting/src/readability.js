@@ -102,10 +102,10 @@
     });
     return rules;
   }
-  function resolve(r, col, contracts, later, fills) {
+  function resolve(r, col, contracts, later, fills, W) {
     var c = r.calc, rules = calcRules(r, contracts, later);
-    var needed = [c.from, c.to].concat(c.alt ? [c.alt] : [], rules.filter(function (x) { return x[2]; }).map(function (x) { return x[0]; }));
-    if (!needed.every(function (k) { return HEX.test(col[k] || ''); })) return HEX.test(col.bg || '') && isDark(col.bg) ? r.dark : r.light;
+    var needed = [c.from, c.to].concat(c.alt ? [c.alt] : [], c.after ? [c.after] : [], rules.filter(function (x) { return x[2]; }).map(function (x) { return x[0]; }));
+    if (!needed.every(function (k) { return HEX.test(col[k] || ''); })) { W[r.name] = c.weight; return HEX.test(col.bg || '') && isDark(col.bg) ? r.dark : r.light; }
     // a ground painted with a gradient (FrostingFills) is judged at every sampled point, as the pass judges it
     var Fl = root.FrostingFills;
     rules = rules.filter(function (x) { return HEX.test(col[x[0]] || ''); }).map(function (x) {
@@ -122,6 +122,13 @@
       return ws;
     }
     function search(a, b, lo) { var ws = order(c.weight, lo); for (var i = 0; i < ws.length; i++) { var h = line(a, b, ws[i]); if (passes(h)) return h; } return null; }
+    if (c.after) {   // a tint-ladder rung: searches down from its nominal weight, never at or below the rung below plus 2; else it equals that rung
+      var pw = W[c.after] != null ? W[c.after] : (c.afterWeight || 0);
+      for (var w = c.weight; w >= pw + 3; w--) { var t = line(c.from, c.to, w); if (passes(t)) { W[r.name] = w; return t; } }
+      W[r.name] = pw;
+      return col[c.after].toUpperCase();
+    }
+    W[r.name] = c.weight;
     if (!c.alt) {
       var h = search(c.from, c.to, 0);
       if (h) return h;
@@ -134,13 +141,28 @@
     if (passes(a)) return a;
     return search(c.from, c.to, lo) || search(c.from, c.alt, lo) || col[c.from].toUpperCase();
   }
+  /* the two derived tints (accent-faint 8%, accent-soft 12% of accent into bg; tokens.json "derived") added to a copy of colors when
+     bg and accent are valid and the map has none of its own: contracts and fit rules may name them as grounds. The input is not changed. */
+  function withDerived(colors) {
+    var out = Object.assign({}, colors || {});
+    if (HEX.test(out.bg || '') && HEX.test(out.accent || '')) {
+      if (!out['accent-faint']) out['accent-faint'] = mix(out.bg, out.accent, 0.08);
+      if (!out['accent-soft']) out['accent-soft'] = mix(out.bg, out.accent, 0.12);
+    }
+    return out;
+  }
   function complete(colors, opts) {
     opts = opts || {};
     var out = Object.assign({}, colors || {}), list = calcRoles(opts.roles);
     var ov = cleanOverrides(opts.overrides !== undefined ? opts.overrides : out.overrides, list);
     var fills = opts.fills !== undefined ? opts.fills : out.fills;
     var later = {}; list.forEach(function (r) { later[r.name] = true; });
-    list.forEach(function (r) { delete later[r.name]; out[r.name] = ov[r.name] || resolve(r, out, opts.contracts, later, fills); });
+    var work = withDerived(out), W = {};   // work: out plus the derived tints rules may name; W: the weight each rung used
+    list.forEach(function (r) {
+      delete later[r.name];
+      if (ov[r.name]) W[r.name] = r.calc.weight;
+      out[r.name] = work[r.name] = ov[r.name] || resolve(r, work, opts.contracts, later, fills, W);
+    });
     return out;
   }
 
@@ -150,8 +172,9 @@
   var extra = [];
   function contracts() { return ((root.FrostingTokens && root.FrostingTokens.contracts) || []).concat(extra); }
   function check(theme, list) {
+    var t = withDerived(theme);
     return (list || contracts()).map(function (c) {
-      var a = theme[c.role], b = theme[c.against], r = HEX.test(a || '') && HEX.test(b || '') ? contrast(a, b) : 0;
+      var a = t[c.role], b = t[c.against], r = HEX.test(a || '') && HEX.test(b || '') ? contrast(a, b) : 0;
       return { label: c.label, role: c.role, against: c.against, ratio: Math.round(r * 10) / 10, min: c.min, ok: r >= c.min };
     });
   }
@@ -159,7 +182,7 @@
 
   var api = {
     hexToRgb: hexToRgb, rgbToHex: rgbToHex, hsl: hsl, hex: hex, lum: lum, contrast: contrast, mix: mix, isDark: isDark,
-    accentParts: accentParts, channelVars: channelVars, complete: complete, cleanOverrides: cleanOverrides, fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
+    accentParts: accentParts, channelVars: channelVars, complete: complete, withDerived: withDerived, cleanOverrides: cleanOverrides, fit: fit, ink: ink, bgHeadroom: bgHeadroom, check: check, contracts: contracts, addContracts: addContracts, HEX: HEX,
   };
   root.FrostingColor = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

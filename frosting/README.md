@@ -37,6 +37,11 @@ Apply the published look before first paint (inject a `<style>` at build/serve t
 expressions that follow your base roles but carry no contrast guarantee; build from a recipe for the guarantee.
 See SPEC §2 and §4.
 
+**Tint ladder.** Four more calculated roles carry the accent as a fill and text that sits on it: `accent-hover`, `accent-selected`
+and `accent-pressed` (rising tints of the accent, for hover, selected and pressed rows), and `accent-tint-text` (accent text that
+stays readable on `bg`, `surface`, `accent-faint`, `accent-soft` and all three). Each rung is fitted so `text` reads on it at 4.5:1; a rung
+that cannot be fitted equals the one below it instead of reordering the ladder.
+
 **Numeric accent.** `--fr-accent-h` (a bare hue in degrees), `--fr-accent-s` and `--fr-accent-l` (with `%`) sit beside
 `--fr-accent`. One line makes hue-driven CSS follow the look: `:root { --hue: var(--fr-accent-h, 210); }`. A grey
 accent has hue `0` and saturation `0%`, so multiply `--fr-accent-s` into your own saturation where grey should stay

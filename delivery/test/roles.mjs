@@ -1,5 +1,5 @@
 // New roles in delivery (v1.3.0, deliverable C):
-//  C24 MiseApply.css(recipe) declares every role (39) as #RRGGBB in its :root:root:root block, fitted from the recipe;
+//  C24 MiseApply.css(recipe) declares every role (43) as #RRGGBB in its :root:root:root block, fitted from the recipe;
 //      the DTCG export has a color.<role> token with a $description for each
 //  overrides flow through (frosting.overrides beats the calculated value); delivery/dist/mise.css carries the
 //  calculated roles as color-mix() expressions, like frosting.css
@@ -18,7 +18,7 @@ const block = (css) => css.slice(css.indexOf(':root:root:root {'), css.indexOf('
 const decl = (css, role) => { const m = new RegExp(`--fr-${role}: ([^;]+);`).exec(block(css)); return m ? m[1] : null; };
 const CALC = T.roles.filter((r) => r.calc).map((r) => r.name);
 
-expect(T.roles.length === 39 && CALC.length === 13, 'tokens: 39 roles, 13 calculated', T.roles.length, CALC.length);
+expect(T.roles.length === 43 && CALC.length === 17, 'tokens: 43 roles, 17 calculated', T.roles.length, CALC.length);
 const variants = { 'recipe.json': RECIPE, light: { name: 'L', scheme: 'Light' }, dark: { name: 'D', scheme: 'Dark' },
   accent: { name: 'A', scheme: 'Light', frosting: { colors: { accent: '#7B2CBF', 'accent-text': '#5A1F8C', bad: '#A1123F' } } } };
 for (const [k, r] of Object.entries(variants)) {
@@ -48,5 +48,5 @@ expect(decl(M.head(variants.accent).css, 'bad-text') === decl(M.css(variants.acc
   expect(!missing.length, 'delivery/dist/mise.css declares every calculated role as color-mix() (rebuild with npm run build)', missing.map((r) => r.name));
 }
 
-console.log(fails ? `FAIL: ${fails} delivery roles checks` : `PASS: delivery/test/roles.mjs - MiseApply.css declares ${T.roles.length} roles (13 fitted), DTCG describes each, overrides flow, mise.css (C24)`);
+console.log(fails ? `FAIL: ${fails} delivery roles checks` : `PASS: delivery/test/roles.mjs - MiseApply.css declares ${T.roles.length} roles (${CALC.length} fitted), DTCG describes each, overrides flow, mise.css (C24)`);
 process.exit(fails ? 1 : 0);
