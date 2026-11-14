@@ -1,0 +1,479 @@
+{
+  "page": "font-tabs",
+  "savedAt": "2026-11-14T13:57:18.349Z",
+  "answers": {
+    "picker": "tabs-cards",
+    "mono": "fourth-tab",
+    "decorative": "display-only",
+    "catalog": "yes"
+  },
+  "existing": [
+    {
+      "id": "inter",
+      "family": "Inter",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "inter-tight",
+      "family": "Inter Tight",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "arimo",
+      "family": "Arimo",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "archivo",
+      "family": "Archivo",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "schibsted-grotesk",
+      "family": "Schibsted Grotesk",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "instrument-sans",
+      "family": "Instrument Sans",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "geist",
+      "family": "Geist",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "mona-sans",
+      "family": "Mona Sans",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "public-sans",
+      "family": "Public Sans",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "roboto",
+      "family": "Roboto",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "source-sans-3",
+      "family": "Source Sans 3",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "libre-franklin",
+      "family": "Libre Franklin",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "manrope",
+      "family": "Manrope",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "atkinson-hyperlegible-next",
+      "family": "Atkinson Hyperlegible Next",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "jost",
+      "family": "Jost",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "hanken-grotesk",
+      "family": "Hanken Grotesk",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "plus-jakarta-sans",
+      "family": "Plus Jakarta Sans",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "space-grotesk",
+      "family": "Space Grotesk",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "bricolage-grotesque",
+      "family": "Bricolage Grotesque",
+      "tab": "sans",
+      "proposed": "sans"
+    },
+    {
+      "id": "source-serif-4",
+      "family": "Source Serif 4",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "eb-garamond",
+      "family": "EB Garamond",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "cormorant-garamond",
+      "family": "Cormorant Garamond",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "libre-baskerville",
+      "family": "Libre Baskerville",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "newsreader",
+      "family": "Newsreader",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "fraunces",
+      "family": "Fraunces",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "young-serif",
+      "family": "Young Serif",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "playfair-display",
+      "family": "Playfair Display",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "instrument-serif",
+      "family": "Instrument Serif",
+      "tab": "serif",
+      "proposed": "serif"
+    },
+    {
+      "id": "anton",
+      "family": "Anton",
+      "tab": "decorative",
+      "proposed": "decorative"
+    },
+    {
+      "id": "bebas-neue",
+      "family": "Bebas Neue",
+      "tab": "decorative",
+      "proposed": "decorative"
+    },
+    {
+      "id": "big-shoulders",
+      "family": "Big Shoulders",
+      "tab": "decorative",
+      "proposed": "decorative"
+    },
+    {
+      "id": "syne",
+      "family": "Syne",
+      "tab": "decorative",
+      "proposed": "decorative"
+    },
+    {
+      "id": "unbounded",
+      "family": "Unbounded",
+      "tab": "decorative",
+      "proposed": "decorative"
+    },
+    {
+      "id": "cinzel",
+      "family": "Cinzel",
+      "tab": "decorative",
+      "proposed": "decorative"
+    }
+  ],
+  "add": [
+    {
+      "id": "dm-sans",
+      "family": "DM Sans",
+      "tab": "sans",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "work-sans",
+      "family": "Work Sans",
+      "tab": "sans",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "figtree",
+      "family": "Figtree",
+      "tab": "sans",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "ibm-plex-sans",
+      "family": "IBM Plex Sans",
+      "tab": "sans",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "rubik",
+      "family": "Rubik",
+      "tab": "sans",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "lexend",
+      "family": "Lexend",
+      "tab": "sans",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "lora",
+      "family": "Lora",
+      "tab": "serif",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "merriweather",
+      "family": "Merriweather",
+      "tab": "serif",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "literata",
+      "family": "Literata",
+      "tab": "serif",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "crimson-pro",
+      "family": "Crimson Pro",
+      "tab": "serif",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "ibm-plex-serif",
+      "family": "IBM Plex Serif",
+      "tab": "serif",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "gelasio",
+      "family": "Gelasio",
+      "tab": "serif",
+      "group": "text",
+      "slots": [
+        "text",
+        "display"
+      ]
+    },
+    {
+      "id": "bodoni-moda",
+      "family": "Bodoni Moda",
+      "tab": "serif",
+      "group": "display",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "dm-serif-display",
+      "family": "DM Serif Display",
+      "tab": "serif",
+      "group": "display",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "oswald",
+      "family": "Oswald",
+      "tab": "decorative",
+      "group": "bold",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "archivo-black",
+      "family": "Archivo Black",
+      "tab": "decorative",
+      "group": "bold",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "abril-fatface",
+      "family": "Abril Fatface",
+      "tab": "decorative",
+      "group": "slab",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "alfa-slab-one",
+      "family": "Alfa Slab One",
+      "tab": "decorative",
+      "group": "slab",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "pacifico",
+      "family": "Pacifico",
+      "tab": "decorative",
+      "group": "script",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "caveat",
+      "family": "Caveat",
+      "tab": "decorative",
+      "group": "script",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "permanent-marker",
+      "family": "Permanent Marker",
+      "tab": "decorative",
+      "group": "script",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "fredoka",
+      "family": "Fredoka",
+      "tab": "decorative",
+      "group": "playful",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "lilita-one",
+      "family": "Lilita One",
+      "tab": "decorative",
+      "group": "playful",
+      "slots": [
+        "display"
+      ]
+    },
+    {
+      "id": "bungee",
+      "family": "Bungee",
+      "tab": "decorative",
+      "group": "retro",
+      "slots": [
+        "display"
+      ]
+    }
+  ],
+  "declined": [
+    "Nunito Sans",
+    "Outfit",
+    "Sora",
+    "Albert Sans",
+    "Onest",
+    "Red Hat Text",
+    "Spectral",
+    "PT Serif",
+    "Libre Caslon Text",
+    "Alegreya",
+    "Roboto Serif",
+    "Petrona",
+    "Besley",
+    "Staatliches",
+    "Ultra",
+    "Yeseva One",
+    "Dancing Script",
+    "Great Vibes",
+    "Lobster",
+    "Comfortaa",
+    "Righteous",
+    "Shrikhand",
+    "Monoton",
+    "Press Start 2P",
+    "Silkscreen",
+    "Black Ops One",
+    "Rye",
+    "Bungee Shade",
+    "Poiret One",
+    "Climate Crisis"
+  ],
+  "notes": ""
+}
