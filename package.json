@@ -13,7 +13,6 @@
     "test:fontdant": "npm --prefix fontdant test",
     "test:kitchen": "npm --prefix kitchen test",
     "catalog": "npm --prefix frosting run catalog",
-    "deploy": "node catalog/build.mjs && npx --prefix frosting wrangler deploy --config catalog/wrangler.jsonc",
     "test:catalog": "node catalog/build.mjs && node catalog/test.mjs",
     "test:delivery": "npm --prefix delivery test",
     "install:delivery": "npm --prefix delivery ci",
