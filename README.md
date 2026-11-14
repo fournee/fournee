@@ -86,7 +86,7 @@ Electron (`ELECTRON_PATH`). Copy [`.env.example`](.env.example) to `.env` to set
 | [`fontdant/`](fontdant/) | type roles ([`type-tokens.json`](fontdant/type-tokens.json)), fit, font library, the Fontdant tab |
 | [`kitchen/`](kitchen/) | recipe format, store, the pass, standards, Sprinkles, the panel shell and steps |
 | [`delivery/`](delivery/) | wrappers and exports |
-| [`catalog/`](catalog/) | the catalog site (`node catalog/build.mjs`; [`wrangler.example.jsonc`](catalog/wrangler.example.jsonc) to host it on Cloudflare) |
+| [`catalog/`](catalog/) | the catalog site (`node catalog/build.mjs`; published to GitHub Pages on every push to `main`) |
 | [`docs/research/`](docs/research/) | research notes behind the standards and gradients |
 | [`docs/decisions/`](docs/decisions/) | design decisions (ADRs) |
 
@@ -98,6 +98,8 @@ for claude.ai. It asks before each step. The catalog's *Copy instructions for Cl
 with the steps to apply it.
 
 ## Contributing
+
+Fournée is maintained by one person, as time allows, so replies may be slow.
 
 Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first, and please follow the
 [code of conduct](CODE_OF_CONDUCT.md). Security problems: see [SECURITY.md](SECURITY.md).
