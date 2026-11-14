@@ -4,9 +4,8 @@
 //  2. the pass attaches `suggest` to failed or warned colour results (frosting contracts, X-checks) and to nothing else
 //  3. Sprinkles loaded: the X4 note stays an info note without a suggestion
 //  4. (Sprinkles loaded, as in the shell) nothing fails on the defaults, presets or lucky looks, so no result carries a suggestion, and every result is
-//     otherwise identical to the previous pass.js (read from git HEAD)
+//     otherwise identical to the previous pass.js (a frozen fixture, fixtures/pass-pre-v1.3.js)
 import { readFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
 import vm from 'node:vm';
 
 const mise = new URL('../../', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
@@ -122,11 +121,10 @@ const consumer = { frosting: { colors: { bg: '#F2F5F8', surface: '#FBFCFD', mute
 
 /* 4 ── A10, A11: nothing fails on good looks; existing fields are identical to the previous pass.js */
 {
-  let headSource = null;
-  try { headSource = execFileSync('git', ['show', 'HEAD:kitchen/src/pass.js'], { cwd: mise, encoding: 'utf8', windowsHide: true }); } catch { /* no git: skip the comparison */ }
+  const headSource = readFileSync(mise + 'kitchen/test/fixtures/pass-pre-v1.3.js', 'utf8');
   // with Sprinkles loaded, as in the shell: without it the defaults' 7:1 quiet-text advice is a legitimate X4 warning
   const sp = sandbox({ sprinkles: true });
-  const old = headSource ? sandbox({ sprinkles: true, passSource: headSource }) : null;
+  const old = sandbox({ sprinkles: true, passSource: headSource });
   const looks = [light, dark, ...G.presets().map((p) => ({ colors: p.colors, scheme: p.scheme }))];
   for (let i = 0; i < 3000; i++) { const l = G.lucky(); looks.push({ colors: l.colors, scheme: l.scheme }); }
   let withSuggest = 0, drift = 0;
@@ -135,14 +133,14 @@ const consumer = { frosting: { colors: { bg: '#F2F5F8', surface: '#FBFCFD', mute
     const r = { scheme: l.scheme, frosting: { colors: l.colors } };
     const res = run(sp, r, l.scheme === 'Dark' ? dark : light);
     withSuggest += res.results.filter((x) => 'suggest' in x).length;
-    if (old && (i < 60 || i % 50 === 0)) {
+    if (i < 60 || i % 50 === 0) {
       const was = run(old, r, l.scheme === 'Dark' ? dark : light);
       const a = res.results.map((x) => KEYS.map((k) => JSON.stringify(x[k])).join('|')), b = was.results.map((x) => KEYS.map((k) => JSON.stringify(x[k])).join('|'));
       if (a.length !== b.length || a.some((x, j) => x !== b[j])) drift++;
     }
   });
   expect(withSuggest === 0, 'A10: no result on a passing look carries a suggest', withSuggest);
-  expect(old ? drift === 0 : true, 'A11: id, label, level, ok, pending, detail, source and where are unchanged', drift);
+  expect(drift === 0, 'A11: id, label, level, ok, pending, detail, source and where are unchanged', drift);
   if (old) {
     // and on a failing recipe too
     const a = run(sp, consumer), b = run(old, consumer);
