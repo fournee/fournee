@@ -63,10 +63,16 @@ T13 is rendered by kitchen's pass. A font whose licence forbids metric-override 
 
 Every library family has a curated `tab`: `sans`, `serif`, `decorative` or `mono`, set in
 `fonts/library-source.json`. It is separate from the automatic `category`, which drives fallbacks. The face
-picker in the Fontdant tab shows the four tabs as an ARIA tablist (arrow keys, `aria-selected`) over a grid of
-compact preview cards (a small "Aa" and the name, set in that face). Which tabs a slot sees:
+Faces picker in the Fontdant tab is ONE picker spanning the full width of the tab (below the presets, above the
+size controls and live preview). At the top, "Choosing for" switches between Headings (display), Body (text) and Code
+(mono), each showing its current face; the switch decides which slot a card click sets. Under it sits one row of four
+ARIA tabs, Sans, Serif, Decorative and Mono, always all four and never wrapping, with the 🎲 at the right end.
+A tab the chosen slot cannot use is disabled (`aria-disabled`, muted, skipped by the arrow keys, with a title saying
+why), not hidden; arrow keys, Home and End move between the enabled tabs. Opening a slot selects the tab holding its
+current face. Below the tabs is a grid of preview cards ("Aa Gg" large and the family name, both set in that face).
+Which tabs a slot can use:
 
-| Slot | Tabs shown |
+| Slot | Tabs enabled |
 |---|---|
 | text (body) | Sans, Serif |
 | display (headings) | Sans, Serif, Decorative, Mono |

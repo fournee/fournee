@@ -38,6 +38,13 @@ try {
       await page.click(`[data-fdpick="${i}"]`);
       expect(/Fraunces/.test(await h1Font()) && (await h1Font()) !== fontBefore, bt + ': a type preset reaches the bakery headline', await h1Font());
 
+      // the Faces picker at the playground's panel width: one tablist, four tabs on one row, several cards per row
+      const pgFaces = await page.evaluate(() => {
+        const pick = document.querySelector('.fd-pal [data-pick]'), tabs = [...pick.querySelectorAll('[role="tab"]')], cards = [...pick.querySelectorAll('[role="tabpanel"] [data-face]')], t0 = cards[0].getBoundingClientRect().top;
+        return { lists: document.querySelectorAll('.fd-pal [role="tablist"]').length, tops: new Set(tabs.map((t) => Math.round(t.getBoundingClientRect().top))).size, n: tabs.length, per: cards.filter((c) => Math.abs(c.getBoundingClientRect().top - t0) < 4).length };
+      });
+      expect(pgFaces.lists === 1 && pgFaces.n === 4 && pgFaces.tops === 1 && pgFaces.per >= 3, bt + ': playground Faces picker is one row of four tabs over 3+ cards per row', pgFaces);
+
       // colours: a frosting look reaches the page
       await page.click('[data-tab="frosting"]');
       const bg0 = await bg();

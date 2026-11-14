@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- **Fontdant: one Faces picker, four tabs across the top.** The three per-slot pickers (a narrow column beside the live
+  preview, tabs wrapping, one tiny card per row) are replaced by one full-width picker: "Choosing for" Headings / Body /
+  Code, one never-wrapping row of Sans, Serif, Decorative and Mono tabs with the 🎲 at its right end, and a grid of
+  "Aa Gg" cards (several per row at the steps page panel width, two on a phone). Tabs a slot cannot use are disabled
+  with a reason instead of hidden. Public API, the store and the draft are unchanged.
+
 ## v1.4.0 · 14 Nov 2026
 
 Additive only: no existing role, preset look or library entry changes value, apart from the new `tab` field and the

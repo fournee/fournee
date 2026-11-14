@@ -22,6 +22,29 @@ let fails = 0; const ok = (c, m) => { if (!c) { fails++; console.log('  FAIL ' +
 const PAGES = [['', 'Home'], ['frosting/', 'Frosting'], ['fontdant.html', 'Fontdant'], ['spec.html', 'Spec'], ['steps.html', 'The four steps']];
 
 const b = await pw.chromium.launch();
+// The Faces picker on the real steps page (Fontdant step): one picker, four tabs in one row, several cards per row,
+// beside nothing narrow, nothing under 12px, light and dark.
+async function checkFaces(ctx, w, tag) {
+  for (const scheme of ['light', 'dark']) {
+    const p = await ctx.newPage(); await p.emulateMedia({ colorScheme: scheme });
+    await p.goto(base + 'steps.html', { waitUntil: 'networkidle' }); await p.waitForTimeout(600);
+    await p.click('.mise-shell__tab[data-tab="fontdant"]');
+    await p.waitForSelector('[data-body="fontdant"] [data-pick] [data-face]');
+    const g = await p.evaluate(() => {
+      const body = document.querySelector('[data-body="fontdant"]'), pick = body.querySelector('[data-pick]');
+      const tabs = [...pick.querySelectorAll('[role="tab"]')], cards = [...pick.querySelectorAll('[role="tabpanel"] [data-face]')];
+      const top0 = cards[0].getBoundingClientRect().top, pr = pick.getBoundingClientRect(), bw = body.getBoundingClientRect(), prev = body.querySelector('.fd-pal__preview').getBoundingClientRect();
+      const small = [...pick.querySelectorAll('*')].filter((e) => e.offsetParent !== null && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && parseFloat(getComputedStyle(e).fontSize) < 12).map((e) => e.className);
+      return { lists: body.querySelectorAll('[role="tablist"]').length, tabs: tabs.map((t) => t.textContent.trim()).join(), tops: new Set(tabs.map((t) => Math.round(t.getBoundingClientRect().top))).size,
+        per: cards.filter((c) => Math.abs(c.getBoundingClientRect().top - top0) < 4).length, wide: pr.width >= bw.width - 40, above: pr.bottom <= prev.top + 1, over: document.documentElement.scrollWidth - innerWidth, small };
+    });
+    ok(g.lists === 1 && g.tabs === 'Sans,Serif,Decorative,Mono' && g.tops === 1, `${tag} ${scheme} steps Faces: one tablist, four tabs on one row (${JSON.stringify(g)})`);
+    ok(g.per >= (w >= 700 ? 3 : 2), `${tag} ${scheme} steps Faces: cards per row (${g.per})`);
+    ok(g.wide && g.above, `${tag} ${scheme} steps Faces: full panel width, above the live preview`);
+    ok(g.over <= 0 && !g.small.length, `${tag} ${scheme} steps Faces: no sideways scroll, nothing under 12px (${g.over}, ${g.small})`);
+    await p.close();
+  }
+}
 for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
   const ctx = await b.newContext({ viewport: { width: w, height: h }, colorScheme: 'light' });
   for (const [path, name] of PAGES) {
@@ -95,8 +118,10 @@ for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
   ok(await p.$$eval('.mise-shell__tab', (t) => t.length) === 4, `${tag}: the four steps still mount`);
   await p.click('.mise-nav__theme');
   ok(bgDark !== 'rgb(255, 255, 255)', `${tag}: dark actually changes the page (${bgDark})`);
+  await checkFaces(ctx, w, tag);
   await ctx.close();
 }
+{ const c = await b.newContext({ viewport: { width: 1440, height: 900 } }); await checkFaces(c, 1440, 'wide'); await c.close(); }
 await b.close(); server.close();
 console.log((fails ? 'FAIL' : 'PASS') + ': the Fournée catalog: one bar on every page, light/dark everywhere, sticky, phone width');
 if (fails) process.exit(1);

@@ -70,6 +70,34 @@ for (const name of only ? [only] : ['chromium', 'firefox']) {
   const fheads = await page.$$eval('[data-body="fontdant"] h3', (hs) => hs.map((h) => h.childNodes[0].textContent.trim()));
   ok(fheads.join('|') === 'Type presets|Faces|Size|Mode|Add a font', 'Fontdant order: ' + fheads.join('|'));
 
+  // Faces: ONE picker, full width of the panel, four tabs in a single row, several cards per row, at desktop and phone widths
+  for (const [vw, minPer] of [[1280, 3], [1440, 3], [390, 2]]) {
+    await page.setViewportSize({ width: vw, height: 900 });
+    const g = await page.evaluate(() => {
+      const body = document.querySelector('[data-body="fontdant"]'), pick = body.querySelector('[data-pick]');
+      const tabs = [...pick.querySelectorAll('[role="tab"]')], cards = [...pick.querySelectorAll('[role="tabpanel"] [data-face]')];
+      const top0 = cards[0].getBoundingClientRect().top, prev = body.querySelector('.fd-pal__preview').getBoundingClientRect(), pr = pick.getBoundingClientRect(), bw = body.getBoundingClientRect();
+      return { lists: body.querySelectorAll('[role="tablist"]').length, tabs: tabs.map((t) => t.textContent.trim()).join(), tops: [...new Set(tabs.map((t) => Math.round(t.getBoundingClientRect().top)))].length,
+        per: cards.filter((c) => Math.abs(c.getBoundingClientRect().top - top0) < 4).length, wide: pr.width >= bw.width - 40, above: pr.bottom <= prev.top + 1, over: document.documentElement.scrollWidth - innerWidth };
+    });
+    ok(g.lists === 1 && g.tabs === 'Sans,Serif,Decorative,Mono' && g.tops === 1, `${vw}: one Faces tablist, four tabs on one row (${JSON.stringify(g)})`);
+    ok(g.per >= minPer, `${vw}: at least ${minPer} cards per row (${g.per})`);
+    ok(g.wide && g.above, `${vw}: the picker spans the panel and sits above the live preview (${JSON.stringify(g)})`);
+    ok(g.over <= 0, `${vw}: no sideways scroll (${g.over})`);
+  }
+  await page.setViewportSize({ width: 1200, height: 900 });
+  // choosing for Body: a card click sets the text face; Headings: the display face
+  await page.click('[data-body="fontdant"] [data-slotsel="text"]');
+  ok(await page.$$eval('[data-body="fontdant"] [role="tab"][aria-disabled="true"]', (t) => t.map((x) => x.textContent.trim()).join()) === 'Decorative,Mono', 'Body disables Decorative and Mono');
+  const bodyFace = await page.$$eval('[data-body="fontdant"] [role="tabpanel"] [data-face]:not([aria-pressed="true"])', (c) => c[0].getAttribute('data-face'));
+  const full0 = await page.evaluate(() => JSON.stringify(window.steps.fontdant().draft())), d0 = await page.evaluate(() => JSON.stringify(window.steps.fontdant().draft().faces || {}));
+  await page.click(`[data-body="fontdant"] [data-face="${bodyFace}"]`);
+  const d1 = await page.evaluate(() => window.steps.fontdant().draft().faces || {});
+  ok(d1.text === bodyFace && JSON.stringify({ ...d1, text: undefined }) === JSON.stringify({ ...JSON.parse(d0), text: undefined }), 'with Body chosen, a card click sets only the text face: ' + JSON.stringify(d1));
+  await page.click('[data-body="fontdant"] [data-slotsel="display"]');
+  await page.evaluate((j) => window.steps.fontdant().wear(JSON.parse(j)), full0);   // leave the draft as it was
+
+
   // Spec: house banner, compare NASA, fit, before/after, adopt
   await page.click('[data-step-go="spec"]');
   ok(/House spec/.test(await page.textContent('.mise-spec__now')), 'House spec by default');
