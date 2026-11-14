@@ -94,9 +94,10 @@ try {
     expect(read.fam === 'Alegreya Sans' && /500, 700, 800/.test(read.text) && /display/.test(read.text) && /hhea and typo differ/.test(read.text), 'Add a font reads family, weights, slots and the F5 warning in the browser', read);
     await page.click('[data-add-go]');
     await page.waitForFunction(() => /Added Alegreya Sans/.test(document.querySelector('.fd-pal [data-flash]').textContent));
-    const opt = await page.$$eval('.fd-pal [data-slot="display"] optgroup', (gs) => gs.map((g) => g.label + ':' + [...g.querySelectorAll('option')].map((o) => o.textContent).join('|')).filter((s) => /Your fonts/.test(s)));
-    expect(opt.length === 1 && /Corner Bakery/.test(opt[0]) && /Alegreya Sans/.test(opt[0]), 'it is offered under "Your fonts · Corner Bakery"', opt);
-    await page.selectOption('.fd-pal [data-slot="display"]', 'alegreya-sans');
+    await page.click('.fd-pal [data-slot="display"] [data-tab="sans"]');   // no category: it sits in Sans, marked as the user's own
+    const opt = await page.$$eval('.fd-pal [data-slot="display"] [data-face="alegreya-sans"]', (cs) => cs.map((c) => c.textContent));
+    expect(opt.length === 1 && /Alegreya Sans/.test(opt[0]) && /Your fonts/.test(opt[0]), 'it is offered in the picker marked "Your fonts"', opt);
+    await page.click('.fd-pal [data-slot="display"] [data-face="alegreya-sans"]');
     const css = await page.evaluate(() => document.getElementById('fontdant-live').textContent);
     expect(/font-family: "Alegreya Sans fd-display";\n  src: url\("data:[^;"]*;base64,[^"]+"\) format\("woff2"\)/.test(css) && /font-weight: 800;/.test(css), 'picking it emits its own @font-face (inline files: no saveFontFile here)', css.slice(0, 200));
     await page.evaluate(() => document.fonts.ready);
@@ -108,7 +109,8 @@ try {
     const other = await ctx.newPage();
     await other.goto(`${base}/kitchen/test/shell.html?client=${encodeURIComponent('Other Client')}`);
     await other.click('[data-tab="fontdant"]'); await other.evaluate(() => shell.tab('fontdant').ready);
-    const otherOpts = await other.$$eval('.fd-pal [data-slot="display"] option', (os) => os.map((o) => o.value));
+    await other.click('.fd-pal [data-slot="display"] [data-tab="sans"]');
+    const otherOpts = await other.$$eval('.fd-pal [data-slot="display"] [data-face]', (os) => os.map((o) => o.getAttribute('data-face')));
     expect(!otherOpts.includes('alegreya-sans'), 'another client\'s Fontdant tab does not offer it');
     await other.close();
     log.push('Add a font: Alegreya Sans read in-browser (500/700/800, display, F5), Corner Bakery only');

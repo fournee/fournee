@@ -61,3 +61,18 @@
 .fd-card--lucky { border-style: dashed; }
 .fd-pal__controls.is-flash { outline: 3px solid var(--fr-warn); outline-offset: 4px; border-radius: 6px; }
 .fd-pal__flash:empty { display: none; }
+/* the face pickers: a tablist (Sans, Serif, Decorative, Mono) over a grid of preview cards, one picker per slot */
+.fd-pick { display: grid; gap: 6px; }
+.fd-pick__head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.fd-pick__head .fd-pal__label { min-width: 6.5em; }
+.fd-pick__tabs { display: inline-flex; flex-wrap: wrap; gap: 2px; border-bottom: 1px solid var(--fr-border); flex: 1 1 auto; }
+.fd-pick__tab { font: inherit; padding: 4px 12px; background: transparent; color: var(--fr-muted); border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+.fd-pick__tab[aria-selected="true"] { color: var(--fr-text); font-weight: 700; border-bottom-color: var(--fr-accent); }
+.fd-pick__tab:focus-visible, .fd-pick__dice:focus-visible, .fd-face:focus-visible { outline: 2px solid var(--fr-accent); outline-offset: 2px; }
+.fd-pick__panel { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px; max-height: 15em; overflow: auto; padding: 2px; }
+.fd-pick__panel[hidden] { display: none; }
+.fd-face { display: grid; gap: 1px; text-align: left; padding: 6px 8px; background: var(--fr-bg); color: var(--fr-text); border: 1px solid var(--fr-border); border-radius: 8px; cursor: pointer; font: inherit; min-width: 0; }
+.fd-face[aria-pressed="true"] { outline: 2px solid var(--fr-accent); outline-offset: 1px; }
+.fd-face__aa { font-size: 24px; line-height: 1.15; }
+.fd-face__name { font-size: max(12px, .85em); color: var(--fr-muted); }
+.fd-face__sample { font-size: max(12px, .85em); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

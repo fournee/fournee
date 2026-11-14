@@ -23,6 +23,10 @@
   'use strict';
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SLOTS = ['display', 'text', 'mono'];
+  var SLOT_LABEL = { display: 'Display', text: 'Text', mono: 'Mono' };
+  var SLOT_SAMPLE = { display: 'Corner Bakery', text: 'Fresh bread, baked daily', mono: 'order #9f2c4b' };
+  /* a font the user added has no curated tab: its category says where it sits (brief rule 6) */
+  var CATEGORY_TAB = { serif: 'serif', mono: 'mono' };
   var WEIGHT_WORDS = /[\s-]+(Thin|Hairline|ExtraLight|UltraLight|Light|Regular|Book|Normal|Medium|SemiBold|DemiBold|Bold|ExtraBold|UltraBold|Heavy|Black)?\s*(Italic|Oblique)?$/i;
 
   /* the type store: KitchenStore with fontdant's own keys; values are the recipe's fontdant half */
@@ -49,11 +53,11 @@
     opts = opts || {};
     var T = root.FontdantTokens, L = root.FontdantLibrary, F = root.FontdantFonts, C = root.FontdantCheck, G = root.FontdantGallery, E = root.FontdantEmit;
     var p = T.prefix, target = opts.target || document.documentElement, store = opts.store, shelfStore = opts.fontShelf;
-    var state = { theme: {}, draft: {}, favorites: [], shelf: {}, notes: [], current: null };
+    var state = { theme: {}, draft: {}, favorites: [], shelf: {}, notes: [], current: null, tab: {}, seen: {} };
     var presets = G.presets();
 
     var tipi = function (t) { return '<button type="button" class="mise-tipi" aria-label="About this">i<span role="tooltip">' + esc(t) + '</span></button>'; };
-    var slotRows = SLOTS.map(function (s) { return '      <label class="fd-pal__row"><span class="fd-pal__label">' + (s === 'display' ? 'Display' : s === 'text' ? 'Text' : 'Mono') + '</span><select data-slot="' + s + '"></select></label>'; }).join('');
+    var slotRows = SLOTS.map(function (s) { return '      <div class="fd-pick" data-slot="' + s + '" role="group" aria-label="' + SLOT_LABEL[s] + ' face"></div>'; }).join('');
     var preview =
       '    <div class="fd-pal__preview" data-preview>' +
       '      <div class="' + p + '-eyebrow">Today’s specials</div><div class="' + p + '-heading-xl">Corner Bakery opens at seven</div>' +
@@ -95,7 +99,7 @@
       '  <div class="fd-pal__grid">' +
       '    <div class="fd-pal__controls">' +
       '      <div class="fd-pal__row"><span class="fd-pal__label" id="fd-mode-l">Mode</span><div class="fd-seg" role="radiogroup" aria-labelledby="fd-mode-l" data-modes></div></div>' +
-      SLOTS.map(function (s) { return '      <label class="fd-pal__row"><span class="fd-pal__label">' + (s === 'display' ? 'Display' : s === 'text' ? 'Text' : 'Mono') + '</span><select data-slot="' + s + '"></select></label>'; }).join('') +
+      SLOTS.map(function (s) { return '      <div class="fd-pick" data-slot="' + s + '" role="group" aria-label="' + SLOT_LABEL[s] + ' face"></div>'; }).join('') +
       '      <label class="fd-pal__row"><span class="fd-pal__label">Text size</span><input type="range" min="' + T.scalingRange[0] + '" max="' + T.scalingRange[1] + '" step="0.05" data-scaling><output data-scaling-out></output></label>' +
       '      <details class="fd-pal__fine"><summary>Fine-tune: size steps and weights</summary><div class="fd-pal__dials" data-dials></div></details>' +
       '      <div class="fd-pal__notes" data-notes aria-live="polite"></div>' +
@@ -161,16 +165,72 @@
         '<b class="fd-card__aa" aria-hidden="true">🎲</b><span class="fd-card__name">I\'m feeling lucky</span><span class="fd-card__faces">A random pairing</span></button>' : '';
       ui.cards.innerHTML = lucky + presets.map(function (x, i) { return card(x, i, 'pick'); }).join('') + state.favorites.map(function (x, i) { return card(x, i, 'favpick'); }).join('');
     }
-    function options(slot) {
-      var shelves = L.shelves, groups = {}, own = clientFonts(), cur = F.facesOf(state.draft)[slot];
-      Object.keys(L.fonts).forEach(function (id) { var e = L.fonts[id]; if (e.slots.indexOf(slot) < 0) return; (groups[e.shelf] = groups[e.shelf] || []).push(e); });
-      var html = Object.keys(shelves).filter(function (s) { return groups[s]; }).map(function (s) {
-        return '<optgroup label="' + esc(shelves[s].label) + '">' + groups[s].map(function (e) { return '<option value="' + esc(e.id) + '"' + (e.id === cur ? ' selected' : '') + '>' + esc(e.family) + (e.lucky ? '' : ' (maybe)') + '</option>'; }).join('') + '</optgroup>';
-      }).join('');
-      var mine = Object.keys(own).filter(function (id) { return (own[id].slots || []).indexOf(slot) >= 0; });
-      if (mine.length) html += '<optgroup label="Your fonts' + (opts.client ? ' · ' + esc(opts.client) : '') + '">' + mine.map(function (id) { return '<option value="' + esc(id) + '"' + (id === cur ? ' selected' : '') + '>' + esc(own[id].family) + '</option>'; }).join('') + '</optgroup>';
-      return html;
+    /* the face pickers: per slot an ARIA tablist over preview cards. Only the open tab's cards are drawn, and their
+       @font-face blocks are added when the tab is first opened, so ~60 families are never loaded up front. */
+    var pickCss = document.getElementById('fontdant-picker') || document.head.appendChild(Object.assign(document.createElement('style'), { id: 'fontdant-picker' }));
+    var pickLoaded = {};
+    function tabOf(id) {
+      var e = L.fonts[id] || clientFonts()[id]; if (!e) return null;
+      return e.tab || CATEGORY_TAB[e.category] || 'sans';
     }
+    function slotTabs(slot) { return Object.keys(L.tabs || {}).filter(function (t) { return L.tabs[t].slots.indexOf(slot) >= 0; }); }
+    /* the fonts of one tab that can serve one slot: the library's, then this client's own */
+    function tabFonts(slot, tab) {
+      var out = [], own = clientFonts();
+      Object.keys(L.fonts).forEach(function (id) { var e = L.fonts[id]; if (e.tab === tab && e.slots.indexOf(slot) >= 0) out.push({ e: e, own: false }); });
+      Object.keys(own).forEach(function (id) { var e = own[id]; if (!L.fonts[id] && tabOf(id) === tab && (e.slots || []).indexOf(slot) >= 0) out.push({ e: e, own: true }); });
+      return out;
+    }
+    function withOwn(fn) {   // the face helpers only know this client's added fonts through F.use
+      var prev = F.clientFonts(); F.use(Object.assign({}, prev, clientFonts()));
+      try { return fn(); } finally { F.use(prev); }
+    }
+    function loadTab(slot, tab) {
+      var key = slot + '/' + tab; if (pickLoaded[key]) return; pickLoaded[key] = 1;
+      withOwn(function () {
+        var css = pickCss.textContent ? [pickCss.textContent] : [];
+        tabFonts(slot, tab).forEach(function (x) { css.push(F.faceBlocks(x.e.id, slot, { baseUrl: opts.baseUrl, display: 'swap' }).css); });
+        pickCss.textContent = css.join('\n');
+      });
+    }
+    function faceCard(x, slot, cur) {
+      var e = x.e, stack = withOwn(function () { return F.faceStack(e.id, slot); });
+      return '<button type="button" class="fd-face" data-face="' + esc(e.id) + '" aria-pressed="' + (e.id === cur) + '">' +
+        '<b class="fd-face__aa" aria-hidden="true" style="font-family:' + esc(stack) + '">Aa</b>' +
+        '<span class="fd-face__name">' + esc(e.family) + (x.own ? ' · Your fonts' : e.lucky ? '' : ' (maybe)') + '</span>' +
+        '<span class="fd-face__sample" style="font-family:' + esc(stack) + '">' + esc(SLOT_SAMPLE[slot]) + '</span></button>';
+    }
+    function paintPickers() {
+      var active = document.activeElement, box = active && el.contains(active) && active.closest('.fd-pick'), keep = null;
+      if (box) keep = { slot: box.getAttribute('data-slot'), sel: active.hasAttribute('data-face') ? '[data-face="' + active.getAttribute('data-face') + '"]' : active.hasAttribute('data-tab') ? '[data-tab="' + active.getAttribute('data-tab') + '"]' : active.hasAttribute('data-dice') ? '[data-dice]' : null };
+      var faces = F.facesOf(state.draft);
+      SLOTS.forEach(function (slot) {
+        var tabs = slotTabs(slot), cur = faces[slot];
+        if (state.seen[slot] !== cur) { state.seen[slot] = cur; var home = tabOf(cur); if (tabs.indexOf(home) >= 0) state.tab[slot] = home; }   // a new face: open the tab that holds it
+        if (tabs.indexOf(state.tab[slot]) < 0) state.tab[slot] = tabs[0];
+        var open = state.tab[slot]; loadTab(slot, open);
+        var head = '<div class="fd-pick__head"><span class="fd-pal__label" id="fd-l-' + slot + '">' + SLOT_LABEL[slot] + '</span>' +
+          '<div class="fd-pick__tabs" role="tablist" aria-labelledby="fd-l-' + slot + '">' + tabs.map(function (t) {
+            return '<button type="button" role="tab" class="fd-pick__tab" id="fd-t-' + slot + '-' + t + '" data-tab="' + t + '" aria-selected="' + (t === open) + '" aria-controls="fd-p-' + slot + '-' + t + '" tabindex="' + (t === open ? 0 : -1) + '">' + esc(L.tabs[t].label) + '</button>';
+          }).join('') + '</div>' +
+          '<button type="button" class="fr-btn fr-btn--ghost fd-pick__dice" data-dice aria-label="Pick a random ' + esc(L.tabs[open].label) + ' font for ' + SLOT_LABEL[slot] + '">🎲</button></div>';
+        var panels = tabs.map(function (t) {
+          return '<div class="fd-pick__panel" role="tabpanel" id="fd-p-' + slot + '-' + t + '" aria-labelledby="fd-t-' + slot + '-' + t + '"' + (t === open ? '' : ' hidden') + '>' +
+            (t === open ? tabFonts(slot, t).map(function (x) { return faceCard(x, slot, cur); }).join('') : '') + '</div>';
+        }).join('');
+        $('[data-slot="' + slot + '"]').innerHTML = head + panels;
+      });
+      if (keep && keep.sel) { var again = $('[data-slot="' + keep.slot + '"] ' + keep.sel); if (again) again.focus(); }
+    }
+    /* 🎲 in a tab: any library font of this tab for this slot (lucky flag ignored), still licence-filtered */
+    function rollTab(slot, tab) {
+      var cur = F.facesOf(state.draft)[slot], ctx = { client: opts.client, domain: opts.domain };
+      var ids = tabFonts(slot, tab).filter(function (x) { return !x.own && (!root.FontdantLicence || root.FontdantLicence.covers(x.e, ctx)); }).map(function (x) { return x.e.id; });
+      var pool = ids.length > 1 ? ids.filter(function (id) { return id !== cur; }) : ids;
+      if (!pool.length) { flash('Nothing to roll in ' + L.tabs[tab].label + ' for this project.', true); return; }
+      pickFace(slot, pool[Math.floor(Math.random() * pool.length)]);
+    }
+    function pickFace(slot, id) { var d = JSON.parse(JSON.stringify(state.draft)); d.faces = d.faces || {}; d.faces[slot] = id; wear(d); }
     function paintDials() {
       var R = C.resolve(state.draft);
       ui.dials.innerHTML = '<div class="fd-pal__dialgrid">' + T.stepOrder.map(function (s) {
@@ -184,7 +244,7 @@
       ui.name.textContent = state.current ? (state.current.kind === 'pick' ? presets[state.current.i].name : (state.favorites[state.current.i] || {}).name || 'Your look') : 'Your current type';
       ui.faces.textContent = famName(f.display) + ' · ' + famName(f.text) + ' · ' + famName(f.mono);
       ui.modes.innerHTML = Object.keys(T.modes).map(function (m) { return '<button type="button" role="radio" aria-checked="' + (m === mode) + '" data-mode="' + esc(m) + '">' + esc(m.charAt(0).toUpperCase() + m.slice(1)) + '</button>'; }).join('');
-      SLOTS.forEach(function (s) { $('[data-slot="' + s + '"]').innerHTML = options(s); });
+      paintPickers();
       ui.scaling.value = d.scaling == null ? 1 : d.scaling; ui.scalingOut.textContent = Number(ui.scaling.value).toFixed(2) + '×';
       ui.notes.innerHTML = state.notes.map(function (n) { return '<span class="fd-tag">' + esc(n) + '</span>'; }).join('');
       paintCards(); paintDials();
@@ -209,11 +269,21 @@
         store.saveFavorites(state.favorites.concat([{ name: name, look: state.draft }])).then(function (list) { state.favorites = list; cardFaces(); paint(); flash('Saved to your looks.'); });
       }
       else if (t.hasAttribute('data-add')) openAdd();
+      else if (t.hasAttribute('data-face')) pickFace(t.closest('.fd-pick').getAttribute('data-slot'), t.getAttribute('data-face'));
+      else if (t.hasAttribute('data-tab')) { var sl = t.closest('.fd-pick').getAttribute('data-slot'); state.tab[sl] = t.getAttribute('data-tab'); paintPickers(); }
+      else if (t.hasAttribute('data-dice')) { var sl2 = t.closest('.fd-pick').getAttribute('data-slot'); rollTab(sl2, state.tab[sl2]); }
+    });
+    el.addEventListener('keydown', function (e) {   // the tablist's arrow keys (wrapping), Home and End; focus follows the tab
+      var t = e.target.closest && e.target.closest('[role="tab"]'); if (!t || !el.contains(t)) return;
+      var tabs = [].slice.call(t.parentNode.querySelectorAll('[role="tab"]')), i = tabs.indexOf(t), n = tabs.length;
+      var to = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i + n - 1) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+      if (to < 0) return; e.preventDefault();
+      var sl = t.closest('.fd-pick').getAttribute('data-slot'); state.tab[sl] = tabs[to].getAttribute('data-tab'); paintPickers();
+      $('[data-slot="' + sl + '"] [data-tab="' + state.tab[sl] + '"]').focus();
     });
     el.addEventListener('change', function (e) {
       var t = e.target, d = JSON.parse(JSON.stringify(state.draft));
-      if (t.hasAttribute('data-slot')) { d.faces = d.faces || {}; d.faces[t.getAttribute('data-slot')] = t.value; wear(d); }
-      else if (t.hasAttribute('data-step')) { d.dials = d.dials || {}; d.dials.steps = d.dials.steps || {}; d.dials.steps[t.getAttribute('data-step')] = round(Number(t.value) / 16 / (d.scaling || 1), 4) + 'rem'; wear(d, state.current); }
+      if (t.hasAttribute('data-step')) { d.dials = d.dials || {}; d.dials.steps = d.dials.steps || {}; d.dials.steps[t.getAttribute('data-step')] = round(Number(t.value) / 16 / (d.scaling || 1), 4) + 'rem'; wear(d, state.current); }
       else if (t.hasAttribute('data-weight')) { d.dials = d.dials || {}; d.dials.weights = d.dials.weights || {}; d.dials.weights[t.getAttribute('data-weight')] = Number(t.value); wear(d, state.current); }
     });
     ui.scaling.addEventListener('input', function () { var d = JSON.parse(JSON.stringify(state.draft)); var v = Number(ui.scaling.value); if (v === 1) delete d.scaling; else d.scaling = v; wear(d, state.current); });

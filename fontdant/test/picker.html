@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>fontdant face picker</title>
+<link rel="stylesheet" href="/frosting/dist/frosting.css">
+<link rel="stylesheet" href="/fontdant/dist/fontdant.css">
+<link rel="stylesheet" href="/frosting/src/panel.css">
+<link rel="stylesheet" href="/fontdant/src/panel.css">
+<script src="/frosting/dist/tokens.js"></script>
+<script src="/kitchen/src/store.js"></script>
+<script src="/kitchen/src/recipe.js"></script>
+<script src="/fontdant/dist/type-tokens.js"></script>
+<script src="/fontdant/dist/library.js"></script>
+<script src="/fontdant/src/fontface.js"></script>
+<script src="/fontdant/src/typecheck.js"></script>
+<script src="/fontdant/src/licence.js"></script>
+<script src="/fontdant/src/gallery.js"></script>
+<script src="/fontdant/src/emit.js"></script>
+<script src="/fontdant/src/panel.js"></script>
+</head>
+<body style="margin:16px">
+<div id="mount"></div>
+<script>
+  // ?own=1 puts one added serif font on the shelf
+  var Q = new URLSearchParams(location.search), client = 'Acme';
+  var adapter = KitchenStore.memoryAdapter();
+  if (Q.get('own')) {   // an added font looks like a library entry, minus the curated tab, with its files served by src
+    var lora = JSON.parse(JSON.stringify(FontdantLibrary.fonts.lora)), mine = Object.assign(lora, { id: 'my-serif', family: 'My Serif', shelf: 'own', lucky: false, client: client, added: true, provider: 'own' });
+    delete mine.tab; mine.files.forEach(function (f) { f.src = '/fontdant/fonts/lora/' + f.file; });
+    adapter.set('type.fonts', JSON.stringify({ 'my-serif': mine }));
+  }
+  window.panel = FontdantPanel.mount(document.getElementById('mount'), { store: FontdantPanel.createStore(adapter), fontShelf: FontdantPanel.createShelf(adapter), client: client, baseUrl: '/fontdant/fonts' });
+</script>
+</body>
+</html>
