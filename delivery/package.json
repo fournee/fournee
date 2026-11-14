@@ -31,12 +31,12 @@
     "scripts"
   ],
   "devDependencies": {
-    "esbuild": "0.24.2",
+    "esbuild": "0.28.2",
     "esbuild-svelte": "0.9.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "style-dictionary": "5.7.1",
-    "svelte": "5.33.0",
+    "svelte": "5.57.3",
     "wawoff2": "2.0.1"
   },
   "license": "MIT",
@@ -44,5 +44,9 @@
     "type": "git",
     "url": "https://github.com/fournee/fournee.git",
     "directory": "delivery"
+  },
+  "overrides": {
+    "glob": "^14.0.6",
+    "minimatch": "^11.0.8"
   }
 }
