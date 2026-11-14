@@ -119,6 +119,16 @@ for (const name of only ? [only] : ['chromium', 'firefox']) {
   ok(await page.isVisible('.mise-spec__cmp') && await page.isHidden('[data-main]'), 'compare slides in');
   const rows = await page.$$eval('.mise-spec__table tbody tr', (rs) => rs.map((r) => r.className));
   ok(rows.length >= 10 && rows.some((c) => c === 'is-diff'), 'rules side by side with differences marked');
+  ok(await page.isHidden('.mise-spec__table') && await page.isVisible('.mise-spec__rules summary'), 'the full table is folded away behind a summary');
+  const verdict = await page.textContent('.mise-spec__verdict');
+  ok(/NASA/.test(verdict) && /focus ring/.test(verdict) && /would change/.test(verdict), 'a plain verdict says what NASA changes: ' + verdict);
+  ok(await page.$$eval('.mise-cmpx__card', (c) => c.map((x) => x.dataset.side).join()) === 'a,b', 'one sample card per spec');
+  const ringA = await page.$eval('.mise-cmpx__card[data-side="a"] .mise-cmpx__btn', (e) => getComputedStyle(e).outlineStyle);
+  const ringB = await page.$eval('.mise-cmpx__card[data-side="b"] .mise-cmpx__btn', (e) => getComputedStyle(e).outlineStyle + ' ' + getComputedStyle(e).outlineWidth);
+  ok(/^solid (3|2.5)px$/.test(ringB) && ringA === 'none', 'the NASA half shows its 3px focus ring, the page-now half does not: ' + ringA + ' / ' + ringB);
+  await page.fill('[data-split]', '20');
+  ok(await page.$eval('.mise-cmpx', (e) => e.style.getPropertyValue('--split')) === '20%' &&
+    /inset\(0px 0px 0px 20%\)|20%/.test(await page.$eval('.mise-cmpx__card[data-side="b"]', (e) => getComputedStyle(e).clipPath)), 'dragging the slider moves the divider');
   const failsBefore = await page.$$eval('.mise-spec__cmp .mise-spec__probs > li:not(.mise-spec__more)', (l) => l.length);
   ok(failsBefore > 0, 'something would fail under NASA: ' + failsBefore);
   await page.click('[data-cmpfit]');

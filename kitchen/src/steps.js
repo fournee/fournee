@@ -193,16 +193,65 @@
         K.list().forEach(function (q) { if (q.id !== cur) (groups[q.group] = groups[q.group] || []).push(q); });
         return out + Object.keys(groups).map(function (g) { return '<optgroup label="' + esc(g) + '">' + groups[g].map(function (q) { return '<option value="' + esc(q.id) + '">' + esc(q.label) + '</option>'; }).join('') + '</optgroup>'; }).join('');
       }
+      /* the compare slider: one sample card fitted to each spec, a divider to drag between them */
+      function preview() {
+        if (!cmp.pa) {
+          // left: the page as it is now; right: the page fitted to the other spec
+          cmp.pa = { colours: cmp.original.colours, type: cmp.original.type, changes: [] }; cmp.pb = fitFrom(cmp.id, cmp.original);
+          cmp.pageChanges = cmp.pb.changes.length;
+          if (cmp.split == null) cmp.split = 50;
+        }
+      }
+      function typeOf(t) {
+        var out = { body: 16, heading: 24, leading: 1.5 }, TC = root.FontdantCheck;
+        if (!t || !TC || !TC.resolve) return out;
+        try {
+          var st = TC.resolve(t).styles, body = st.filter(function (x) { return x.name === 'body'; })[0], head = st.filter(function (x) { return x.name === 'heading'; })[0];
+          if (body) { out.body = Math.round(body.sizePx * 10) / 10; if (typeof body.leading === 'number') out.leading = body.leading; }
+          if (head) out.heading = Math.round(head.sizePx * 10) / 10;
+        } catch (e) { /* keep the defaults */ }
+        return out;
+      }
+      function card(f, p, name, side) {
+        var c = f.colours, ty = typeOf(f.type), pick = function (k, alt) { return hex(c[k]) ? c[k] : (hex(c[alt]) ? c[alt] : ''); };
+        var vars = [['bg', pick('bg', 'surface')], ['text', pick('text')], ['muted', pick('muted', 'text')], ['link', pick('accent-text', 'accent')],
+          ['btn', pick('button', 'accent')], ['btntext', pick('button-text', 'bg')], ['line', pick('border', 'muted')]]
+          .filter(function (v) { return v[1]; }).map(function (v) { return '--x-' + v[0] + ':' + v[1]; });
+        var ring = p && p.focus && p.focus.width ? p.focus.width : 0, target = p && p.targets ? p.targets : 0;
+        vars.push('--x-body:' + ty.body + 'px', '--x-head:' + ty.heading + 'px', '--x-lead:' + ty.leading, '--x-ring:' + ring + 'px', '--x-target:' + target + 'px');
+        return '<div class="mise-cmpx__card" data-side="' + side + '" style="' + vars.join(';') + '" aria-hidden="true">' +
+          '<span class="mise-cmpx__tag">' + esc(name) + '</span>' +
+          '<b class="mise-cmpx__h">Heading</b>' +
+          '<p class="mise-cmpx__p">Body text at ' + ty.body + 'px, line height ' + ty.leading + '. The quick brown fox jumps over the lazy dog.</p>' +
+          '<p class="mise-cmpx__q">Quiet note in grey</p>' +
+          '<span class="mise-cmpx__a">A link in your accent</span>' +
+          '<span class="mise-cmpx__btn' + (ring ? ' has-ring' : '') + '">Button' + (target ? ' · ' + target + 'px target' : '') + (ring ? ' · ' + ring + 'px focus ring' : '') + '</span></div>';
+      }
+      function slider(nameA, nameB) {
+        var pA = profile(standard()), pB = profile(cmp.id);
+        return '<div class="mise-cmpx" style="--split:' + cmp.split + '%">' + card(cmp.pa, pA, 'Now · ' + nameA, 'a') + card(cmp.pb, pB, nameB, 'b') +
+          '<span class="mise-cmpx__bar" aria-hidden="true"></span>' +
+          '<input type="range" class="mise-cmpx__range" min="0" max="100" step="1" value="' + cmp.split + '" data-split aria-label="Slide between ' + esc(nameA) + ' (left) and ' + esc(nameB) + ' (right)"></div>' +
+          '<p class="mise-spec__hint">Drag across the sample: left is your page now, right is it fitted to ' + esc(nameB) + '. If the two halves look alike, switching changes nothing you would see.</p>';
+      }
+      function verdictBox(nameA, nameB, ra, rb) {
+        var v = K.verdict(ra, rb, { nameA: nameA, nameB: nameB, pageChanges: cmp.pageChanges });
+        return '<div class="mise-spec__verdict" data-level="' + v.level + '"><b>' + esc(v.headline) + '</b>' +
+          (v.items.length ? '<ul>' + v.items.map(function (i) { return '<li data-dir="' + i.dir + '">' + esc(i.say) + '</li>'; }).join('') + '</ul>' : '') +
+          (v.same > 0 && v.items.length ? '<span class="mise-spec__same">✓ ' + v.same + ' other rule' + (v.same === 1 ? ' is' : 's are') + ' the same</span>' : '') + '</div>';
+      }
       function paintCmp() {
         if (!cmp) { box.hidden = true; main.hidden = false; return; }
         var cur = standard(), a = profile(cur), b = profile(cmp.id), ra = rules(cur), rb = rules(cmp.id), probs = problems(cmp.id);
         var nameA = a ? SHORT(a) : HOUSE.label, nameB = b ? SHORT(b) : HOUSE.label;
         main.hidden = true; box.hidden = false;
+        preview();
         box.innerHTML = '<div class="mise-spec__cmphead"><button type="button" class="fr-link" data-back>← Back</button><b>' + esc(nameA) + ' vs ' + esc(nameB) + '</b></div>' +
           (b ? '<p class="mise-spec__note">' + esc(b.note) + '</p>' : '') +
-          '<table class="mise-spec__table"><thead><tr><th>Rule</th><th>' + esc(nameA) + ' (now)</th><th>' + esc(nameB) + '</th></tr></thead><tbody>' +
+          verdictBox(nameA, nameB, ra, rb) + slider(nameA, nameB) +
+          '<details class="mise-spec__rules"><summary>Show all ' + ra.length + ' rules side by side</summary><table class="mise-spec__table"><thead><tr><th>Rule</th><th>' + esc(nameA) + ' (now)</th><th>' + esc(nameB) + '</th></tr></thead><tbody>' +
           ra.map(function (r, i) { var d = r[1] !== rb[i][1]; return '<tr' + (d ? ' class="is-diff"' : '') + '><td>' + (d ? '<span class="mise-spec__dot" aria-hidden="true">●</span> ' : '') + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td><td>' + esc(rb[i][1]) + (d ? '<span class="mise-spec__vh"> (differs)</span>' : '') + '</td></tr>'; }).join('') +
-          '</tbody></table>' +
+          '</tbody></table></details>' +
           '<h3>On your page · ' + (cmp.showing === 'after' ? 'after fitting, ' : '') + (probs.length ? probs.length + ' would fail' : 'nothing fails') + '</h3>' +
           (cmp.fitted ? '<div class="mise-spec__acts">' + seg(cmp) + '</div>' : '') +
           probList(probs) +
@@ -214,6 +263,9 @@
       }
       function paint() { paintMain(); paintCmp(); }
 
+      el.addEventListener('input', function (e) {
+        if (e.target.hasAttribute('data-split') && cmp) { cmp.split = Number(e.target.value); e.target.parentNode.style.setProperty('--split', cmp.split + '%'); }
+      });
       el.addEventListener('change', function (e) {
         if (e.target.hasAttribute('data-try')) { var b = el.querySelector('[data-compare]'); if (b) b.disabled = !e.target.value; }
       });

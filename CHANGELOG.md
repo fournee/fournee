@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- **Spec: comparing two standards now says what it means.** "Compare side by side" opens with a plain verdict ("Nearly
+  the same for your page", "NASA is stricter: 2 things on your page would change") and each differing rule in plain
+  words ("the keyboard focus ring must be stronger"). Below it, a sample card you drag across: your page now on the
+  left, fitted to the other standard on the right. The full rules table is folded under "Show all 12 rules".
 - **Fontdant: font names show in full.** Card names and the names under Headings / Body / Code now wrap onto a
   second line instead of being cut off with "…" ("Schibsted Gr…"). A test checks every tab at four panel widths.
 - **Fontdant: the Mode switch is readable and fits.** The selected segment was dark text on a dark fill in dark mode and the

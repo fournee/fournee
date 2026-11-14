@@ -236,7 +236,56 @@
     return { colors: colors, fills: fills, type: type, changes: changes, left: left };
   }
 
-  var api = { list: list, get: get, contracts: contracts, floors: floors, checks: checks, fit: fit, apca: apca, isText: isText, LARGE: LARGE, PROFILES: P, RESEARCH: R };
+  /* verdict: the compare view's plain-language summary. rowsA/rowsB are the same [label, value] rule rows for two
+     specs (kitchen/src/steps.js builds them); opts.pageChanges counts what moving from A to B would change on the page.
+     A bigger number is always the stricter rule; '—' means the spec has no such rule; '(advice)' is weaker than a rule. */
+  var SAY = {
+    'Main text contrast': 'text must stand out more from the background',
+    'Quiet text contrast': 'grey (quiet) text must be darker',
+    'Accent text contrast': 'accent-coloured text must stand out more',
+    'Button text contrast': 'button labels need more contrast',
+    'Shapes and borders': 'borders and icons must stand out more',
+    'Body text at least': 'body text must be bigger',
+    'Smallest text': 'the smallest text must be bigger',
+    'Focus ring': 'the keyboard focus ring must be stronger',
+    'Tap targets': 'buttons and links must be bigger to tap',
+    'Body line height': 'lines of text need more space between them',
+    'APCA (draft method)': 'text is also checked by the newer APCA method'
+  };
+  function strength(v) {
+    var n = /(\d+(?:\.\d+)?)/.exec(String(v));
+    return { n: n ? parseFloat(n[1]) : null, advice: /advice/.test(String(v)) };
+  }
+  function verdict(rowsA, rowsB, opts) {
+    opts = opts || {};
+    var A = opts.nameA || 'A', B = opts.nameB || 'B', changes = opts.pageChanges || 0, items = [];
+    rowsA.forEach(function (r, i) {
+      var label = r[0], a = r[1], b = rowsB[i] ? rowsB[i][1] : '—';
+      if (a === b || label === 'Based on') return;
+      var x = strength(a), y = strength(b), dir;
+      if (x.n === null && y.n === null) dir = 'different';
+      else if (x.n === null) dir = 'stricter';
+      else if (y.n === null) dir = 'looser';
+      else if (y.n !== x.n) dir = y.n > x.n ? 'stricter' : 'looser';
+      else dir = x.advice === y.advice ? 'different' : (x.advice ? 'stricter' : 'looser');
+      var what = SAY[label] || label.toLowerCase();
+      items.push({ label: label, a: a, b: b, dir: dir,
+        say: dir === 'stricter' ? B + ': ' + what + ' (' + a + ' → ' + b + ')' : dir === 'looser' ? B + ' is looser on ' + label.toLowerCase() + ' (' + a + ' → ' + b + ')' : label + ': ' + a + ' → ' + b });
+    });
+    var up = items.filter(function (t) { return t.dir === 'stricter'; }).length, down = items.filter(function (t) { return t.dir === 'looser'; }).length;
+    var pc = changes + ' thing' + (changes === 1 ? '' : 's') + ' on your page would change';
+    var level, headline;
+    if (!items.length) { level = 'same'; headline = 'The same rules. Your page looks the same under both.'; }
+    else if (!changes && !down) { level = 'nearly'; headline = 'Nearly the same for your page. ' + B + ' asks for more, but your page already meets it.'; }
+    else if (!changes && !up) { level = 'looser'; headline = B + ' is looser than ' + A + '. Nothing on your page would change.'; }
+    else if (!changes) { level = 'nearly'; headline = 'Nearly the same for your page: the rules differ, but nothing on it would change.'; }
+    else if (!down) { level = 'stricter'; headline = B + ' is stricter: ' + pc + '.'; }
+    else if (!up) { level = 'looser'; headline = B + ' is looser, yet ' + pc + '.'; }
+    else { level = 'mixed'; headline = 'Stricter in some places, looser in others: ' + pc + '.'; }
+    return { level: level, headline: headline, items: items, same: rowsA.length - 1 - items.length };
+  }
+
+  var api = { list: list, get: get, contracts: contracts, floors: floors, checks: checks, fit: fit, verdict: verdict, apca: apca, isText: isText, LARGE: LARGE, PROFILES: P, RESEARCH: R };
   root.KitchenStandards = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

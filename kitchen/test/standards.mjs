@@ -88,5 +88,23 @@ expect(hard(badFill).some((h) => /gradient/.test(h)), 'a dark end under dark tex
   expect(fillFit.changes.some((c) => c.kind === 'gradient'), 'a failing fill is fitted or made solid', JSON.stringify(fillFit.changes));
 }
 
+/* 5 ── verdict: the compare view's plain-language summary */
+{
+  const row = (body, focus, text = '4.5:1') => [['Based on', 'WCAG 2.2 AA'], ['Main text contrast', text], ['Body text at least', body], ['Focus ring', focus]];
+  const same = K.verdict(row('16px', '—'), row('16px', '—'), { nameA: 'A', nameB: 'B' });
+  expect(same.level === 'same' && same.items.length === 0 && same.same === 3, 'identical rules are the same', JSON.stringify(same));
+  const nearly = K.verdict(row('16px', '—'), row('19px', '3px, 3:1'), { nameA: 'WCAG', nameB: 'GOV.UK', pageChanges: 0 });
+  expect(nearly.level === 'nearly' && nearly.items.every((i) => i.dir === 'stricter'), 'stricter rules the page already meets read as nearly the same', JSON.stringify(nearly));
+  expect(/body text must be bigger \(16px → 19px\)/.test(nearly.items[0].say) && nearly.same === 1, 'items say what changes in plain words', nearly.items[0].say);
+  const strict = K.verdict(row('16px', '—'), row('16px', '—', '7:1'), { nameA: 'A', nameB: 'UN', pageChanges: 2 });
+  expect(strict.level === 'stricter' && /2 things on your page would change/.test(strict.headline), 'stricter with page changes', strict.headline);
+  const loose = K.verdict(row('19px', '3px, 3:1'), row('16px', '—'), { nameA: 'GOV.UK', nameB: 'WCAG' });
+  expect(loose.level === 'looser' && loose.items.every((i) => i.dir === 'looser'), 'a weaker spec reads as looser', JSON.stringify(loose));
+  const advice = K.verdict([['Shapes and borders', '3:1 (advice)']], [['Shapes and borders', '3:1']], { pageChanges: 1 });
+  expect(advice.items[0].dir === 'stricter', 'a rule beats the same number as advice');
+  const mixed = K.verdict(row('19px', '—'), row('16px', '3px, 3:1'), { pageChanges: 1 });
+  expect(mixed.level === 'mixed', 'stricter and looser at once is mixed', mixed.level);
+}
+
 console.log(fails ? `FAIL: ${fails} failures` : `PASS: standards dial — ${K.list().length} profiles, house on/off, WCAG 2.0 warnings, UN 7:1, GOV.UK floors, S1–S5, APCA reference values, fills in the pass, fit (21 profiles × 228 looks meet their profile)`);
 if (fails) process.exitCode = 1;

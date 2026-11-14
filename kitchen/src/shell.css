@@ -123,3 +123,31 @@
 .mise-expo__summary { margin: 0; padding: 8px 10px; border-radius: 6px; background: var(--fr-bg); color: var(--fr-text); border: 1px solid var(--fr-border); white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--fd-face-mono, ui-monospace, Consolas, monospace); font-size: var(--fd-step-xs, 12px); line-height: 1.5; }
 .mise-expo__prompt { width: 100%; margin-top: 8px; padding: 8px; border-radius: 6px; border: 1px solid var(--fr-control-border); background: var(--fr-bg); color: var(--fr-text); font-family: var(--fd-face-mono, ui-monospace, Consolas, monospace); font-size: var(--fd-step-xs, 12px); line-height: 1.45; resize: vertical; box-sizing: border-box; }
 .mise-expo__handoff input[type=file] { max-width: 100%; color: var(--fr-text); }
+
+/* compare: plain verdict, then one sample card per spec with a divider to drag between them (steps.js slider()) */
+.mise-spec__verdict { display: grid; gap: 4px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--fr-border); border-left: 4px solid var(--fr-accent); background: var(--fr-accent-faint); }
+.mise-spec__verdict[data-level="same"], .mise-spec__verdict[data-level="nearly"], .mise-spec__verdict[data-level="looser"] { border-left-color: var(--fr-ok); }
+.mise-spec__verdict[data-level="stricter"], .mise-spec__verdict[data-level="mixed"] { border-left-color: var(--fr-warn); }
+.mise-spec__verdict b { font-size: 15px; line-height: 1.35; }
+.mise-spec__verdict ul { margin: 2px 0 0; padding-left: 18px; font-size: 13px; line-height: 1.45; }
+.mise-spec__verdict li[data-dir="looser"] { color: var(--fr-muted); }
+.mise-spec__same { font-size: 13px; color: var(--fr-muted); }
+.mise-cmpx { --split: 50%; position: relative; display: grid; border: 1px solid var(--fr-border); border-radius: 10px; overflow: hidden; user-select: none; }
+.mise-cmpx__card { grid-area: 1 / 1; display: grid; gap: 8px; align-content: start; padding: 30px 16px 16px; background: var(--x-bg, var(--fr-bg)); color: var(--x-text, var(--fr-text)); }
+.mise-cmpx__card[data-side="b"] { clip-path: inset(0 0 0 var(--split)); }
+.mise-cmpx__tag { position: absolute; top: 8px; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--x-line, var(--fr-border)); color: var(--x-text, var(--fr-text)); }
+.mise-cmpx__card[data-side="a"] .mise-cmpx__tag { left: 10px; }
+.mise-cmpx__card[data-side="b"] .mise-cmpx__tag { right: 10px; }
+.mise-cmpx__h { font-size: var(--x-head); line-height: 1.2; }
+.mise-cmpx__p { margin: 0; font-size: var(--x-body); line-height: var(--x-lead); }
+.mise-cmpx__q { margin: 0; font-size: max(12px, calc(var(--x-body) * .85)); color: var(--x-muted, var(--fr-muted)); }
+.mise-cmpx__a { font-size: var(--x-body); color: var(--x-link, var(--fr-accent)); text-decoration: underline; justify-self: start; }
+.mise-cmpx__btn { justify-self: start; display: inline-flex; align-items: center; min-height: var(--x-target); padding: 6px 14px; border-radius: 6px; font-size: max(12px, calc(var(--x-body) * .9)); font-weight: 600;
+  background: var(--x-btn, var(--fr-accent)); color: var(--x-btntext, var(--fr-bg)); }
+.mise-cmpx__btn.has-ring { outline: var(--x-ring) solid var(--x-text, var(--fr-text)); outline-offset: 2px; }
+.mise-cmpx__bar { position: absolute; top: 0; bottom: 0; left: var(--split); width: 3px; transform: translateX(-50%); background: var(--fr-accent); pointer-events: none; box-shadow: 0 0 0 1px var(--fr-bg); }
+.mise-cmpx__bar::after { content: "◀ ▶"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 4px 6px; border-radius: 999px; font-size: 12px; line-height: 1; white-space: nowrap; background: var(--fr-accent); color: var(--fr-bg); }
+.mise-cmpx__range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.mise-cmpx:has(.mise-cmpx__range:focus-visible) { outline: 2px solid var(--fr-accent); outline-offset: 2px; }
+.mise-spec__rules summary { cursor: pointer; font-size: 13px; color: var(--fr-accent-text); }
+.mise-spec__rules[open] summary { margin-bottom: 6px; }
