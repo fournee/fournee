@@ -1,6 +1,9 @@
 # Changelog
 
-## Unreleased
+## v1.5.0 · 14 Nov 2026
+
+Additive only: four new colour roles and ten new readability contracts; no existing role, contract, preset look or
+library entry changes value.
 
 - **Frosting: the tint ladder.** Four new roles for the accent as a fill, built the way the other calculated roles are:
   `accent-hover`, `accent-selected` and `accent-pressed` (each a stronger tint of the accent over the background, for hover,
@@ -10,7 +13,6 @@
   are unchanged. That is 43 roles and 70 readability contracts (ten new). At the default looks the tints are #DEEAE3 /
   #D1E2D8 / #C4DBCE (light) and #26223A / #2E2848 / #372F57 (dark), and `accent-tint-text` equals `accent-text`. Additive only:
   no existing role or contract changes. The readability checks can now name `accent-faint` and `accent-soft` as backgrounds.
-  The earlier line that the ladder was "specified, not built" is now out of date.
 - **Spec: comparing two standards now says what it means.** "Compare side by side" opens with a plain verdict ("Nearly
   the same for your page", "NASA is stricter: 2 things on your page would change") and each differing rule in plain
   words ("the keyboard focus ring must be stronger"). Below it, a sample card you drag across: your page now on the
