@@ -5,8 +5,8 @@
 Additive only: no existing role, preset look or library entry changes value, apart from the new `tab` field and the
 mono families' extra `display` slot.
 
-- **Fontdant: the face picker is four tabs**, Sans, Serif, Decorative and Mono, over a grid of preview cards (name,
-  "Aa" and a sample in that face). Tabs are a real ARIA tablist. The text slot sees Sans and Serif, the display slot
+- **Fontdant: the face picker is four tabs**, Sans, Serif, Decorative and Mono, over a grid of compact preview cards (a
+  small "Aa" and the name, set in that face; two or more per row even in a narrow panel). Tabs are a real ARIA tablist. The text slot sees Sans and Serif, the display slot
   sees all four, the mono slot sees Mono.
 - **Fontdant: per-tab dice.** 🎲 inside the picker picks any font from the current tab for the slot being picked,
   ignoring the `lucky` flag but still respecting the licence filter. The whole-pairing lucky card is unchanged.
@@ -18,6 +18,9 @@ mono families' extra `display` slot.
   Gelasio, Bodoni Moda, DM Serif Display. Decorative: Oswald, Archivo Black, Abril Fatface, Alfa Slab One, Pacifico,
   Caveat, Permanent Marker, Fredoka, Lilita One, Bungee. All OFL-1.1 except Permanent Marker (Apache-2.0).
 - **Catalog: the font library page** has the same four tabs.
+- **Security: development dependencies patched.** undici (frosting, via wrangler), svelte, esbuild, glob/minimatch
+  (delivery) and esbuild (fontdant) moved to patched versions. None ship in Fournée's outputs. deepmerge (low, pulled
+  in by style-dictionary) has no patched release yet and stays open.
 
 ## v1.3.0 · 13 Nov 2026
 
