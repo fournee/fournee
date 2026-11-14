@@ -21,6 +21,8 @@ Additive only: no existing role value, contract or pass result changes (checked 
   contrast guarantee; build from a recipe for the guarantee. `FrostingColor.complete()` does the fitting and takes the
   accessibility standard's contracts and the look's gradients into account. A new test fails if any of the 13 roles,
   their contracts or the accent channels is removed.
+  In about 4.2% of looks (248 of 5,962 in the roles test) no visible hover colour passes both rules, so `button-hover`
+  equals `button`.
 - **Specified, not built: a tint ladder** (hover, selected and pressed tints of the accent, and text that stays
   readable on them). The design is written down in `docs/design/roles-v1.3/spec.md` for a later release.
 - **Frosting: eight tag roles**, `--fr-tag-1` … `--fr-tag-8`, an optional group for telling projects or categories

@@ -63,6 +63,7 @@ KitchenPass.failing(res, 'hard');           // e.g. ['T5', 'X4']
 Which colour a type role is painted in decides its cross-checks. Defaults: display, heading, body, ui, mono and
 metric use `text`; caption and eyebrow use `muted`; `ui-button` uses `button-text` on `button`. A recipe overrides
 this per role (`fontdant.roles.caption.color = 'accent-text'`, or a hex). Text is checked on `bg` and `surface`.
+
 **Suggestions.** A failed or warned contrast result (a frosting contract, X2, X3, X4, X5, X6's colour part, X8) carries an
 optional `suggest` field: the nearest colour of the same hue, moving lightness only, that reaches the contrast asked for
 on every ground the pass checks that colour on. It is absent when not applicable, `null` when no lightness works, or
@@ -75,7 +76,7 @@ on every ground the pass checks that colour on. It is absent when not applicable
 `role` is the role that moves (`null` for a literal hex), `deltaL` the lightness change in HSL points, `ratio` the worst
 ratio over `against`, floored so `7.00` never hides 6.996. When `suggest` is `null` the result also has `suggestTarget`,
 the strictest ratio it was judged against, so a view can say "no colour of this hue reaches 7:1 here".
-`KitchenPass.suggest(fg, rules, opts)` is the pure function behind it (`rules` is `[[groundHex, min], …]`). The pass view
+`KitchenPass.suggest(fg, rules, opts)` is the pure function behind it (`rules` is `[[groundHex, min, groundRole?], …]`; the optional third element names the ground role and fills `against[].role`). The pass view
 shows the swatch, the hex and the ratio, and a "Use this" button when you give `KitchenPassView` an `onSuggest` hook.
 
 Hard checks fail a recipe; warnings badge it; info notes (level `info`) only advise. Licence checks L1–L6 join

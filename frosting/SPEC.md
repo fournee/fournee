@@ -90,6 +90,9 @@ roles with a minimum WCAG contrast ratio:
 - for each of `ok`, `warn` and `bad`: `<status>-text` on `bg`, `surface` and `<status>-soft` at **4.5:1**,
   `text` on `<status>-soft` at **7:1**, and `<status>-border` on `bg` at **3:1**
 
+In about 4.2% of looks (248 of 5,962 in `frosting/test/roles.mjs`) no visible hover colour passes both `button-hover`
+rules, so `button-hover` equals `button`: a consumer should expect "no hover change" there.
+
 That is 60 contracts in all: the original 37 (unchanged, in the same order) and 23 for the calculated roles.
 
 The engine never saves a silently unreadable look: hand edits are checked and badged;

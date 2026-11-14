@@ -613,7 +613,7 @@ Numbered per deliverable. Tests listed under each leaf in section 9 own them.
 - **A9** Given `KitchenSprinkles` loaded and a Plain version available, when the pass runs on the A6 recipe, then X4 is
   the `info` note (`ok: true`) and has no `suggest`.
 - **A10** Given the default light and dark recipes, all presets and 3,000 lucky looks, when the pass runs, then no
-  result has a `suggest` (nothing fails), and the results are otherwise identical to before.
+  result has a `suggest` (nothing fails, with Sprinkles loaded; without it X4 warns at 7:1 as before and that warning now carries a suggestion), and the results are otherwise identical to before.
 - **A11** Given any result list, when each existing result is compared with its pre-change value ignoring `suggest`,
   then `id`, `label`, `level`, `ok`, `pending`, `detail`, `source` and `where` are equal.
 - **A12** Given a result with `suggest: { to: '#445566', ratio: 7.01, target: 7, role: 'muted' }`, when the Pass view
