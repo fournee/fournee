@@ -45,6 +45,27 @@ for (const [w, h, tag] of [[1280, 900, 'desk'], [390, 844, 'phone']]) {
     ok(!errs.length, `${tag} ${name}: no errors or missing files: ${errs.slice(0, 3)}`);
     await p.close();
   }
+  // font library: four tabs, every family in exactly one, no sideways scroll, nothing under 12px, light and dark
+  for (const scheme of ['light', 'dark']) {
+    const lp = await ctx.newPage(); await lp.emulateMedia({ colorScheme: scheme });
+    await lp.goto(base + 'fontdant.html', { waitUntil: 'networkidle' });
+    const lib = JSON.parse(await readFile(join(here, '..', 'fontdant', 'fonts', 'library.json'), 'utf8'));
+    const tabs = await lp.$$eval('#lib-tabs [role="tab"]', (t) => t.map((x) => x.textContent.replace(/ \(\d+\)/, '')));
+    ok(JSON.stringify(tabs) === JSON.stringify(['Sans', 'Serif', 'Decorative', 'Mono']), `${tag} ${scheme} library: four tabs (${tabs})`);
+    ok(await lp.$eval('#lib-tabs', (e) => e.getAttribute('role')) === 'tablist', `${tag} ${scheme} library: ARIA tablist`);
+    const counts = {};
+    for (const t of ['sans', 'serif', 'decorative', 'mono']) {
+      await lp.click(`#tab-${t}`);
+      ok(await lp.getAttribute(`#tab-${t}`, 'aria-selected') === 'true' && await lp.isVisible(`#panel-${t}`), `${tag} ${scheme} library: ${t} tab opens its panel`);
+      for (const id of await lp.$$eval(`#panel-${t} .lib-card`, (c) => c.map((x) => x.dataset.family))) counts[id] = (counts[id] || 0) + 1;
+      ok((await lp.evaluate(() => document.documentElement.scrollWidth - innerWidth)) <= 0, `${tag} ${scheme} library: ${t} fits width`);
+      const small = await lp.$$eval(`#panel-${t} *, #lib-tabs *`, (els) => els.filter((e) => e.childNodes.length && [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim()) && parseFloat(getComputedStyle(e).fontSize) < 12).map((e) => e.tagName));
+      ok(!small.length, `${tag} ${scheme} library: ${t} nothing under 12px (${small.slice(0, 3)})`);
+    }
+    const ids = Object.keys(lib.fonts);
+    ok(ids.every((id) => counts[id] === 1) && Object.keys(counts).length === ids.length, `${tag} ${scheme} library: every family in exactly one tab (${ids.length} families)`);
+    await lp.close();
+  }
   // light/dark: switch on one page, it holds on the next; the Frosting catalog follows
   const p = await ctx.newPage();
   await p.goto(base + 'spec.html'); await p.waitForTimeout(200);

@@ -17,6 +17,14 @@
   .preset .sample-h { font-size: var(--fd-step-h-sm); margin: 8px 0 2px; }
   .preset .sample-b { margin: 0; }
   .preset .faces { color: var(--fr-muted); font-size: var(--fd-step-sm); }
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+  .tabs [role="tab"] { font: inherit; font-size: var(--fd-step-sm); padding: 8px 14px; border: 1px solid var(--fr-border); border-radius: 8px; background: var(--fr-surface); color: var(--fr-text); cursor: pointer; }
+  .tabs [role="tab"][aria-selected="true"] { border-color: var(--fr-accent); font-weight: 600; }
+  .lib-card { padding: 14px; border: 1px solid var(--fr-border); border-radius: 10px; background: var(--fr-surface); }
+  .lib-card h3 { margin: 0 0 4px; }
+  .lib-card .sample { font-size: var(--fd-step-h-sm); margin: 6px 0; overflow-wrap: anywhere; }
+  .lib-card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; color: var(--fr-muted); font-size: var(--fd-step-sm); }
+  .lib-card dd { margin: 0; overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -33,7 +41,8 @@
 
   <h2>The font library</h2>
   <p class="muted">Served from this site's <code>fonts/</code>, never from Google. "Lucky" fonts can be picked by 🎲.</p>
-  <div class="scroll"><table id="library"></table></div>
+  <div class="tabs" role="tablist" aria-label="Font library" id="lib-tabs"></div>
+  <div id="library"></div>
 </main>
 <script src="assets/type-tokens.js"></script>
 <script src="assets/library.js"></script>
@@ -53,17 +62,44 @@
       '<div class="sample-h" style="font-family:' + esc(face(f.display, 'display')) + '">Corner Bakery opens at seven</div>' +
       '<p class="sample-b" style="font-family:' + esc(face(f.text, 'text')) + '">Our sourdough rests for two days before it is baked.</p></div>';
   }).join('');
-  var st = document.createElement('style'); st.textContent = css.join('\n'); document.head.appendChild(st);
+  var st = document.createElement('style'); st.textContent = css.join(String.fromCharCode(10)); document.head.appendChild(st);
   var modes = Object.keys(T.modes);
   document.getElementById('ladder').innerHTML = '<thead><tr><th>Step</th>' + modes.map(function (m) { return '<th>' + esc(T.modes[m].label || m) + '</th>'; }).join('') + '</tr></thead><tbody>' +
     T.stepOrder.map(function (s) { return '<tr><td><code>--fd-step-' + esc(s) + '</code></td>' + modes.map(function (m) { return '<td><code>' + esc(T.modes[m].steps[s]) + '</code></td>'; }).join('') + '</tr>'; }).join('') +
     '<tr><td>Floors (px)</td>' + modes.map(function (m) { var f = T.modes[m].floors || {}; return '<td>' + Object.keys(f).map(function (k) { return esc(k) + ' ' + f[k]; }).join(', ') + '</td>'; }).join('') + '</tr></tbody>';
-  var fonts = Object.keys(L.fonts).map(function (id) { return L.fonts[id]; }).sort(function (a, b) { return a.family.localeCompare(b.family); });
-  document.getElementById('library').innerHTML = '<thead><tr><th>Family</th><th>Shelf</th><th>Slots</th><th>Weights</th><th>Licence</th><th>Lucky</th></tr></thead><tbody>' +
-    fonts.map(function (e) {
-      var w = e.weights || {}; var ws = w.kind === 'variable' ? w.min + '–' + w.max : (w.available || []).join(', ');
-      return '<tr><td>' + esc(e.family) + '</td><td>' + esc((L.shelves[e.shelf] || {}).label || e.shelf) + '</td><td>' + esc((e.slots || []).join(', ')) + '</td><td>' + esc(ws) + '</td><td>' + esc((e.licence || {}).id || '') + '</td><td>' + (e.lucky ? 'yes' : '') + '</td></tr>';
-    }).join('') + '</tbody>';
+  var tabIds = Object.keys(L.tabs), byTab = {}, sampleText = 'Corner Bakery opens at seven';
+  Object.keys(L.fonts).forEach(function (id) { var e = L.fonts[id]; (byTab[e.tab] = byTab[e.tab] || []).push(e); });
+  tabIds.forEach(function (t) { (byTab[t] = byTab[t] || []).sort(function (a, b) { return a.family.localeCompare(b.family); }); });
+  var tabsEl = document.getElementById('lib-tabs'), libEl = document.getElementById('library'), loaded = {};
+  tabsEl.innerHTML = tabIds.map(function (t) {
+    return '<button type="button" role="tab" id="tab-' + esc(t) + '" aria-controls="panel-' + esc(t) + '" data-tab="' + esc(t) + '">' + esc(L.tabs[t].label) + ' (' + byTab[t].length + ')</button>';
+  }).join('');
+  libEl.innerHTML = tabIds.map(function (t) {
+    return '<div role="tabpanel" id="panel-' + esc(t) + '" aria-labelledby="tab-' + esc(t) + '" hidden><div class="presets">' + byTab[t].map(function (e) {
+      var w = e.weights || {}, ws = w.kind === 'variable' ? w.min + '–' + w.max : (w.available || []).join(', '), slot = (e.slots || ['display'])[0];
+      return '<div class="lib-card" data-family="' + esc(e.id) + '"><h3>' + esc(e.family) + '</h3><div class="sample" data-face="' + esc(e.id) + '" data-slot="' + esc(slot) + '">' + sampleText + '</div><dl>' +
+        '<dt>Slots</dt><dd>' + esc((e.slots || []).join(', ')) + '</dd><dt>Weights</dt><dd>' + esc(ws) + '</dd><dt>Licence</dt><dd>' + esc((e.licence || {}).id || '') + '</dd><dt>Lucky</dt><dd>' + (e.lucky ? 'yes' : 'no') + '</dd></dl></div>';
+    }).join('') + '</div></div>';
+  }).join('');
+  function showTab(t) {
+    tabIds.forEach(function (x) {
+      var on = x === t; var b = document.getElementById('tab-' + x);
+      b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1;
+      document.getElementById('panel-' + x).hidden = !on;
+    });
+    if (!loaded[t]) {
+      loaded[t] = 1;
+      libEl.querySelectorAll('#panel-' + t + ' .sample').forEach(function (n) { var id = n.getAttribute('data-face'), slot = n.getAttribute('data-slot'); n.style.fontFamily = face(id, slot); });
+      st.textContent = css.join(String.fromCharCode(10));
+    }
+  }
+  tabsEl.addEventListener('click', function (ev) { var b = ev.target.closest('[role="tab"]'); if (b) showTab(b.getAttribute('data-tab')); });
+  tabsEl.addEventListener('keydown', function (ev) {
+    var i = tabIds.indexOf(document.activeElement.getAttribute('data-tab')); if (i < 0) return;
+    var n = ev.key === 'ArrowRight' ? (i + 1) % tabIds.length : ev.key === 'ArrowLeft' ? (i + tabIds.length - 1) % tabIds.length : ev.key === 'Home' ? 0 : ev.key === 'End' ? tabIds.length - 1 : -1;
+    if (n < 0) return; ev.preventDefault(); showTab(tabIds[n]); document.getElementById('tab-' + tabIds[n]).focus();
+  });
+  showTab(tabIds[0]);
 </script>
 </body>
 </html>
