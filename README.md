@@ -15,7 +15,7 @@ accessibility rules before it ships.
 | Part | What it does |
 |---|---|
 | [**Frosting**](frosting/) | Colour by role (`--fr-*`): 39 roles with light and dark defaults (13 of them calculated and fitted to pass), 60 readability contracts, the accent as plain numbers (`--fr-accent-h/-s/-l`), ready-made looks, gradients, a colour panel |
-| [**Fontdant**](fontdant/) | Type by role (`--fd-*`, `.fd-*` classes): a size ladder per mode, type contracts, the fit, and a library of 39 self-hosted open-licence font families |
+| [**Fontdant**](fontdant/) | Type by role (`--fd-*`, `.fd-*` classes): a size ladder per mode, type contracts, the fit, and a library of 63 self-hosted open-licence font families in four tabs (Sans, Serif, Decorative, Mono) |
 | [**Kitchen**](kitchen/) | The shared parts: the recipe format, the store, **the pass** (checks a look against WCAG 2.2 and 20 other standards, and suggests a nearby colour that would pass), Sprinkles, and the four-step panel |
 | [**Delivery**](delivery/) | The same recipe in plain HTML, React, Svelte, Electron, pywebview, Qt and tkinter, plus a [DTCG](https://www.designtokens.org/) 2025.10 export |
 

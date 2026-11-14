@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.4.0 · 14 Nov 2026
+
+Additive only: no existing role, preset look or library entry changes value, apart from the new `tab` field and the
+mono families' extra `display` slot.
+
+- **Fontdant: the face picker is four tabs**, Sans, Serif, Decorative and Mono, over a grid of preview cards (name,
+  "Aa" and a sample in that face). Tabs are a real ARIA tablist. The text slot sees Sans and Serif, the display slot
+  sees all four, the mono slot sees Mono.
+- **Fontdant: per-tab dice.** 🎲 inside the picker picks any font from the current tab for the slot being picked,
+  ignoring the `lucky` flag but still respecting the licence filter. The whole-pairing lucky card is unchanged.
+- **Fontdant: curated `tab` field** on every library family in `library-source.json`, separate from `category`.
+  Mono families gain the `display` slot (code fonts may set headings, not body text). Fonts a user adds appear in a
+  "Your fonts" group in the matching tab.
+- **Fontdant: 24 new library families** (63 in all: Sans 25, Serif 17, Decorative 16, Mono 5). Sans: DM Sans, Work
+  Sans, Figtree, IBM Plex Sans, Rubik, Lexend. Serif: Lora, Merriweather, Literata, Crimson Pro, IBM Plex Serif,
+  Gelasio, Bodoni Moda, DM Serif Display. Decorative: Oswald, Archivo Black, Abril Fatface, Alfa Slab One, Pacifico,
+  Caveat, Permanent Marker, Fredoka, Lilita One, Bungee. All OFL-1.1 except Permanent Marker (Apache-2.0).
+- **Catalog: the font library page** has the same four tabs.
+
 ## v1.3.0 · 13 Nov 2026
 
 Additive only: no existing role value, contract or pass result changes (checked against a frozen copy of v1.2.0).

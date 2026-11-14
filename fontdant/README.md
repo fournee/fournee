@@ -7,8 +7,8 @@ and the layout stays put.
 - **Source of truth:** [`type-tokens.json`](type-tokens.json): roles, steps, weights, face slots (with
   their fit targets), modes, variants, scopes, features, contracts. Everything else is generated.
 - **Font library:** [`fonts/library-source.json`](fonts/library-source.json) names the families
-  (the curated picks: 32 for presets and lucky, 5 pickable by hand) and the default look
-  **Inter / Inter / JetBrains Mono**; `fonts/<id>/` holds each family's latin woff2 and licence;
+  (63 families: Sans 25, Serif 17, Decorative 16, Mono 5) and the default look
+  **Inter / Inter / JetBrains Mono**; each family carries a curated `tab` (see "Font tabs" below); `fonts/<id>/` holds each family's latin woff2 and licence;
   `fonts/library.json` is the measured library (generated).
 - **Generated** (`npm run build`, do not edit `dist/`): `dist/fontdant.css` (longhand variables and
   classes), `dist/type-tokens.js` (`window.FontdantTokens`), `dist/library.js` (`window.FontdantLibrary`),
@@ -58,6 +58,32 @@ overrides; `size-adjust` works there).
 snaps a weight the face lacks to the nearest it has (Anton has only 400), badges a face whose hhea and
 typo tables disagree (F5), and returns the notes. `FontdantCheck.check(look)` runs T1–T12 and T14–T17;
 T13 is rendered by kitchen's pass. A font whose licence forbids metric-override CSS is not fitted (100%).
+
+## Font tabs
+
+Every library family has a curated `tab`: `sans`, `serif`, `decorative` or `mono`, set in
+`fonts/library-source.json`. It is separate from the automatic `category`, which drives fallbacks. The face
+picker in the Fontdant tab shows the four tabs as an ARIA tablist (arrow keys, `aria-selected`) over a grid of
+preview cards (name, "Aa" and a short sample in that face). Which tabs a slot sees:
+
+| Slot | Tabs shown |
+|---|---|
+| text (body) | Sans, Serif |
+| display (headings) | Sans, Serif, Decorative, Mono |
+| mono (code) | Mono |
+
+Mono families gain the `display` slot, so a code face can set headings (not body text). Decorative families are
+display-only. The 🎲 inside the picker picks any font from the tab you are in, for the slot you are picking,
+ignoring the `lucky` flag but still respecting the licence filter (`FontdantLicence.covers`). The whole-pairing
+"I'm feeling lucky" card is unchanged and still rolls lucky-marked fonts. Fonts you add (own files or an Adobe
+kit) appear in a "Your fonts" group inside the matching tab (serif goes to Serif, mono to Mono, anything else to
+Sans). The catalog's font library page has the same four tabs.
+
+Added in v1.4.0 (24 families; Permanent Marker is Apache-2.0, the rest OFL-1.1):
+Sans: DM Sans, Work Sans, Figtree, IBM Plex Sans, Rubik, Lexend.
+Serif: Lora, Merriweather, Literata, Crimson Pro, IBM Plex Serif, Gelasio, Bodoni Moda, DM Serif Display.
+Decorative: Oswald, Archivo Black, Abril Fatface, Alfa Slab One, Pacifico, Caveat, Permanent Marker, Fredoka,
+Lilita One, Bungee. New Sans and Serif families are lucky-marked, new Decorative families are not.
 
 ## Bring your own font
 
