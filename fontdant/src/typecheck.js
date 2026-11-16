@@ -278,6 +278,8 @@
       var size = forMode(o.size, mode), tr = forMode(o.tracking, mode), lead = forMode(o.leading, mode);
       if (size != null) v('size', T.stepOrder.indexOf(size) >= 0 ? 'var(--' + p + '-step-' + size + ')' : String(size).replace(/(\d*\.?\d+)rem/g, 'calc($1rem * var(--' + p + '-scaling))'));
       if (o.weight != null) v('weight', typeof o.weight === 'number' ? o.weight : 'var(--' + p + '-weight-' + o.weight + ')');
+      var face = forMode(o.face, mode);
+      if (face != null) v('family', 'var(--' + p + '-face-' + face + ')');
       if (lead != null) v('leading', lead);
       if (tr != null) v('tracking', tr);
       if (o.case != null) v('transform', o.case === 'upper' ? 'uppercase' : o.case === 'lower' ? 'lowercase' : 'none');
