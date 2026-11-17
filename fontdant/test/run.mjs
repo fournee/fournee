@@ -158,6 +158,8 @@ expect(unknown.notes.some((n) => /not in the library; using inter/.test(n)) && !
 const wrongSlot = K.fit({ faces: { text: 'anton' } });
 expect(wrongSlot.notes.some((n) => /anton is not offered for the text slot/.test(n)), 'a display-only face in the text slot is badged', wrongSlot.notes);
 expect(K.cssVars({ faces: { display: 'fraunces' } }).includes('--fd-face-display: "Fraunces fd-display", "Fraunces fd-display fallback", "Fraunces", system-ui, sans-serif;'), 'cssVars emits the alias stack for a face');
+{ const v = K.cssVars({ roles: { 'heading-lg': { face: 'text' }, caption: { face: 'mono' } } }), r = K.resolve({ roles: { 'heading-lg': { face: 'text' } } });
+  expect(v.includes('--fd-heading-lg-family: var(--fd-face-text);') && v.includes('--fd-caption-family: var(--fd-face-mono);') && r.styles.find((s) => s.name === 'heading-lg').face === 'text', 'cssVars emits a per-role face override, matching what resolve() checks (#1)', v); }
 
 /* 8. bring your own font: Lora (not in the library) and Arial (hhea ≠ typo → F5) */
 const lora = makeEntry({ id: 'lora', family: 'Lora', files: [{ file: 'lora-latin-400.woff2', weight: '400' }], metrics: metricsFromFile(new URL('./fixtures/lora-latin-400.woff2', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), category: 'serif' });
