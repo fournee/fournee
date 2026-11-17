@@ -160,6 +160,13 @@ expect(wrongSlot.notes.some((n) => /anton is not offered for the text slot/.test
 expect(K.cssVars({ faces: { display: 'fraunces' } }).includes('--fd-face-display: "Fraunces fd-display", "Fraunces fd-display fallback", "Fraunces", system-ui, sans-serif;'), 'cssVars emits the alias stack for a face');
 { const v = K.cssVars({ roles: { 'heading-lg': { face: 'text' }, caption: { face: 'mono' } } }), r = K.resolve({ roles: { 'heading-lg': { face: 'text' } } });
   expect(v.includes('--fd-heading-lg-family: var(--fd-face-text);') && v.includes('--fd-caption-family: var(--fd-face-mono);') && r.styles.find((s) => s.name === 'heading-lg').face === 'text', 'cssVars emits a per-role face override, matching what resolve() checks (#1)', v); }
+{ const look = { roles: { heading: { weight: 700, tracking: '0.01em' }, 'heading-sm': { weight: 600 }, ui: { weight: 'regular' } } }, v = K.cssVars(look), r = K.resolve(look);
+  const want = (name, k) => v.includes('--fd-' + name + '-' + k + ': ');
+  const agree = ['heading-xl', 'heading-lg', 'heading-md'].every((n) => v.includes('--fd-' + n + '-weight: 700;') && r.styles.find((s) => s.name === n).weight === 700);
+  expect(agree && v.includes('--fd-heading-sm-weight: 600;') && !v.includes('--fd-heading-sm-weight: 700;')
+    && v.includes('--fd-heading-sm-tracking: 0.01em;') && !want('heading-xl', 'tracking') && !want('heading-md', 'tracking')
+    && v.includes('--fd-ui-sm-weight: var(--fd-weight-regular);') && !want('ui-button', 'weight') && !want('ui-nav', 'weight'),
+    'cssVars writes a base role override to the steps and variants that inherit it in resolve(), and no others (#2)', v); }
 
 /* 8. bring your own font: Lora (not in the library) and Arial (hhea ≠ typo → F5) */
 const lora = makeEntry({ id: 'lora', family: 'Lora', files: [{ file: 'lora-latin-400.woff2', weight: '400' }], metrics: metricsFromFile(new URL('./fixtures/lora-latin-400.woff2', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), category: 'serif' });

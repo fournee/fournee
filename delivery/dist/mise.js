@@ -2507,8 +2507,8 @@
     Object.keys((look && look.dials && look.dials.weights) || {}).forEach(function (w) { out.push('--' + p + '-weight-' + w + ': ' + R.weights[w] + ';'); });
     // per-role overrides (hand edits, and the weights fit snapped) → that style's longhand variables
     var mode = (look && look.mode) || T.defaultMode;
-    Object.keys((look && look.roles) || {}).forEach(function (name) {
-      var o = look.roles[name] || {}, v = function (k, val) { out.push('--' + p + '-' + name + '-' + k + ': ' + val + ';'); };
+    function emitRole(name, o) {
+      var v = function (k, val) { out.push('--' + p + '-' + name + '-' + k + ': ' + val + ';'); };
       var size = forMode(o.size, mode), tr = forMode(o.tracking, mode), lead = forMode(o.leading, mode);
       if (size != null) v('size', T.stepOrder.indexOf(size) >= 0 ? 'var(--' + p + '-step-' + size + ')' : String(size).replace(/(\d*\.?\d+)rem/g, 'calc($1rem * var(--' + p + '-scaling))'));
       if (o.weight != null) v('weight', typeof o.weight === 'number' ? o.weight : 'var(--' + p + '-weight-' + o.weight + ')');
@@ -2519,6 +2519,21 @@
       if (o.case != null) v('transform', o.case === 'upper' ? 'uppercase' : o.case === 'lower' ? 'lowercase' : 'none');
       if (o.italic != null) v('style', o.italic ? 'italic' : 'normal');
       if (o.tnum != null) v('numeric', o.tnum ? 'tabular-nums' : 'normal');
+    }
+    var roleOver = (look && look.roles) || {};
+    Object.keys(roleOver).forEach(function (name) { emitRole(name, roleOver[name] || {}); });
+    // a base role's override reaches its steps and variants in resolve() (unless they set that field
+    // themselves), so write it to their longhands too, or the page keeps their defaults (#2)
+    var defs = T.roles.concat(extensionRoles(look).filter(function (r) { return !T.roles.some(function (c) { return c.name === r.name; }); }));
+    defs.forEach(function (role) {
+      var baseOver = roleOver[role.name]; if (!baseOver) return;
+      [role.steps || {}, role.variants || {}].forEach(function (group) {
+        Object.keys(group).forEach(function (k) {
+          var name = role.name + '-' + k, def = group[k] || {}, own = roleOver[name] || {}, inh = {};
+          Object.keys(baseOver).forEach(function (f) { if (!(f in def) && !(f in own)) inh[f] = baseOver[f]; });
+          emitRole(name, inh);
+        });
+      });
     });
     return out.join('\n');
   }
