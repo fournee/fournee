@@ -8,6 +8,7 @@
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { metricsFromFile, makeEntry } from '../src/metrics.mjs';
+import { planFiles, weightOf } from '../src/metrics-core.mjs';
 
 const sandbox = { window: {}, console };
 sandbox.window.window = sandbox.window;
@@ -179,5 +180,32 @@ if (arial) {
 }
 delete L.fonts.lora; delete L.fonts.arial;
 
-console.log(fails ? `FAIL: ${fails} failures` : `PASS: ${modes.length} modes × ${T.styles.length} styles, ${T.contracts.filter((c) => !c.needs || c.needs === 'font-metrics').length} contracts checked (T13 pending), fit floors/order/scaling/weights, console 8-dial map, ${ids.length}-font library on target, BYO Lora + Arial F5`);
+/* 9. a family's full download (#3): static files + the variable files, as Google Fonts ships it.
+   The statics are Lora's metrics renamed; Thin and ExtraLight carry usWeightClass 250 like Josefin Sans. */
+{ const fx = (p) => new URL(p, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+  const jost = metricsFromFile(fx('../fonts/jost/jost-latin-wght.woff2')), jostI = metricsFromFile(fx('../fonts/jost/jost-latin-wght-italic.woff2'));
+  const base = metricsFromFile(fx('./fixtures/lora-latin-400.woff2'));
+  const stat = (style, wc, italic = false) => ({ name: 'Jost-' + style + '.ttf', bytes: 60000, metrics: { ...base, axes: {}, weightClass: wc, italic, names: { ...base.names, postscriptName: 'Jost-' + style } } });
+  const statics = [['Thin', 250], ['ExtraLight', 250], ['Light', 300], ['Regular', 400], ['Medium', 500], ['SemiBold', 600], ['Bold', 700], ['ExtraBold', 800], ['Black', 900]].map(([n, w]) => stat(n, w));
+  expect(weightOf(statics[0].metrics) === 100 && weightOf(statics[1].metrics) === 200 && weightOf(statics[3].metrics) === 400, 'usWeightClass 250 reads Thin as 100 and ExtraLight as 200 from the style name');
+  expect(weightOf({ weightClass: 250, names: {} }, 'Some-UltraLight.woff2') === 200 && weightOf({ weightClass: 350, names: {} }, 'odd.ttf') === 400, 'no PostScript name: the file name decides, else the value is rounded');
+
+  const vMin = jost.axes.wght[0], vMax = jost.axes.wght[2];
+  const items = [...statics, stat('ThinItalic', 250, true), { name: 'Jost-VariableFont_wght.ttf', bytes: 120000, metrics: jost }, { name: 'Jost-Italic-VariableFont_wght.ttf', bytes: 125000, metrics: jostI }];
+  const plan = planFiles(items);
+  const kept = plan.used.map((i) => items[i].name);
+  const outside = statics.filter((x) => weightOf(x.metrics) < vMin || weightOf(x.metrics) > vMax).map((x) => x.name);
+  expect(kept.includes('Jost-VariableFont_wght.ttf') && kept.includes('Jost-Italic-VariableFont_wght.ttf') && !kept.includes('Jost-Regular.ttf') && !kept.includes('Jost-ThinItalic.ttf') && kept.length === 2 + outside.length,
+    'a variable file drops the static files of its style inside its range; statics outside it stay', kept, [vMin, vMax]);
+  expect(plan.metrics === jost, 'the entry is built from the upright variable file');
+  const e = makeEntry({ id: 'jost-own', files: plan.files, metrics: plan.metrics });
+  expect(e.weights.kind === 'variable' && e.weights.min === vMin && e.weights.max === vMax && e.italics.kind === 'variable' && e.files.filter((f) => f.style === 'italic').length === 1, 'the full download becomes a variable entry with variable italics', e.weights, e.italics);
+
+  const onlyStatic = planFiles(statics);
+  const s = makeEntry({ id: 'statics', files: onlyStatic.files, metrics: onlyStatic.metrics });
+  expect(onlyStatic.dropped.length === 0 && s.weights.kind === 'static' && s.weights.available.join() === '100,200,300,400,500,600,700,800,900', 'static files only: all kept, one weight each, Thin 100 and ExtraLight 200', s.weights.available);
+  const dup = makeEntry({ id: 'dup', files: [{ file: 'a.woff2', weight: '400' }, { file: 'b.woff2', weight: '400' }], metrics: base });
+  expect(dup.weights.available.join() === '400', 'a weight given by two files is listed once', dup.weights.available); }
+
+console.log(fails ? `FAIL: ${fails} failures` : `PASS: ${modes.length} modes × ${T.styles.length} styles, ${T.contracts.filter((c) => !c.needs || c.needs === 'font-metrics').length} contracts checked (T13 pending), fit floors/order/scaling/weights, console 8-dial map, ${ids.length}-font library on target, BYO Lora + Arial F5, full-download upload`);
 if (fails) process.exitCode = 1;

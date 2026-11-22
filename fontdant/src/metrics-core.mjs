@@ -41,6 +41,44 @@ export function metricsFrom(font) {
   };
 }
 
+/* A static file's CSS weight. usWeightClass is used when it is a multiple of 100. Some fonts store
+   another value there (Josefin Sans gives both Thin and ExtraLight 250, an old Windows workaround),
+   so then the style name decides (PostScript name after the hyphen, else the file name), and the
+   value is rounded only if no name matches. */
+const WEIGHT_NAMES = [['extralight', 200], ['ultralight', 200], ['semibold', 600], ['demibold', 600], ['extrabold', 800], ['ultrabold', 800],
+  ['hairline', 100], ['thin', 100], ['light', 300], ['regular', 400], ['book', 400], ['normal', 400], ['medium', 500], ['bold', 700], ['black', 900], ['heavy', 900]];
+export function weightOf(metrics, fileName) {
+  const wc = metrics.weightClass;
+  if (wc && wc % 100 === 0) return wc;
+  const ps = (metrics.names && metrics.names.postscriptName) || '', stem = String(fileName || '').replace(/\.[a-z0-9]+$/i, '');
+  const style = (ps.includes('-') ? ps.slice(ps.lastIndexOf('-') + 1) : stem.includes('-') ? stem.slice(stem.lastIndexOf('-') + 1) : '').toLowerCase();
+  for (const [name, w] of WEIGHT_NAMES) if (style.includes(name)) return w;
+  return wc ? Math.min(900, Math.max(100, Math.round(wc / 100) * 100)) : 400;
+}
+
+/* Which of several uploaded files of one family to keep, and the files list makeEntry takes.
+   items: [{name, metrics, bytes?}]. A variable file covers the static files of its style (upright or
+   italic) whose weight is inside its wght range, so those are dropped: the entry is variable and no
+   duplicate bytes get inlined. Returns { used, dropped } (indices into items), files, and the metrics
+   to build the entry from (the upright variable file when there is one, else the first upright file). */
+export function planFiles(items) {
+  const style = (m) => (m.italic ? 'italic' : 'normal');
+  const vars = items.filter((x) => x.metrics.axes && x.metrics.axes.wght);
+  const covered = (x) => !(x.metrics.axes && x.metrics.axes.wght) && vars.some((v) => {
+    const [min, , max] = v.metrics.axes.wght, w = weightOf(x.metrics, x.name);
+    return style(v.metrics) === style(x.metrics) && w >= min && w <= max;
+  });
+  const used = [], dropped = [];
+  items.forEach((x, i) => (covered(x) ? dropped : used).push(i));
+  const files = used.map((i) => {
+    const x = items[i], wght = x.metrics.axes && x.metrics.axes.wght;
+    return { file: x.name, weight: wght ? wght[0] + ' ' + wght[2] : String(weightOf(x.metrics, x.name)), style: style(x.metrics), ...(x.bytes != null ? { bytes: x.bytes } : {}) };
+  });
+  const pick = (f) => used.map((i) => items[i]).find(f);
+  const main = pick((x) => !x.metrics.italic && x.metrics.axes && x.metrics.axes.wght) || pick((x) => !x.metrics.italic) || items[used[0]];
+  return { used, dropped, files, metrics: main.metrics };
+}
+
 /* A library entry from measured metrics: the same shape for a library font and a client's own file.
    files: [{file, weight ('400' or '100 900' for a variable file), unicodeRange?, bytes?}] */
 export function makeEntry({ id, family, files, metrics, shelf = 'custom', slots, lucky = false, category, licence = {}, provider = 'own file', note }) {
@@ -48,10 +86,10 @@ export function makeEntry({ id, family, files, metrics, shelf = 'custom', slots,
   const upright = files.filter((f) => (f.style || 'normal') !== 'italic'), italic = files.filter((f) => f.style === 'italic');
   const weights = metrics.axes.wght
     ? { kind: 'variable', min: metrics.axes.wght[0], max: metrics.axes.wght[2], available: DIALS.filter((w) => w >= metrics.axes.wght[0] && w <= metrics.axes.wght[2]) }
-    : { kind: 'static', available: upright.map((f) => Number(f.weight)).filter((n) => !isNaN(n)).sort((a, b) => a - b) };
+    : { kind: 'static', available: staticWeights(upright) };
   const italics = !italic.length ? { kind: 'none', available: [] }
     : metrics.axes.wght ? { kind: 'variable', min: metrics.axes.wght[0], max: metrics.axes.wght[2] }
-    : { kind: 'static', available: italic.map((f) => Number(f.weight)).filter((n) => !isNaN(n)).sort((a, b) => a - b) };
+    : { kind: 'static', available: staticWeights(italic) };
   const textOk = [400, 500, 600, 700].every((w) => weights.available.includes(w));
   const cat = category || (metrics.zeroAdvance && metrics.xWidthAvg && Math.abs(metrics.zeroAdvance - metrics.xWidthAvg) < 2 ? 'mono' : 'sans');
   const defaultSlots = cat === 'mono' ? ['mono'] : textOk ? ['text', 'display'] : ['display'];
@@ -62,5 +100,8 @@ export function makeEntry({ id, family, files, metrics, shelf = 'custom', slots,
     licence: Object.assign({ id: 'custom', licensor: null, licensee: null, uses: ['web'], domains: null, cap: null, self_host: 'allowed', modify: { subset: null, convert: null, metric_override_css: 'unconfirmed', rename_required: null }, reserved_font_name: null, term: { type: null }, proof: null, checked: null }, licence),
   };
 }
+
+// each weight once, in order (two files with the same weight would otherwise list it twice)
+function staticWeights(files) { return [...new Set(files.map((f) => Number(f.weight)).filter((n) => !isNaN(n)))].sort((a, b) => a - b); }
 
 function round(n) { return Math.round(n * 10000) / 10000; }
