@@ -334,14 +334,17 @@
         return Promise.all([].map.call(files, function (file) {
           return file.arrayBuffer().then(function (buf) { var m = M.fromBuffer(buf); return { file: file, buf: buf, m: m }; });
         })).then(function (items) {
-          var fam = familyOf(items[0].m.names.family), base = items[0].m, upright = items.filter(function (x) { return !x.m.italic; })[0] || items[0];
-          var files2 = items.map(function (x) { return { file: x.file.name, weight: x.m.axes.wght ? x.m.axes.wght[0] + ' ' + x.m.axes.wght[2] : String(x.m.weightClass || 400), style: x.m.italic ? 'italic' : 'normal', bytes: x.file.size }; });
-          var entry = M.makeEntry({ id: 'own', family: fam, files: files2, metrics: upright.m, shelf: 'own' });
-          pending = { items: items, entry: entry };
+          // a variable file covers the static files of its style, so those are left out (#3)
+          var plan = M.planFiles(items.map(function (x) { return { name: x.file.name, metrics: x.m, bytes: x.file.size }; }));
+          var fam = familyOf(plan.metrics.names.family), base = plan.metrics;
+          var entry = M.makeEntry({ id: 'own', family: fam, files: plan.files, metrics: plan.metrics, shelf: 'own' });
+          pending = { items: plan.used.map(function (i) { return items[i]; }), entry: entry };
+          var fileWeight = {}; plan.files.forEach(function (f) { fileWeight[f.file] = f.weight.replace(' ', '–'); });
           var k = { display: F.fitFactor(entry, 'display'), text: F.fitFactor(entry, 'text') };
           read.innerHTML = '<strong>Read automatically</strong><dl class="fd-add__kv">' +
             '<dt>Family</dt><dd><input type="text" data-add-family value="' + esc(fam) + '"></dd>' +
-            '<dt>Files</dt><dd>' + items.map(function (x) { return esc(x.file.name) + ' (' + (x.m.axes.wght ? 'variable ' + x.m.axes.wght[0] + '–' + x.m.axes.wght[2] : x.m.weightClass) + (x.m.italic ? ' italic' : '') + ')'; }).join('<br>') + '</dd>' +
+            '<dt>Files</dt><dd>' + items.map(function (x, i) { return plan.dropped.indexOf(i) >= 0 ? '<span class="fd-muted">' + esc(x.file.name) + ' (not used: the variable file covers it)</span>'
+              : esc(x.file.name) + ' (' + (x.m.axes.wght ? 'variable ' : '') + fileWeight[x.file.name] + (x.m.italic ? ' italic' : '') + ')'; }).join('<br>') + '</dd>' +
             '<dt>Weights</dt><dd>' + esc(entry.weights.kind === 'variable' ? entry.weights.min + '–' + entry.weights.max : entry.weights.available.join(', ')) + '</dd>' +
             '<dt>Cap / x</dt><dd>' + round(base.ratios.cap, 3) + ' / ' + round(base.ratios.x, 3) + ' → fit ×' + round(k.display) + ' (display), ×' + round(k.text) + ' (text)</dd>' +
             '<dt>Offered for</dt><dd>' + esc(entry.slots.join(', ')) + (entry.slots.indexOf('text') < 0 && entry.category !== 'mono' ? ' (the text slot needs weights 400–700)' : '') + '</dd>' +
